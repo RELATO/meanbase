@@ -15,4 +15,7 @@ app.controller('AppCtrl', ['$scope', '$http', '$location', 'CRUD', function($sco
 		summary: "SimpleCMS is on it's way",
 		description: "About page for SimpleCMS"
 	};
+
+	// CRUD.comment.deleteByIds(['5450999f09bfe6dab34714b5', '5450999f09bfe6dab34714b6'], function(response) {console.log(response);});
+	// CRUD.comment.deleteBy({author: 'JP'}, function(response) {console.log(response);});
 }]);

@@ -4,47 +4,55 @@ app.service('comment', ['$http', function($http) {
 			$http.post('/server/' + url + '/comment', data).success(function(data) {
 				callback(data);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
 		this.findOne = function(id, callback) {
-			$http.get('/server/pages', {params: {id: id}}).success(function(response) {
+			$http.get('/server/comments', {params: {id: id}}).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
+			});
+		};
+
+		this.findByUrl = function(url, callback) {
+			$http.get('/server' + url + '/comments').success(function(response) {
+				callback(response);
+			}).error(function(error) {
+				callback(error);
 			});
 		};
 
 		this.findBy = function(paramaters, callback) {
-			$http.get('/server/comment', {params: paramaters}).success(function(response) {
+			$http.get('/server/comments', {params: paramaters}).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
 		this.findAll = function(callback) {
-			$http.get('/server/comment').success(function(response) {
+			$http.get('/server/comments').success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
-		this.updateOne = function(url, data, callback) {
-			$http.put('/server'+url, data).success(function(response) {
+		this.updateOne = function(data, callback) {
+			$http.put('/server/comments', data).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
-		this.updateBy = function(data, callback) {
-			$http.put('/server/comment', data).success(function(response) {
+		this.updateBy = function(identifier, replacementData, callback) {
+			$http.put('/server/comments', {identifier: identifier, replacementData: replacementData}).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
@@ -52,43 +60,53 @@ app.service('comment', ['$http', function($http) {
 			if(data.identifier) {
 				callback("You have included an identifier in a update all request. Please remove the identifier if you wish to update all or use .updateBy({identifier: {}, replacementData: {}}) for updating by a criteria.");
 			} else {
-				$http.put('/server/comment', data).success(function(response) {
+				$http.put('/server/comments', data).success(function(response) {
 					callback(response);
 				}).error(function(error) {
-					console.log(error);
+					callback(error);
 				});
 			}
 		};
 
-		this.deleteOne = function(url, callback) {
-			$http.delete('/server'+url).success(function(response) {
+		this.deleteOne = function(id, callback) {
+			$http.delete('/server/comments', id).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
 		this.deleteBy = function(data, callback) {
-			$http.delete('/server/comment', data).success(function(response) {
+			$http({
+			    method: "DELETE",
+			    url: '/server/comments',
+			    data: data,
+			    headers: {"Content-Type": "application/json;charset=utf-8"}
+  			}).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
 		this.deleteByIds = function(ids, callback) {
-			$http.delete('/server/comment', ids).success(function(response) {
+			$http({
+			    method: "DELETE",
+			    url: '/server/comments',
+			    data: {ids: ids},
+			    headers: {"Content-Type": "application/json;charset=utf-8"}
+  			}).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
 		this.deleteAll = function(callback) {
-			$http.delete('/server/comment').success(function(response) {
+			$http.delete('/server/comments').success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 	}

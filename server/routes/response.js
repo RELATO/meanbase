@@ -59,9 +59,9 @@ module.exports = function(type) {
 			}
 		}; 
 
-		this.updateBy = function(res, found, identifier) {
+		this.updateBy = function(res, found) {
 			if(found) {
-				res.send(found + ' ' + type + 's with ' + identifier + ' were updated.');
+				res.send(found + ' ' + type + 's were updated.');
 			} else {
 				res.send('Could not find those '+type+'s. Please use {idenfitier: {}, replacementData: {}}');
 			}

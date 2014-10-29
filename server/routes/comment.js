@@ -65,7 +65,7 @@ module.exports = function(app, mongoose, models) {
 				} else {
 					if(found) {
 						// Delete those Comments
-						res.send('Removed all ' + foundComments + ' comments from ' + found  + ' pages.');
+						res.send('Deleted all comments.');
 					} else {
 						res.send('Failed: Could not delete those comments from those pages.');
 					}
@@ -130,24 +130,25 @@ module.exports = function(app, mongoose, models) {
 		}
 	})
 	.delete(function(req, res) {
+		console.log('head ', req.body);
 		if(req.body.id) {
 			// Remove One Comment by ID
 			model.findOneAndRemove({_id: req.body.id}, function (error, found) { 
 				response.respond(res, error, found, response.deleteOne);
 			});
-		} else if (!req.body.id && req.body.ids) {
-			// Delete comments by id array
-			mongoose.model('Page').update({comments: {$in: ids}}, {$pullAll: {comments: ids}}, {multi: true}, function(error, found) {
+		} else if(!isEmpty(req.body.ids)) {
+			//Delete comments by id array
+			mongoose.model('Page').update({comments: {$in: req.body.ids}}, {$pullAll: {comments: req.body.ids}}, {multi: true}, function(error, found) {
 				if(error) {
 					res.send('error: ', error);
 				} else {
 					if(found) {
 						// Delete those comments
-						model.remove({_id: {$in: ids}}, function(error, found) {
+						model.remove({_id: {$in: req.body.ids}}, function(error, found) {
 							response.respond(res, error, found, response.deleteBy);
 						});
 					} else {
-						res.send('Failed: Could not delete those comments from those pages.');
+						res.send('Failed: Could not find comments with those ids.');
 					}
 				}
 			});
@@ -185,9 +186,10 @@ module.exports = function(app, mongoose, models) {
 			});
 		} else {
 			// Delete all Comments
-			model.remove(function(error, found) {
-				response.respond(res, error, found, response.deleteAll);
-			});
+			res.send('Delete all');
+			// model.remove(function(error, found) {
+			// 	response.respond(res, error, found, response.deleteAll);
+			// });
 		}
 	});
 

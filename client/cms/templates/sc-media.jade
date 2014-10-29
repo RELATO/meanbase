@@ -1,0 +1,44 @@
+!!! 5
+html
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(charset='utf-8')
+    title SimpleCMS | Media
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='http://cdn.jsdelivr.net/flexgrid/1.5.1/flexgrid.min.css')
+    script(src='http://code.jquery.com/jquery-2.1.1.min.js')
+    link(rel='stylesheet', type='text/css', href='SimpleCMS.css')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+    link(href='http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+  body
+    //
+       SimpleCMS Head Tool Bar 
+    #head-tool-bar
+      #SimpleCMS
+        a(href='index.html') Back to Site
+      a(href='sc-backend-settings.html')
+        #sc-backend-settings.sc-tools.fa-gear
+      a(href='sc-comments.html')
+        #sc-comments.sc-tools.fa-comments
+      a(href='sc-media.html')
+        #sc-media.sc-tools.fa-image
+      a(href='sc-users.html')
+        #sc-users.sc-tools.fa-users
+      a(href='sc-analytics.html')
+        #sc-analytics.sc-tools.fa-bar-chart
+      #sc-login-info.sc-has-dropdown
+        .role Admin
+        .name Jon Paul
+        .sc-dropdown-right.sc-hidden
+          ul
+            li Log out
+            li
+              a(href='sc-users.html') Settings
+    //
+       SimpleCMS End Head Tool Bar 
+    #sc-backend-wrapper
+      h1 Media
+    script(src='http://cdn.jsdelivr.net/flexgrid/1.5.2/flexgrid.min.js')
+    script(src='SimpleCMS.js')

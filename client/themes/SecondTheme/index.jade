@@ -1,0 +1,15 @@
+doctype html
+html(ng-app="app")
+	head
+		//- meta(name="fragment" content="!")
+		title SecondTheme
+		include ../../cms/templates/sc-links
+		//- FirstTheme Scripts
+		link(rel="stylesheet", href="themes/SecondTheme/css/style.css")
+		script(src="themes/SecondTheme/controllers/main.js")
+	body(ng-controller="AppCtrl")
+		h1 Second Theme
+		h2 {{page.title}}
+		p.
+			{{page.content}}
+		//- div(ng-view)

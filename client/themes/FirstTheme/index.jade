@@ -1,0 +1,15 @@
+doctype html
+html(ng-app="app")
+	head
+		meta(name="fragment" content="!")
+		title FirstTheme
+		include ../../cms/templates/sc-links
+		//- FirstTheme Scripts
+		link(rel="stylesheet", href="themes/FirstTheme/css/style.css")
+		//- script(src="themes/FirstTheme/js/FirstTheme.js")
+		script(src="themes/FirstTheme/controllers/main.js")
+	body(ng-controller="AppCtrl")
+		h1 First Theme: {{page.title}}
+		h3 Author: {{page.author}}
+		p Created: {{page.created | date:"MMM dd, yyyy 'at' hh:mma"}}
+		p {{page.content}}

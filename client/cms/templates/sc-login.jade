@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(charset='utf-8')
+    title SimpleCMS | Backend Settings
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='http://cdn.jsdelivr.net/flexgrid/1.5.1/flexgrid.min.css')
+    script(src='http://code.jquery.com/jquery-2.1.1.min.js')
+    link(rel='stylesheet', type='text/css', href='cms/css/SimpleCMS.css')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css')
+    script(src='cms/js/SimpleCMS.js')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+    link(href='http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+  body
+    #sc-login-wrapper
+      h1 SimpleCMS
+      .sc-form-box
+        form(action='login.html', method='post')
+          .form-group
+            input#sc-email.sc-input(type='text', name='sc-email', placeholder='email')
+          .form-group
+            input#sc-password.sc-input(type='password', name='sc-password', placeholder='password')
+          .sc-forgot-password
+            button#sc-forgot-password-button.sc-button Forgot password?
+          input#login-submit.sc-button(type='submit', value='Log in')
+          a.sc-sign-up-link(href='sc-signup.html')
+            button.sc-button Sign Up

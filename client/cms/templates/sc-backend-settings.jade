@@ -1,0 +1,77 @@
+!!! 5
+html
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(charset='utf-8')
+    title SimpleCMS | Backend Settings
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='http://cdn.jsdelivr.net/flexgrid/1.5.1/flexgrid.min.css')
+    script(src='http://code.jquery.com/jquery-2.1.1.min.js')
+    link(rel='stylesheet', type='text/css', href='SimpleCMS.css')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+    link(href='http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+  body
+    //
+       SimpleCMS Head Tool Bar 
+    #head-tool-bar
+      #SimpleCMS
+        a(href='index.html') Back to Site
+      a(href='sc-backend-settings.html')
+        #sc-backend-settings.sc-tools.fa-gear
+      a(href='sc-comments.html')
+        #sc-comments.sc-tools.fa-comments
+      a(href='sc-media.html')
+        #sc-media.sc-tools.fa-image
+      a(href='sc-users.html')
+        #sc-users.sc-tools.fa-users
+      a(href='sc-analytics.html')
+        #sc-analytics.sc-tools.fa-bar-chart
+      #sc-login-info.sc-has-dropdown
+        .role Admin
+        .name Jon Paul
+        .sc-dropdown-right.sc-hidden
+          ul
+            li Log out
+            li
+              a(href='sc-users.html') Settings
+    //
+       SimpleCMS End Head Tool Bar 
+    #sc-backend-wrapper
+      h1 Backend Settings
+      h3 Site Title
+      input#sc-site-title.sc-input(type='text', name='sc-site-title')
+      h3 Tagline
+      input#sc-site-tagline.sc-input(type='text', name='sc-site-tagline')
+      h3 Themes
+      #sc-site-theme
+        .sc-theme-option.sc-4
+          .sc-theme-title
+            | Flexgrid for Old Hillsboro
+          .sc-theme-preview
+            img(src='screenshot.png', height='450', width='600')
+          .sc-theme-controls
+            button.sc-button.sc-theme-delete Delete
+            button.sc-button.sc-theme-activate Activate
+        .sc-theme-option.sc-4
+          .sc-theme-title
+            | Flexgrid for Old Hillsboro Unfinished
+          .sc-theme-preview
+            img(src='screenshot.png', height='450', width='600')
+          .sc-theme-controls
+            button.sc-button.sc-theme-delete Delete
+            button.sc-button.sc-theme-activate Activate
+        .sc-theme-option.sc-4
+          .sc-theme-title
+            | Flexgrid for Old Hillsboro Unfinished
+          .sc-theme-preview
+            img(src='screenshot.png', height='450', width='600')
+          .sc-theme-controls
+            button.sc-button.sc-theme-delete Delete
+            button.sc-button.sc-theme-activate Activate
+      h3 Social Sharing Setup
+      button.sc-button.sc-connect-social Connect
+      h3
+    script(src='http://cdn.jsdelivr.net/flexgrid/1.5.2/flexgrid.min.js')
+    script(src='SimpleCMS.js')

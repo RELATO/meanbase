@@ -1,0 +1,667 @@
+/*
+white: ECF0F1
+black: 2C3E50
+green: 2ECC71;
+dark green: 27AE60;
+
+*/
+
+
+/* Top Menu Bar */
+
+#head-tool-bar {
+	position: relative;
+	width: 100%;
+	background-color: #2C3E50;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+#SimpleCMS {
+	display: inline-block;
+	vertical-align: top;
+}
+
+#SimpleCMS a {
+	display: block;
+	padding: 0.8em;
+	background-color: #ECF0F1;
+	margin: 3px;
+	text-decoration: none;
+	color: inherit;
+}
+
+#SimpleCMS a:hover {
+	background-color: #2ECC71;
+	color: #ECF0F1;
+}
+
+
+.sc-tools {
+	position: relative;
+	display: inline-block;
+	padding: 0.5em 1.25em;
+	color: #ECF0F1;
+	border: 0;
+	background-color: #2C3E50;
+}
+
+.sc-tools:hover {
+	background-color: #2ECC71;
+	color: #2C3E50;
+}
+
+.sc-tools:before {
+	font-family: 'FontAwesome';
+	font-size: 1.75em;
+}
+
+
+/* Individual tools */
+
+#sc-cancel {
+	background-color: #E74C3C;
+	color: #ECF0F1;
+}
+
+#sc-trash {
+	background-color: #C0392B;
+	color: #ECF0F1;
+	vertical-align: top;
+}
+
+#sc-trash:before {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#sc-trash span {
+	pointer-events: none;
+	display: inline-block;
+	vertical-align: middle;
+	padding-left: 0.5em
+}
+
+#sc-cancel:hover {
+	color: #2C3E50;
+}
+
+#sc-trash:hover {
+	color: #2C3E50;
+}
+
+.sc-light-green {
+	background-color: #2ECC71;
+}
+
+
+/* Log in */
+
+#sc-login-info {
+	position: relative;
+	float: right;
+	color: white;
+	padding: 0.25em 0.5em;
+}
+
+#sc-login-info:hover {
+	background-color: #2ECC71;
+}
+
+#sc-login-info li a {
+	text-decoration: none;
+	color: inherit;
+}
+
+#sc-login-info .role,
+#sc-login-info .name {
+	text-align: right;
+}
+
+.sc-highlight {
+	outline: 2px solid #2ECC71;
+}
+
+
+/* Drop downs */
+
+.sc-dropdown,
+.sc-dropdown-right {
+	display: inline-block;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	border-radius: 6px;
+	margin-top: 1em;
+	background-color: #34495e;
+	color: white;
+	padding: 0.75em;
+	-webkit-transition: all 1s ease-in-out;
+  	-moz-transition: all 1s ease-in-out;
+  	-o-transition: all 1s ease-in-out;
+  	transition: all 1s ease-in-out;
+}
+
+#sc-page-settings .sc-dropdown-right {
+	width: 480px;
+	text-align: left;
+}
+
+.sc-dropdown-right {
+	right: 0;
+	left: auto;
+	text-align: center;
+}
+
+.sc-dropdown-right .sc-6 {
+	display: inline-block;
+	vertical-align: top;
+	padding: 0.5em;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.sc-dropdown:before,
+.sc-dropdown-right:before {
+	content: "";
+	position: absolute;
+	right: 20px;
+	bottom: 100%;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 9px 9px 9px;
+	border-color: transparent transparent #34495e transparent;
+}
+
+.sc-dropdown-right:before {
+	left: auto;
+}
+
+.sc-dropdown-right ul,
+.sc-dropdown ul {
+	padding-left: 0;
+	list-style: none;
+	margin-bottom: 0;
+}
+
+.sc-dropdown-right li,
+.sc-dropdown li {
+	padding: 0.35em 1em;
+	border-radius: 3px;
+}
+
+.sc-has-dropdown .role,
+.sc-has-dropdown .name {
+	pointer-events: none;
+}
+
+.sc-dropdown-right li:hover,
+.sc-dropdown li:hover {
+	background-color: #2ECC71;
+}
+
+.sc-visibility,
+.sc-editability,
+.sc-status {
+	padding: 0.5em 0;
+}
+
+
+/* Form inputs */
+
+.sc-input {
+	background-color: transparent;
+	border: 2px solid #27AE60;
+	border-radius: 3px;
+	outline: none;
+	padding: 0.4em 0.4em;
+	font-size: 1.2em;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.sc-input:focus {
+	border-color: #2ECC71;
+}
+
+#sc-users .sc-form-group {
+	padding: 0.5em 1em 0.5em 0;
+	width: 50%;
+}
+
+.sc-user-info {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.sc-calendar {
+	font-size: 1.5em;
+	padding: 0.25em 0.5em;
+}
+
+.sc-calendar,
+.sc-share-option:before,
+.sc-lock:before {
+	font-family: "FontAwesome";
+}
+
+#sc-publish-btn {
+	padding: 0.5em 1em;
+	width: 100%;
+	box-sizing: border-box;
+	color: #ECF0F1;
+	background-color: #27AE60;
+	border: none;
+	border-radius: 3px;
+	margin-top: 0.5em;
+}
+
+#sc-publish-btn:hover {
+	background-color: #2ECC71;
+}
+
+#sc-backend-wrapper {
+	max-width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#sc-backend-wrapper h1 {
+	margin: 0.3em 0 0 0;
+}
+
+#sc-backend-wrapper hr {
+	margin: 1em 0 0 0;
+	border: 2px solid #2C3E50;
+}
+
+.sc-panel-head {
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+	background-color: #2C3E50;
+}
+
+.sc-panel-head .sc-panel-title {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0.5em;
+}
+
+.sc-panel-righthand {
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: middle;
+	text-align: right;
+	padding: 0.5em;
+}
+
+.sc-6 {
+	width: 50%;
+}
+
+.sc-4 {
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	width: 33%;
+}
+
+.sc-panel {
+	margin-bottom: 0.5em;
+}
+
+.sc-panel button,
+.sc-panel input[type="submit"],
+.sc-button {
+	color: #ECF0F1;
+	padding: 0.5em 1em;
+	border: none;
+	border-radius: 3px;
+	margin: 2px;
+	outline: none;
+}
+
+.sc-panel button {
+	background-color: #2980B9;
+}
+
+.sc-panel button:hover {
+	background-color: #3498DB;
+}
+
+.sc-panel input[type="submit"] {
+	background-color: #27AE60;
+}
+
+.sc-panel input[type="submit"]:hover {
+	background-color: #2ECC71;
+}
+
+.sc-panel select {
+	background-color: #27AE60;
+	color: #ECF0F1;
+	border: none;
+	font-size: 1.5em;
+	border-radius: 3px;
+}
+
+.sc-panel-body {
+	background-color: #ECF0F1;
+	border: 2px solid #2C3E50;
+	padding: 1em;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	display: none;
+}
+
+.sc-panel-body.sc-panel-body-open {
+	display: block
+}
+
+.sc-form-group {
+	position: relative;
+	display: inline-block;
+}
+
+input[type=email].sc-email + label,
+input[type=text].sc-text + label,
+input[type=url].sc-url + label,
+input[type=tel].sc-tel + label,
+input[type=search].sc-search + label,
+input[type=number].sc-number + label,
+input[type=password].sc-password + label,
+input[type=hidden].sc-hidden + label {
+	position: absolute;
+	font-size: 19px;
+	top: 4px;
+	color: #ddd;
+	left: 12px;
+}
+
+input.sc-with-icon {
+	padding-left: 3em;
+}
+
+input[type=radio].sc-radio.sc-radio,
+input[type=checkbox].sc-checkbox.sc-checkbox {
+	display: none;
+}
+
+input[type=radio].sc-radio + label,
+input[type=checkbox].sc-checkbox + label {
+	font-size: 1.3em;
+	font-family: 'Montserrat', sans-serif;
+	width: 250px;
+}
+
+input[type=radio].sc-radio + label:before,
+input[type=checkbox].sc-checkbox + label:before {
+	display: inline-block; 
+    vertical-align: middle; 
+    font-family: 'FontAwesome';
+    font-size: 1.5em;
+    color: #2C3E50;
+    margin-right: 0.5em;
+}
+
+input[type=radio].sc-radio + label:before {
+    content: "\f10c";  
+}
+
+input[type=checkbox].sc-checkbox + label:before {
+    content: "\f0c8";  
+}
+
+input[type=radio].sc-radio:checked + label:before {
+    content: "\f05d";
+}
+
+input[type=checkbox].sc-checkbox:checked + label:before {
+    content:"\f14a";
+}
+
+button.sc-toggle-active {
+	padding: 0;
+	margin: 0;
+	background-color: transparent;
+	color: #27AE60;
+	border-radius: 0;
+	font-size: 2.2em;
+}
+
+button.sc-toggle-active:hover {
+	background-color: transparent;
+}
+
+#sc-user-search {
+	border: 2px solid #2C3E50;
+	color: #27AE60;
+	border-radius: 3px;
+	padding: 0.5em 1em;
+	padding-left: 3em;
+	outline: none;
+	width: 100%;
+}
+
+#sc-user-search + label:before {
+	color: #2C3E50;
+}
+
+#sc-form-group-user-search {
+	margin: 1em 0;
+	width: 100%;
+}
+
+input[type=search].sc-search + label:before {
+	font-family: FontAwesome;
+	content: '\f002';
+	color: #27AE60;
+}
+
+.sc-panel-image-thumbnail {
+	display: inline-block;
+	vertical-align: middle;
+	width: 40px;
+	height: 40px;
+	border-radius: 100px;
+	border: 2px solid #27AE60;
+	background-color: #ECF0F1;
+}
+
+.sc-user-name {
+	display: inline-block;
+	vertical-align: middle;
+	color: #ECF0F1;
+	padding-left: 0.5em;
+	font-size: 1.5em;
+	margin: 0;
+}
+
+.sc-user-info-date {
+	font-size: 0.8em;
+}
+
+.sc-user-gravatar img {
+	width: 40px;
+	height: 40px;
+}
+
+button.sc-user-gravatar-choose {
+	font-size: 0.75em;
+	padding: 0.5em;
+}
+
+button.sc-delete-user {
+	background-color: #C0392B;
+}
+
+button.sc-delete-user:hover {
+	background-color: #E74C3C;
+}
+
+.sc-3 {
+	display: inline-block;
+	vertical-align: top;
+	width: 25%;
+	margin: 0;
+}
+
+.sc-align-right {
+	text-align: right;
+}
+
+.sc-user-righthand {
+	color: #ECF0F1;
+	font-size: 1.5em;
+	vertical-align: middle;
+}
+
+.sc-user-righthand i {
+	font-size: 1.5em;
+	vertical-align: middle;
+	padding-left: 0.5em;
+	padding-right: 0.25em;
+	pointer-events: none;
+}
+
+#sc-delete-user-role {
+	background-color: #C0392B;
+}
+
+#sc-delete-user-role:hover {
+	background-color: #E74C3C;
+}
+
+.sc-save-delete-controls {
+	padding-top: 1em;
+}
+
+/* SC Theme Options */
+
+.sc-theme-option {
+	padding: 1em;
+}
+
+.sc-theme-title {
+	text-align: center;
+	font-size: 1.2em;
+	padding: 0.5em;
+	height: 75px;
+}
+
+.sc-theme-preview img {
+	max-width: 100%;
+	height: auto;
+}
+
+.sc-theme-controls {
+	text-align: right;
+}
+
+.sc-theme-delete {
+	background-color: #C0392B;
+}
+
+.sc-theme-delete:hover {
+	background-color: #E74C3C;
+}
+
+.sc-theme-activate {
+	background-color: #27AE60;
+}
+
+.sc-theme-activate:hover {
+	background-color: #2ECC71;
+}
+
+
+/* Login */
+
+#sc-login-wrapper {
+	text-align: center;
+}
+
+#sc-login-wrapper .sc-form-box {
+	display: inline-block;
+	width: 25%;
+	padding: 1em;
+	margin-top: 50px;
+	text-align: left;
+	border-radius: 3px;
+	background-color: #2C3E50;
+}
+
+#sc-login-wrapper #login-submit {
+	background-color: #27AE60;
+	display: inline-block;
+}
+
+#sc-login-wrapper #login-submit:hover {
+	background-color: #2ECC71;
+}
+
+#sc-login-wrapper .sc-input {
+	color: #2ECC71;
+}
+
+
+.sc-sign-up-link {
+	float: right;
+}
+
+.sc-sign-up-link:hover {
+	text-decoration: none;
+}
+
+.sc-sign-up-link button {
+	display: inline-block;
+	background-color: #2980B9;
+}
+
+.sc-sign-up-link button:hover {
+	background-color: #3498DB;
+}
+
+.sc-forgot-password {
+	text-align: right;
+}
+
+#sc-forgot-password-button {
+	display: inline-block;
+	background-color: transparent;
+	padding-top: 0;
+	margin-top: 0;
+	color: #ECF0F1;
+	text-align: right;
+}
+
+
+
+.sc-hidden {
+	display: none;
+}
+
+
+@media screen and (max-width: 640px) {
+	#sc-users .sc-form-group {
+		width: 100%;
+	}
+
+	.sc-3 {
+		width: 100%;
+	}
+
+	.sc-6 {
+		width: 100%;
+		text-align: center;
+	}
+
+	.sc-4 {
+		width: 100%;
+	}
+
+	#sc-page-settings .sc-dropdown-right {
+		width: 300px;
+	}
+}

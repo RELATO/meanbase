@@ -98,5 +98,13 @@ module.exports = function(type) {
 				res.send('Could not delete any ' + type + 's.');
 			}
 		};
+
+		this.deleteOneAndDependants = function(res, found) {
+			if(found) {
+				res.send('A ' + type + ' was deleted.');
+			} else {
+				res.send('Could not find that ' + type + ' to delete.');
+			}
+		}; 
 	};
 }

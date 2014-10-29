@@ -68,15 +68,68 @@ module.exports = function(app, mongoose, models) {
 			
 		})
 		.delete(function(req, res) {
-			if(req.body) {
+			if(!isEmpty(req.body)) {
 				// Delete Multiple Pages
-				model.remove(req.body, function(error, found) {
-					response.respond(res, error, found, response.deleteBy);
+				model.find(req.body).populate('comments').exec(function(error, foundPages) {
+					if(error) {
+						res.send(error);
+					} else {
+						if(foundPages) {
+							// Collect all comment ids in pages
+
+							var ids = [];
+							var pageids = [];
+							var j = 0;
+							while(j < foundPages.length) {
+								pageids.push(foundPages[j]._id);
+								var i = 0;
+								while(i < foundPages[j].comments.length) {
+									ids.push(foundPages[j].comments[i]._id);
+									i++;
+								}
+								j++;
+							}
+
+							// Delete dependant comments
+							mongoose.model('Comment').remove({_id: {$in: ids}}, function(error, found) {
+								if(error) {
+									res.send(error);
+								} else {
+									// Delete the Page itself
+									model.remove(foundPages, function(error, found) {
+										res.send("Deleted those particular pages and all their dependant comments.");
+									});
+								}
+							});
+						} else {
+							res.send('Could not find any pages with that url.');
+						}
+					}
 				});
 			} else {
 				// Delete all Pages
-				model.remove(function(error) {
-					response.respond(res, error, found, response.deleteAll);
+				model.remove(function(error, found) {
+					if(error) {
+						res.send(error);
+					} else {
+						if(found) {
+							// Deleted all comments
+							mongoose.model('Comment').remove({}, function(error, found) {
+								if(error) {
+									res.send(error);
+								} else {
+									if(found) {
+										res.send('Deleted all comments and pages.');
+									} else {
+										res.send('Could not find any comments to delete.');
+									}
+								}
+							});
+						} else {
+							res.send('Could not find any pages to delete.');
+						}
+					}
+					// response.respond(res, error, found, response.deleteAll);
 				});
 			}
 		});
@@ -97,8 +150,33 @@ module.exports = function(app, mongoose, models) {
 		})
 		.delete(function(req, res) {
 			// Delete One Page by url
-			model.findOneAndRemove({url: req.params.url}, function (error, found) { 
-				response.respond(res, error, found, response.deleteOne);
+			model.findOne({url: req.params.url}).populate('comments').exec(function(error, foundPage) {
+				if(error) {
+					res.send(error);
+				} else {
+					if(foundPage) {
+						// Collect all comment ids in page
+						var ids = [];
+						var i = 0;
+						while(i < foundPage.comments.length) {
+							ids.push(foundPage.comments[i]._id);
+							i++;
+						}
+						// Delete dependant comments
+						mongoose.model('Comment').remove({_id: {$in: ids}}, function(error, found) {
+							if(error) {
+								res.send(error);
+							} else {
+								// Delete the Page itself
+								model.remove(foundPage, function(error, found) {
+									res.send("Deleted " + foundPage.title + " and all it's comments.");
+								});
+							}
+						});
+					} else {
+						res.send('Could not find any pages with that url.');
+					}
+				}
 			});
 		});
 };

@@ -5,13 +5,13 @@ module.exports = function(app, mongoose, models) {
 	// Import a server response object with prebuilt functions to make sending messages to client simplier
 	var response = require('./response')('comment');
 
-	function isEmpty(obj) {
-	    for(var key in obj) {
-	        if(obj.hasOwnProperty(key))
-	            return false;
-	    }
-	    return true;
-	}
+	// function isEmpty(obj) {
+	//     for(var key in obj) {
+	//         if(obj.hasOwnProperty(key))
+	//             return false;
+	//     }
+	//     return true;
+	// }
 
 	// Add custom functions for Comment Routes onto server response object
 	response.findByUrl = function(res, found) {
@@ -186,10 +186,9 @@ module.exports = function(app, mongoose, models) {
 			});
 		} else {
 			// Delete all Comments
-			res.send('Delete all');
-			// model.remove(function(error, found) {
-			// 	response.respond(res, error, found, response.deleteAll);
-			// });
+			model.remove(function(error, found) {
+				response.respond(res, error, found, response.deleteAll);
+			});
 		}
 	});
 

@@ -5,14 +5,6 @@ module.exports = function(app, mongoose, models) {
 	// Import a server response object with prebuilt functions to make sending messages to client simplier
 	var response = require('./response')('comment');
 
-	// function isEmpty(obj) {
-	//     for(var key in obj) {
-	//         if(obj.hasOwnProperty(key))
-	//             return false;
-	//     }
-	//     return true;
-	// }
-
 	// Add custom functions for Comment Routes onto server response object
 	response.findByUrl = function(res, found) {
 		if(found) {
@@ -67,7 +59,7 @@ module.exports = function(app, mongoose, models) {
 						// Delete those Comments
 						res.send('Deleted all comments.');
 					} else {
-						res.send('Failed: Could not delete those comments from those pages.');
+						res.send('Deleted comments, but could not unlink them from those pages, those pages may not exist.');
 					}
 				}
 			});

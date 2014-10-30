@@ -21,7 +21,7 @@ module.exports = function(Schema, models, validate, mongoose) {
 			type: String,
 			validate: validate.email
 		},
-		message: {
+		content: {
 				type: String,
 				required: true
 		},

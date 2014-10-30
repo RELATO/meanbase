@@ -2,11 +2,11 @@ module.exports = function(type) {
 	var type = type;
 
 	return new function Response() {
-		this.respond = function(res, error, found, message) {
+		this.respond = function(res, error, found, message, model, dependantModel, dependantModelProperty) {
 			if(error)
 				this.error(res, error);
 			else
-				message(res, found);
+				message(res, found, model, dependantModel, dependantModelProperty);
 		};
 
 		// CRUD Errors
@@ -99,12 +99,91 @@ module.exports = function(type) {
 			}
 		};
 
-		this.deleteOneAndDependants = function(res, found) {
+		this.deleteOneAndDependancies = function(res, found, model, dependantModel, dependantModelProperty) {
 			if(found) {
-				res.send('A ' + type + ' was deleted.');
+				if(!isEmpty(found[dependantModelProperty])) {
+					// Collect all comment ids in page
+					var ids = [];
+					var i = 0;
+					while(i < found[dependantModelProperty].length) {
+						ids.push(found[dependantModelProperty][i]._id);
+						i++;
+					}
+					// Delete dependant comments
+					dependantModel.remove({_id: {$in: ids}}, function(error, foundDependancies) {
+						if(error) {
+							res.send(error);
+						} else {
+							// Delete the Page itself
+							model.remove(found, function(error, foundDependancies) {
+								res.send("Deleted that document and all it's dependancies.");
+							});
+						}
+					});
+				} else {
+					res.send("That dependant Model property does not exist in the origional Model's Schema.");
+				}
 			} else {
-				res.send('Could not find that ' + type + ' to delete.');
+				res.send('Could not find any documents that matched that id.');
 			}
 		}; 
-	};
+
+		this.deleteByAndDependancies = function(res, found, model, dependantModel, dependantModelProperty) {
+			if(found) {
+				if(!isEmpty(found[0][dependantModelProperty])) {
+					var ids = [];
+					var pageids = [];
+					var j = 0;
+					while(j < found.length) {
+						pageids.push(found[j]._id);
+						var i = 0;
+						while(i < found[j][dependantModelProperty].length) {
+							ids.push(found[j][dependantModelProperty][i]._id);
+							i++;
+						}
+						j++;
+					}
+
+					// Delete dependant comments
+					dependantModel.remove({_id: {$in: ids}}, function(error, foundDependancies) {
+						if(error) {
+							res.send(error);
+						} else {
+							// Delete the Page itself
+							model.remove(found, function(error) {
+								if(error) {
+									res.send(error);
+								} else {
+									res.send("Deleted those particular documents and all their dependancies.");
+								}
+							});
+						}
+					});
+				} else {
+					res.send("That dependant Model property does not exist in the origional Model's Schema.");
+				}
+			} else {
+				res.send('Could not find any documents with that criteria.');
+			}
+		}; 
+
+		this.deleteAllAndDependancies = function(res, found, model, dependantModel, dependantModelProperty) {
+			if(found) {
+				// Deleted all comments
+				dependantModel.remove({}, function(error, found) {
+					if(error) {
+						res.send(error);
+					} else {
+						if(found) {
+							res.send('Deleted all ' + type + 's and dependancies.');
+						} else {
+							res.send('Could not find any dependancies to delete.');
+						}
+					}
+				});
+			} else {
+				res.send('Could not find any documents to delete.');
+			}
+		}; 
+	}; //return Response();
 }

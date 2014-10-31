@@ -1,0 +1,1 @@
+angular.module('crudApp', ['ngResource', 'ngRoute']);

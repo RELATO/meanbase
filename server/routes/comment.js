@@ -71,6 +71,7 @@ module.exports = function(app, mongoose, models) {
 	// Post a comment to a url
 	app.post('/server/:url/comment', function(req, res) {
 		// Saves the comments to Comment collection and adds an _id to the Page Collection
+		req.body.url = req.params.url;
 		var data = new models.Comment(req.body);
 		data.save(function(error) {
 			if(error) {

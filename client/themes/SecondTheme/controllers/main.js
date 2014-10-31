@@ -1,6 +1,4 @@
-app.controller('mainCtrl', ['$scope', '$http', function($scope, $http) {
-	// $http.get('server/hello-world').success(function(data) {
-	// 	$scope.page = data;
-	// });
-	$scope.hello = 'hey';
+app.controller('mainCtrl', ['$scope', '$http', '$location', 'CRUD', function($scope, $http, $location, CRUD) {
+	CRUD.page.findOne($location.url(), function(response) {$scope.page = response;});
+	CRUD.comment.findByUrl($location.url(), function(response) {$scope.comments = response;});
 }]);

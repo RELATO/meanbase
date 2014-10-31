@@ -1,5 +1,6 @@
 (function($) {
 	$(document).ready(function() {
+
 		// Drop Down Menus
 		var activator = $('.sc-has-dropdown');
 		var dropdown = $('.sc-dropdown, .sc-dropdown-right');
@@ -29,6 +30,7 @@
 		});
 
 		$('.sc-panel-toggle').click(function(e) {
+			console.log('clicked');
 			$(e.target).parents('.sc-panel').find('.sc-panel-body').slideToggle();
 			$(e.target).children('.sc-panel-toggle-caret').toggleClass('fa-rotate-90');
 		});

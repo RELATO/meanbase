@@ -20,6 +20,22 @@ module.exports = function(app, mongoose, models) {
 		res.render('cms/templates/sc-login');
 	});
 
+	app.get('/cms', function(req, res) {
+		res.render('cms/templates/SimpleCMS');
+	});
+
+	app.get('/cms/templates/:template', function (req, res) {
+		res.render('cms/templates/' + req.params.template);
+	});
+
+	app.get('/cms/:url', function(req, res) {
+		res.render('cms/templates/SimpleCMS');
+	});
+
+	app.get('/themes/:theme/templates/:template', function(req, res) {
+		res.render('themes/' + req.params.theme + '/templates/' + req.params.template);
+	});
+
 	app.get('*', function(req, res) {
 		res.render('themes/' + THEME + '/index');
 	});

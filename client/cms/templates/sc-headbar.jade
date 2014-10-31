@@ -1,0 +1,72 @@
+//SimpleCMS Head Tool Bar 
+#head-tool-bar
+  #SimpleCMS
+    a(href='/cms' target="_self") SimpleCMS
+  .sc-tools.fa-plus-circle.sc-has-dropdown
+    .sc-dropdown.sc-hidden
+      ul
+        li Page
+        li Post
+        li Product
+  #sc-editMode.sc-tools.fa-edit
+  #sc-cancel.sc-tools.fa-times-circle.sc-hidden
+  #sc-trash.sc-tools.fa-trash.sc-hidden
+    span  Delete Selected 
+  #sc-page-settings.sc-tools.fa-gear.sc-has-dropdown.sc-hidden
+    .sc-dropdown-right.sc-hidden
+      .sc-6
+        form
+          .form-group
+            label Browser Tab Title
+            input#sc-browser-tab-title.sc-input(type='text', name='sc-browser-tab-title')
+          .form-group
+            label URL Link Title
+            input#sc-url-link-title.sc-input(type='text', name='sc-url-link-title')
+          .form-group
+            label Menu Label
+            input#sc-menu-title.sc-input(type='text', name='sc-menu-title')
+      .sc-6
+        .form-group
+          label Page Description
+          textarea#sc-page-description.sc-input(name='sc-page-description')
+        .sc-visibility
+          div
+            | Who can see?
+            | =
+          form
+            select(name='sc-access-level')
+              option(value='everybody') Everybody
+              option(value='members') Members
+              option(value='level1') Level 1
+              option(value='level2') Level 2
+              option(value='level3') Level 3
+              option(value='level4') Level 4
+              option(value='level5') Level 5
+              option(value='super') Super
+        .sc-editability
+          div
+            | Who can edit?
+            | =
+          form
+            select(name='sc-access-level')
+              option(value='everybody') Everybody
+              option(value='members') Members
+              option(value='level1') Level 1
+              option(value='level2') Level 2
+              option(value='level3') Level 3
+              option(value='level4') Level 4
+              option(value='level5') Level 5
+              option(value='super') Super
+        .sc-status
+          | Status: Draft
+          span.sc-calendar.fa-calendar(title='Latest Revision: Jan 18, 2014 7:18pm')
+        input#sc-publish-btn(type='submit', value='Publish Now')
+  #sc-login-info.sc-has-dropdown
+    .role Admin
+    .name Jon Paul
+    .sc-dropdown-right.sc-hidden
+      ul
+        li Log out
+        li
+          a(href='/cms/users') Settings
+//SimpleCMS End Head Tool Bar 

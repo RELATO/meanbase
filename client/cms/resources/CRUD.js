@@ -1,4 +1,4 @@
-app.service('CRUD', ['$http', 'page', 'user', 'role', 'theme', 'comment', 'site', function($http, page, user, role, theme, comment, site) {
+angular.module('crudApp').service('CRUD', ['$http', 'page', 'user', 'role', 'theme', 'comment', 'site', function($http, page, user, role, theme, comment, site) {
 	function Requests() {
 	  	this.page = page;
 	  	this.user = user;

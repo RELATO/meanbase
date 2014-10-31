@@ -1,2 +1,5 @@
-h1 Page Template
-//- h4 {{hello}}
+h1 {{page.title}} - Page Template
+h3 Comments
+div.comment(ng-repeat="comment in comments")
+	p {{comment.author}} on {{comment.date | date: 'MMM d, y h:mm a'}} 
+	p {{comment.content}}

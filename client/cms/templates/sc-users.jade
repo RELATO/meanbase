@@ -1,162 +1,112 @@
-!!! 5
-html
-  head
-    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
-    meta(charset='utf-8')
-    title SimpleCMS | Users
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', type='text/css', href='http://cdn.jsdelivr.net/flexgrid/1.5.1/flexgrid.min.css')
-    script(src='http://code.jquery.com/jquery-2.1.1.min.js')
-    link(rel='stylesheet', type='text/css', href='SimpleCMS.css')
-    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
-    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css')
-    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
-    link(href='http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
-  body
-    //
-       SimpleCMS Head Tool Bar 
-    #head-tool-bar
-      #SimpleCMS
-        a(href='index.html') Back to Site
-      a(href='sc-backend-settings.html')
-        #sc-backend-settings.sc-tools.fa-gear
-      a(href='sc-comments.html')
-        #sc-comments.sc-tools.fa-comments
-      a(href='sc-users.html')
-        #sc-users.sc-tools.fa-users
-      a(href='sc-media.html')
-        #sc-media.sc-tools.fa-camera
-      a(href='sc-plugins.html')
-        #sc-plugins.sc-tools.fa-plug
-      a(href='sc-analytics.html')
-        #sc-analytics.sc-tools.fa-bar-chart
-      #sc-login-info.sc-has-dropdown
-        .role Admin
-        .name Jon Paul
-        .sc-dropdown-right.sc-hidden
-          ul
-            li Log out
-            li
-              a(href='sc-users.html') Settings
-    //
-       SimpleCMS End Head Tool Bar 
-    #sc-backend-wrapper
-      h1 Users and Privilages
-      hr
-      h3 Roles and Privilages
-      .sc-panel
+#sc-backend-wrapper
+  h1 Users and Privilages
+  hr
+  h3 Roles and Privilages
+  .sc-panel
+    form
+      .sc-panel-head
+        .sc-panel-title.sc-6
+          select(name='sc-roles')
+            option(value='level1') Level 1
+            option(value='level2') Level 2
+            option(value='level3') Level 3
+            option(value='level4') Level 4
+            option(value='level5') Level 5
+            option(value='super') Super
+        .sc-panel-righthand.sc-6
+          button#sc-delete-user-role Delete Role
+          button#sc-new-user-role New Role
+          input(type='submit', value='Save')
+      .sc-panel-body.sc-panel-body-open
+        .sc-form-group
+          input#sc-privilage-edit.sc-checkbox(type='checkbox', name='sc-edit')
+          label(for='sc-privilage-edit') Edit Content
+        .sc-form-group
+          input#sc-privilage-publish.sc-checkbox(type='checkbox', name='sc-publish')
+          label(for='sc-privilage-publish') Publish Content
+        .sc-form-group
+          input#sc-privilage-delete.sc-checkbox(type='checkbox', name='sc-delete')
+          label(for='sc-privilage-delete') Delete Content
+        .sc-form-group
+          input#sc-privilage-manage-media.sc-checkbox(type='checkbox', name='sc-manage-media')
+          label(for='sc-privilage-manage-media') Manage Media
+        .sc-form-group
+          input#sc-privilage-restrict.sc-checkbox(type='checkbox', name='sc-restrict')
+          label(for='sc-privilage-restrict') Restrict Access
+        .sc-form-group
+          input#sc-privilage-manage-extensions.sc-checkbox(type='checkbox', name='sc-manage-extensions')
+          label(for='sc-privilage-manage-extensions') Manage Extensions
+        .sc-form-group
+          input#sc-privilage-moderate-comments.sc-checkbox(type='checkbox', name='sc-moderate-comments')
+          label(for='sc-privilage-moderate-comments') Moderate Comments
+        .sc-form-group
+          input#sc-privilage-manage-users.sc-checkbox(type='checkbox', name='sc-manage-users')
+          label(for='sc-privilage-manage-users') Manage Users
+        .sc-form-group
+          input#sc-privilage-manage-roles.sc-checkbox(type='checkbox', name='sc-manage-roles')
+          label(for='sc-privilage-manage-roles') Manage Roles
+        .sc-form-group
+          input#sc-privilage-change-settings.sc-checkbox(type='checkbox', name='sc-change-settings')
+          label(for='sc-privilage-change-settings') Change Site Settings
+        .sc-form-group
+          input#sc-privilage-import-export.sc-checkbox(type='checkbox', name='sc-import-export')
+          label(for='sc-privilage-import-export') Import/Export Data
+        .sc-form-group
+          input#sc-privilage-delete-site.sc-checkbox(type='checkbox', name='sc-delete-site')
+          label(for='sc-privilage-delete-site') Delete Site
+        .sc-form-group
+          input#sc-privilage-all.sc-checkbox(type='checkbox', name='sc-all')
+          label(for='sc-privilage-all') All Privilages
+  h3 Users
+  #sc-form-group-user-search.sc-form-group
+    input#sc-user-search.sc-search.sc-with-icon(type='search', name='sc-user-search', placeholder='Filter Users')
+    label(for='sc-user-search')
+  #sc-users
+    .sc-panel
+      .sc-panel-head
+        .sc-panel-title.sc-6
+          img.sc-panel-image-thumbnail(src='')
+          span.sc-user-name Jon Paul
+        .sc-panel-righthand.sc-user-righthand.sc-panel-toggle.sc-6
+          | Level 5
+          i.fa.fa-caret-right.sc-panel-toggle-caret
+      .sc-panel-body
         form
-          .sc-panel-head
-            .sc-panel-title.sc-6
-              select(name='sc-roles')
+          .sc-user-info
+            | Info:
+          .sc-form-group
+            input#sc-user-name-1.sc-input(type='text', placeholder='Jon Paul')
+          .sc-form-group
+            input#sc-user-email-1.sc-input(type='text', placeholder='soandso@gmail.com')
+          .sc-user-info
+            | Password Change:
+          .sc-form-group
+            input#sc-user-password-1-1.sc-input(type='password', name='sc-user-password-1-1', placeholder='New Password')
+          .sc-form-group
+            input#sc-user-password-1-2.sc-input(type='password', name='sc-user-password-1-2', placeholder='New Password Repeat')
+          .sc-user-info
+            span.sc-user-role.sc-3
+              .sc-user-info Access:
+              select#sc-user-role-1(name='sc-user-role')
                 option(value='level1') Level 1
                 option(value='level2') Level 2
                 option(value='level3') Level 3
                 option(value='level4') Level 4
                 option(value='level5') Level 5
                 option(value='super') Super
-            .sc-panel-righthand.sc-6
-              button#sc-delete-user-role Delete Role
-              button#sc-new-user-role New Role
-              input(type='submit', value='Save')
-          .sc-panel-body.sc-panel-body-open
-            .sc-form-group
-              input#sc-privilage-edit.sc-checkbox(type='checkbox', name='sc-edit')
-              label(for='sc-privilage-edit') Edit Content
-            .sc-form-group
-              input#sc-privilage-publish.sc-checkbox(type='checkbox', name='sc-publish')
-              label(for='sc-privilage-publish') Publish Content
-            .sc-form-group
-              input#sc-privilage-delete.sc-checkbox(type='checkbox', name='sc-delete')
-              label(for='sc-privilage-delete') Delete Content
-            .sc-form-group
-              input#sc-privilage-manage-media.sc-checkbox(type='checkbox', name='sc-manage-media')
-              label(for='sc-privilage-manage-media') Manage Media
-            .sc-form-group
-              input#sc-privilage-restrict.sc-checkbox(type='checkbox', name='sc-restrict')
-              label(for='sc-privilage-restrict') Restrict Access
-            .sc-form-group
-              input#sc-privilage-manage-extensions.sc-checkbox(type='checkbox', name='sc-manage-extensions')
-              label(for='sc-privilage-manage-extensions') Manage Extensions
-            .sc-form-group
-              input#sc-privilage-moderate-comments.sc-checkbox(type='checkbox', name='sc-moderate-comments')
-              label(for='sc-privilage-moderate-comments') Moderate Comments
-            .sc-form-group
-              input#sc-privilage-manage-users.sc-checkbox(type='checkbox', name='sc-manage-users')
-              label(for='sc-privilage-manage-users') Manage Users
-            .sc-form-group
-              input#sc-privilage-manage-roles.sc-checkbox(type='checkbox', name='sc-manage-roles')
-              label(for='sc-privilage-manage-roles') Manage Roles
-            .sc-form-group
-              input#sc-privilage-change-settings.sc-checkbox(type='checkbox', name='sc-change-settings')
-              label(for='sc-privilage-change-settings') Change Site Settings
-            .sc-form-group
-              input#sc-privilage-import-export.sc-checkbox(type='checkbox', name='sc-import-export')
-              label(for='sc-privilage-import-export') Import/Export Data
-            .sc-form-group
-              input#sc-privilage-delete-site.sc-checkbox(type='checkbox', name='sc-delete-site')
-              label(for='sc-privilage-delete-site') Delete Site
-            .sc-form-group
-              input#sc-privilage-all.sc-checkbox(type='checkbox', name='sc-all')
-              label(for='sc-privilage-all') All Privilages
-      h3 Users
-      #sc-form-group-user-search.sc-form-group
-        input#sc-user-search.sc-search.sc-with-icon(type='search', name='sc-user-search', placeholder='Filter Users')
-        label(for='sc-user-search')
-      #sc-users
-        .sc-panel
-          .sc-panel-head
-            .sc-panel-title.sc-6
-              img.sc-panel-image-thumbnail(src='')
-              span.sc-user-name Jon Paul
-            .sc-panel-righthand.sc-user-righthand.sc-panel-toggle.sc-6
-              | Level 5
-              i.fa.fa-caret-right.sc-panel-toggle-caret
-          .sc-panel-body
-            form
-              .sc-user-info
-                | Info:
-              .sc-form-group
-                input#sc-user-name-1.sc-input(type='text', placeholder='Jon Paul')
-              .sc-form-group
-                input#sc-user-email-1.sc-input(type='text', placeholder='soandso@gmail.com')
-              .sc-user-info
-                | Password Change:
-              .sc-form-group
-                input#sc-user-password-1-1.sc-input(type='password', name='sc-user-password-1-1', placeholder='New Password')
-              .sc-form-group
-                input#sc-user-password-1-2.sc-input(type='password', name='sc-user-password-1-2', placeholder='New Password Repeat')
-              .sc-user-info
-                span.sc-user-role.sc-3
-                  .sc-user-info Access:
-                  select#sc-user-role-1(name='sc-user-role')
-                    option(value='level1') Level 1
-                    option(value='level2') Level 2
-                    option(value='level3') Level 3
-                    option(value='level4') Level 4
-                    option(value='level5') Level 5
-                    option(value='super') Super
-                span.sc-3
-                  .sc-user-info Gravatar: 
-                  span.sc-user-info.sc-user-gravatar
-                    img(src='')
-                    button.sc-user-gravatar-choose Choose
-                span.sc-user-active.sc-3
-                  .sc-user-info Active: 
-                  span.sc-user-info
-                    button.fa.fa-toggle-on.sc-toggle-active.sc-button
-                span.sc-user-last-logged-in.sc-3
-                  .sc-user-info Last logged in:
-                  .sc-user-info-date Oct 14, 2014 7:23am
-                .sc-align-right.sc-save-delete-controls
-                  button.sc-email-preferences Email Preferences
-                  button.sc-delete-user Delete
-                  input.sc-save-user(type='submit', value='Save')
-          //
-             .sc-body 
-        //
-           .sc-panel 
-      //
-         #sc-users 
-      script(src='http://cdn.jsdelivr.net/flexgrid/1.5.2/flexgrid.min.js')
-      script(src='SimpleCMS.js')
+            span.sc-3
+              .sc-user-info Gravatar: 
+              span.sc-user-info.sc-user-gravatar
+                img(src='')
+                button.sc-user-gravatar-choose Choose
+            span.sc-user-active.sc-3
+              .sc-user-info Active: 
+              span.sc-user-info
+                button.fa.fa-toggle-on.sc-toggle-active.sc-button
+            span.sc-user-last-logged-in.sc-3
+              .sc-user-info Last logged in:
+              .sc-user-info-date Oct 14, 2014 7:23am
+            .sc-align-right.sc-save-delete-controls
+              button.sc-email-preferences Email Preferences
+              button.sc-delete-user Delete
+              input.sc-save-user(type='submit', value='Save')

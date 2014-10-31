@@ -4,19 +4,16 @@ html(ng-app="app")
 		//- meta(name="fragment" content="!")
 		title SecondTheme
 		include ../../cms/templates/sc-links
-		//- FirstTheme Scripts
-		link(rel="stylesheet", href="themes/SecondTheme/css/style.css")
-		script(src="themes/SecondTheme/controllers/main.js")
+		include templates/SecondThemeLinks
 	body(ng-controller="AppCtrl")
-		//- include ../../cms/templates/sc-links
-		h1 Second Theme
-		h2 {{page.title}}
-		p.
-			{{page.content}}
+		include ../../cms/templates/sc-headbar
+		nav
+			ul
+				li
+					a(href="/") Home
+				li 
+					a(href="/hello-world") Hello World
+				li 
+					a(href="/about") about
+		div(ng-view)
 
-		hr 
-		h3 Comments
-		div.comment(ng-repeat="comment in comments")
-			p {{comment.author}} on {{comment.date | date: 'MMM d, y h:mm a'}} 
-			p {{comment.content}}
-		//- div(ng-view)

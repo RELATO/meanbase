@@ -17,6 +17,9 @@ module.exports = function(Schema, models, validate, mongoose) {
 		gravatar: {
 			type: String
 		},
+		url: {
+			type: String,
+		},
 		email: {
 			type: String,
 			validate: validate.email

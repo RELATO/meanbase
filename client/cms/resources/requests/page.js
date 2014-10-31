@@ -1,10 +1,10 @@
-app.service('page', ['$http', function($http) {
+angular.module('crudApp').service('page', ['$http', function($http) {
 	function Requests() {
 		this.create = function(data, callback) {
 			$http.post('/server/pages', data).success(function(data) {
 				callback(data);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
@@ -12,7 +12,7 @@ app.service('page', ['$http', function($http) {
 			$http.get('/server'+url).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
@@ -20,7 +20,7 @@ app.service('page', ['$http', function($http) {
 			$http.get('/server/pages', {params: paramaters}).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
@@ -28,7 +28,7 @@ app.service('page', ['$http', function($http) {
 			$http.get('/server/pages').success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
@@ -36,7 +36,7 @@ app.service('page', ['$http', function($http) {
 			$http.put('/server'+url, data).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
@@ -44,7 +44,7 @@ app.service('page', ['$http', function($http) {
 			$http.put('/server/pages', data).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
@@ -55,7 +55,7 @@ app.service('page', ['$http', function($http) {
 				$http.put('/server/pages', data).success(function(response) {
 					callback(response);
 				}).error(function(error) {
-					console.log(error);
+					callback(error);
 				});
 			}
 		};
@@ -64,7 +64,7 @@ app.service('page', ['$http', function($http) {
 			$http.delete('/server'+url).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
@@ -72,7 +72,7 @@ app.service('page', ['$http', function($http) {
 			$http.delete('/server/pages', data).success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 
@@ -80,7 +80,7 @@ app.service('page', ['$http', function($http) {
 			$http.delete('/server/pages').success(function(response) {
 				callback(response);
 			}).error(function(error) {
-				console.log(error);
+				callback(error);
 			});
 		};
 	}

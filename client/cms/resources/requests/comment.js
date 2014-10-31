@@ -1,4 +1,4 @@
-app.service('comment', ['$http', function($http) {
+angular.module('crudApp').service('comment', ['$http', function($http) {
 	function Requests() {
 		this.create = function(url, data, callback) {
 			$http.post('/server/' + url + '/comment', data).success(function(data) {

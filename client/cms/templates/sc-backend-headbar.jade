@@ -1,0 +1,24 @@
+//SimpleCMS Head Tool Bar 
+#head-tool-bar
+  #SimpleCMS
+    a(href='/' target="_self") Back to Site
+  a(href='/cms/settings')
+    #sc-backend-settings.sc-tools.fa-gear
+  a(href='/cms/comments')
+    #sc-comments.sc-tools.fa-comments
+  a(href='/cms/users')
+    #sc-users.sc-tools.fa-users
+  a(href='/cms/media')
+    #sc-media.sc-tools.fa-camera
+  a(href='/cms/plugins')
+    #sc-plugins.sc-tools.fa-plug
+  a(href='/cms/analytics')
+    #sc-analytics.sc-tools.fa-bar-chart
+  #sc-login-info.sc-has-dropdown
+    .role Admin
+    .name Jon Paul
+    .sc-dropdown-right.sc-hidden
+      ul
+        li Log out
+        li
+          a(href='/cms/users') Settings

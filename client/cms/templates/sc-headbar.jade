@@ -2,17 +2,8 @@
 #head-tool-bar
   #SimpleCMS
     a(href='/cms' target="_self") SimpleCMS
-  #sc-new-template.sc-tools.fa-plus-circle.sc-has-dropdown
+  #sc-page-settings.sc-tools.fa-gear.sc-has-dropdown
     .sc-dropdown.sc-hidden
-      ul
-        li page
-        li post
-        li product
-  #sc-editMode.sc-tools.fa-edit
-  #sc-cancel.sc-tools.fa-times-circle.sc-hidden
-  #sc-trash.sc-tools.fa-trash.sc-hidden
-  #sc-page-settings.sc-tools.fa-gear.sc-has-dropdown.sc-hidden
-    .sc-dropdown-right.sc-hidden
       .sc-6
         .form-group
           label Browser Tab Title
@@ -60,6 +51,15 @@
           | Status: Draft
           span.sc-calendar.fa-calendar(title="Latest Revision: {{page.updated}}")
         input#sc-publish-btn(type='submit', value='Publish Now')
+  #sc-new-template.sc-tools.fa-plus-circle.sc-has-dropdown
+    .sc-dropdown.sc-hidden
+      ul
+        li page
+        li post
+        li product
+  #sc-editMode.sc-tools.fa-edit
+  #sc-cancel.sc-tools.fa-times-circle.sc-hidden
+  #sc-trash.sc-tools.fa-trash.sc-hidden
   #sc-login-info.sc-has-dropdown
     .role Admin
     .name Jon Paul

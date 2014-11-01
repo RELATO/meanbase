@@ -1,6 +1,6 @@
 module.exports = function(app, mongoose, models) {
 	// Page: Create Read Update Delete
-	app.delete('/server', function(req, res) {
+	app.delete('/server/all', function(req, res) {
 		mongoose.model('Page').remove(function(error) {
 			if(error) {
 				res.send(error);

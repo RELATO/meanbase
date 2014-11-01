@@ -1,4 +1,4 @@
-app.controller('pageCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD', 'resolveData', function($scope, $rootScope, $http, $location, CRUD, resolveData) {
+app.controller('pageCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD', 'resolveData', '$sanitize', function($scope, $rootScope, $http, $location, CRUD, resolveData, $sanitize) {
 
 	$rootScope.page = resolveData.data;
 
@@ -7,6 +7,14 @@ app.controller('pageCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD'
 	});
 	$scope.templateUrl = function() {
 		return 'themes/SecondTheme/templates/' + resolveData.data.template;
+	}
+
+	$scope.getClass = function(path) {
+	    if ($location.path() == path) {
+	      return "active"
+	    } else {
+	      return ""
+	    }
 	}
 
 }]);

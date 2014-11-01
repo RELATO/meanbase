@@ -26,6 +26,7 @@ dark green: 27AE60;
 	display: block;
 	padding: 0.8em;
 	background-color: #ECF0F1;
+	border-radius: 3px;
 	margin: 3px;
 	text-decoration: none;
 	color: inherit;
@@ -136,18 +137,17 @@ dark green: 27AE60;
 	background-color: #34495e;
 	color: white;
 	padding: 0.75em;
+	z-index: 10;
 	-webkit-transition: all 1s ease-in-out;
   	-moz-transition: all 1s ease-in-out;
   	-o-transition: all 1s ease-in-out;
   	transition: all 1s ease-in-out;
 }
 
-#sc-page-settings .sc-dropdown-right {
+#sc-page-settings .sc-dropdown {
 	width: 480px;
 	text-align: left;
 	z-index: 12;
-	right: auto;
-	left: 0
 }
 
 .sc-dropdown-right {
@@ -156,9 +156,7 @@ dark green: 27AE60;
 	text-align: center;
 }
 
-.sc-dropdown-right .sc-6 {
-	display: inline-block;
-	vertical-align: top;
+.sc-dropdown .sc-6 {
 	padding: 0.5em;
 	margin: 0;
 	box-sizing: border-box;
@@ -300,6 +298,8 @@ dark green: 27AE60;
 }
 
 .sc-6 {
+	display: inline-block;
+	vertical-align: top;
 	width: 50%;
 }
 
@@ -674,7 +674,7 @@ button.sc-delete-user:hover {
 		width: 100%;
 	}
 
-	#sc-page-settings .sc-dropdown-right {
+	#sc-page-settings .sc-dropdown {
 		width: 300px;
 	}
 }

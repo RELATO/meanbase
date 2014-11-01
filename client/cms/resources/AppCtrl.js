@@ -15,7 +15,6 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 
 			$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
 			$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
-			$('#sc-page-settings').toggleClass('sc-hidden');
 		} else { //Save Changes
 			$scope.inEditMode = false;
 
@@ -31,7 +30,6 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 			    CKEDITOR.instances[i].destroy();
 			}
 
-			// var tabTitle = $('#sc-browser-tab-title').value;
 			var finalDocument = {
 				title: title,
 				content: content,
@@ -40,8 +38,6 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 				description: document.getElementById('sc-page-description').value
 			}
 
-			// console.log(contentAreas, title);
-			// $push: {content: contentAreas},
 			CRUD.page.updateOne($location.url(), finalDocument, function(response) {
 				console.log(response);
 			});
@@ -49,8 +45,6 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 			jQuery('.sc-editable').removeAttr('contenteditable');
 			$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
 			$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
-			$('#sc-page-settings').toggleClass('sc-hidden');
-			// 
 		}
 	});
 
@@ -65,7 +59,6 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 			jQuery('.sc-editable').removeAttr('contenteditable');
 			$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
 			$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
-			$('#sc-page-settings').toggleClass('sc-hidden');
 		}
 	});
 
@@ -92,9 +85,13 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 
 	// Delete by Url
 	$('#sc-trash').click(function(e){
-		CRUD.page.deleteOne($location.url(), function(response) {
-			console.log(response);
-			$location.url('/');
-		});
+		if(confirm('Are use sure you want to delete the page at ' + $location.url())) {
+			CRUD.page.deleteOne($location.url(), function(response) {
+				$location.url('/');
+				$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
+				$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
+				$scope.inEditMode = false;
+			});
+		}
 	});
 }]);

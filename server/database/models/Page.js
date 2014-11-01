@@ -20,7 +20,6 @@ module.exports = function(Schema, models, validate, mongoose) {
 			type: String,
 			unique: true,
 			trim: true,
-			validate: validate.url,
 			required: true
 		},
 		tabTitle: {

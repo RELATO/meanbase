@@ -102,4 +102,25 @@ module.exports = function(app, mongoose, models) {
 				response.respond(res, error, foundPage, response.deleteOneAndDependancies, model, mongoose.model('Comment'), 'comments');
 			});
 		});
+
+	// Routes for home page
+	app.route('/server/')
+	.get(function(req, res) {
+		// Find One Page by url
+		model.findOne({url: '/'}, function(error, found) {
+			response.respond(res, error, found, response.findOne);
+		});
+	})
+	.put(function(req, res) {
+		// Update One Page by url
+		model.findOneAndUpdate({url: '/'}, req.body, function(error, found) {
+			response.respond(res, error, found, response.updateOne);
+		});
+	})
+	.delete(function(req, res) {
+		// Delete One Page by url
+		model.findOne({url: '/'}).populate('comments').exec(function(error, foundPage) {
+			response.respond(res, error, foundPage, response.deleteOneAndDependancies, model, mongoose.model('Comment'), 'comments');
+		});
+	});
 };

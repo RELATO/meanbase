@@ -32,11 +32,17 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 			}
 
 			// var tabTitle = $('#sc-browser-tab-title').value;
-			// console.log($('#sc-browser-tab-title').value);
+			var finalDocument = {
+				title: title,
+				content: content,
+				tabTitle: document.getElementById('sc-browser-tab-title').value,
+				url: document.getElementById('sc-url-link-title').value,
+				description: document.getElementById('sc-page-description').value
+			}
 
 			// console.log(contentAreas, title);
 			// $push: {content: contentAreas},
-			CRUD.page.updateOne($location.url(), {title: title, content: content, tabTitle: tabTitle}, function(response) {
+			CRUD.page.updateOne($location.url(), finalDocument, function(response) {
 				console.log(response);
 			});
 
@@ -65,22 +71,22 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 
 	// Reject Changes
 	$('#sc-new-template li').click(function(e){
-		console.log($(e.target).text());
+		var url = prompt('url (without beginning slash) Ex: about');
 		var template = {
 	        "author": "jpm",
 	        "editability": "Level 3",
-	        "url": "page-template",
-	        "tabTitle": "Page Template",
+	        "url": url,
+	        "tabTitle": url,
 	        "template": $(e.target).text(),
-	        "title": "Title",
-	        "summary": "",
-	        "description": "",
+	        "title": url + " Title",
+	        "summary": url,
+	        "description": url,
 	        "visibility": "Level 3"
 		};
 
 		CRUD.page.create(template, function(response) {
 			console.log(response);
-			$location.url('/page-template');
+			$location.url('/' + template.url);
 		});
 	});
 

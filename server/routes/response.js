@@ -115,8 +115,8 @@ module.exports = function(type) {
 							res.send(error);
 						} else {
 							// Delete the Page itself
-							model.remove(found, function(error, foundDependancies) {
-								res.send("Deleted that document and all it's dependancies.");
+							model.remove({_id: found._id}, function(error, found) {
+								res.send("Deleted " + found + " document and all it's dependancies.");
 							});
 						}
 					});

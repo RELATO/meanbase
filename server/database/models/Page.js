@@ -43,6 +43,10 @@ module.exports = function(Schema, models, validate, mongoose) {
 		comments: [{type:Schema.ObjectId, ref: 'Comment'}], 
 		// menuId: {type: Schema.ObjectId, ref: 'Menu'},
 		meta: Object,
+		published: {
+			type: Boolean,
+			default: false
+		},
 		likes: Number
 	});
 	return mongoose.model('Page', pageSchema);

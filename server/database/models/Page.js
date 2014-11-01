@@ -36,7 +36,7 @@ module.exports = function(Schema, models, validate, mongoose) {
 			type: String,
 			trim: true
 		},
-		content: [models.contentSchema],
+		content: Object,
 		description: String,
 		summary: String,
 		galleries: [models.gallerySchema],

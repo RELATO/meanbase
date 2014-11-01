@@ -92,7 +92,7 @@ module.exports = function(app, mongoose, models) {
 		})
 		.put(function(req, res) {
 			// Update One Page by url
-			model.findOneAndUpdate({url: req.params.url}, {$set: req.body}, function(error, found) {
+			model.findOneAndUpdate({url: req.params.url}, req.body, function(error, found) {
 				response.respond(res, error, found, response.updateOne);
 			});
 		})

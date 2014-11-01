@@ -22,12 +22,7 @@
 			dropdown.addClass(hiddenClass);
 		});
 
-		// Edit Mode
-		$('#sc-editMode, #sc-cancel').click(function(e){
-			$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
-			$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
-			$('#sc-page-settings').toggleClass('sc-hidden');
-		});
+		
 
 		$('.sc-panel-toggle').click(function(e) {
 			console.log('clicked');

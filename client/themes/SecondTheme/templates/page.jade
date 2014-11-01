@@ -1,5 +1,11 @@
-h1 {{page.title}} - Page Template
+
+h1#page-title.sc-editable {{page.title}}
 h3 Comments
+p#content-1.sc-editable.
+	{{page.content['content-1'] ? page.content['content-1'] : "content-1 prefiller"}}
+p#content-2.sc-editable.
+	{{page.content['content-2'] ? page.content['content-2'] : "content-2 prefiller"}}
 div.comment(ng-repeat="comment in comments")
 	p {{comment.author}} on {{comment.date | date: 'MMM d, y h:mm a'}} 
 	p {{comment.content}}
+

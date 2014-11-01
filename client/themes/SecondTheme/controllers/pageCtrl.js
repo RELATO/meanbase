@@ -1,6 +1,7 @@
-app.controller('mainCtrl', ['$scope', '$http', '$location', 'CRUD', 'resolveData', function($scope, $http, $location, CRUD, resolveData) {
+app.controller('pageCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD', 'resolveData', function($scope, $rootScope, $http, $location, CRUD, resolveData) {
 
-	$scope.page = resolveData.data;
+	$rootScope.page = resolveData.data;
+
 	CRUD.comment.findByUrl($location.url(), function(data) {
 		$scope.comments = data;
 	});

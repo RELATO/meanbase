@@ -86,104 +86,104 @@ module.exports = function(app, mongoose, models) {
 
 	// Get, Edit, and Delete comments by paramaters
 	app.route('/server/comments')
-	.get(function(req, res) {
-		if(req.query.id) {
-			// Find One by ID
-			model.findOne({_id: req.query.id}, function(error, found) {
-				response.respond(res, error, found, response.findOne);
-			});
-		} else if(req.query) {
-			// Find Multiple Comments Matching Query
-			model.find(req.query, function(error, found) {
-				response.respond(res, error, found, response.findBy);	
-			});
-		} else {
-			// Find All Comments
-			model.find(function(error, found) {
-				response.respond(res, error, found, response.findAll);
-			});
-		}
-	})
-	.put(function(req, res) {
-		if(req.body.id) {
-			// Find One Comment by ID and Update
-			model.findOneAndUpdate({_id: req.body.id}, {$set: req.body}, function(error, found) {
-				response.respond(res, error, found, response.updateOne);
-			});
-		} else if(req.body.identifier) {
-			// Update Multiple Comments by identifier {identifier: {}, replacementData: {}}
-			model.update(req.body.identifier, {$set: req.body.replacementData}, {multi: true}, function(error, found) {
-				response.respond(res, error, found, response.updateBy);	
-			});
-		} else {
-			// Update All Comments
-			model.update({}, {$set: req.body}, {multi: true}, function(error, found) {
-				response.respond(res, error, found, response.updateAll);
-			});
-		}
-	})
-	.delete(function(req, res) {
-		console.log('head ', req.body);
-		if(req.body.id) {
-			// Remove One Comment by ID
-			model.findOneAndRemove({_id: req.body.id}, function (error, found) { 
-				response.respond(res, error, found, response.deleteOne);
-			});
-		} else if(!isEmpty(req.body.ids)) {
-			//Delete comments by id array
-			mongoose.model('Page').update({comments: {$in: req.body.ids}}, {$pullAll: {comments: req.body.ids}}, {multi: true}, function(error, found) {
-				if(error) {
-					res.send('error: ', error);
-				} else {
-					if(found) {
-						// Delete those comments
-						model.remove({_id: {$in: req.body.ids}}, function(error, found) {
-							response.respond(res, error, found, response.deleteBy);
-						});
+		.get(function(req, res) {
+			if(req.query.id) {
+				// Find One by ID
+				model.findOne({_id: req.query.id}, function(error, found) {
+					response.respond(res, error, found, response.findOne);
+				});
+			} else if(req.query) {
+				// Find Multiple Comments Matching Query
+				model.find(req.query, function(error, found) {
+					response.respond(res, error, found, response.findBy);	
+				});
+			} else {
+				// Find All Comments
+				model.find(function(error, found) {
+					response.respond(res, error, found, response.findAll);
+				});
+			}
+		})
+		.put(function(req, res) {
+			if(req.body.id) {
+				// Find One Comment by ID and Update
+				model.findOneAndUpdate({_id: req.body.id}, {$set: req.body}, function(error, found) {
+					response.respond(res, error, found, response.updateOne);
+				});
+			} else if(req.body.identifier) {
+				// Update Multiple Comments by identifier {identifier: {}, replacementData: {}}
+				model.update(req.body.identifier, {$set: req.body.replacementData}, {multi: true}, function(error, found) {
+					response.respond(res, error, found, response.updateBy);	
+				});
+			} else {
+				// Update All Comments
+				model.update({}, {$set: req.body}, {multi: true}, function(error, found) {
+					response.respond(res, error, found, response.updateAll);
+				});
+			}
+		})
+		.delete(function(req, res) {
+			console.log('head ', req.body);
+			if(req.body.id) {
+				// Remove One Comment by ID
+				model.findOneAndRemove({_id: req.body.id}, function (error, found) { 
+					response.respond(res, error, found, response.deleteOne);
+				});
+			} else if(!isEmpty(req.body.ids)) {
+				//Delete comments by id array
+				mongoose.model('Page').update({comments: {$in: req.body.ids}}, {$pullAll: {comments: req.body.ids}}, {multi: true}, function(error, found) {
+					if(error) {
+						res.send('error: ', error);
 					} else {
-						res.send('Failed: Could not find comments with those ids.');
-					}
-				}
-			});
-		} else if (!isEmpty(req.body)) {
-			// Delete Multiple Comments
-			model.find(req.body, function(error, found) {
-				if(error) {
-					res.send(error);
-				} else {
-					if(found) {
-						var ids = [];
-						var i = 0;
-						while(i < found.length) {
-							ids.push(found[i].id);
-							i++;
+						if(found) {
+							// Delete those comments
+							model.remove({_id: {$in: req.body.ids}}, function(error, found) {
+								response.respond(res, error, found, response.deleteBy);
+							});
+						} else {
+							res.send('Failed: Could not find comments with those ids.');
 						}
-						mongoose.model('Page').update({comments: {$in: ids}}, {$pullAll: {comments: ids}}, {multi: true}, function(error, found) {
-							if(error) {
-								res.send('error: ', error);
-							} else {
-								if(found) {
-									// Delete those Comments
-									model.remove({_id: {$in: ids}}, function(error, found) {
-										response.respond(res, error, found, response.deleteBy);
-									});
-								} else {
-									res.send('Failed: Could not delete those comments from those pages.');
-								}
-							}
-						});
-					} else {
-						res.send('Could not find any comments with that criteria.');
 					}
-				}
-			});
-		} else {
-			// Delete all Comments
-			model.remove(function(error, found) {
-				response.respond(res, error, found, response.deleteAll);
-			});
-		}
-	});
+				});
+			} else if (!isEmpty(req.body)) {
+				// Delete Multiple Comments
+				model.find(req.body, function(error, found) {
+					if(error) {
+						res.send(error);
+					} else {
+						if(found) {
+							var ids = [];
+							var i = 0;
+							while(i < found.length) {
+								ids.push(found[i].id);
+								i++;
+							}
+							mongoose.model('Page').update({comments: {$in: ids}}, {$pullAll: {comments: ids}}, {multi: true}, function(error, found) {
+								if(error) {
+									res.send('error: ', error);
+								} else {
+									if(found) {
+										// Delete those Comments
+										model.remove({_id: {$in: ids}}, function(error, found) {
+											response.respond(res, error, found, response.deleteBy);
+										});
+									} else {
+										res.send('Failed: Could not delete those comments from those pages.');
+									}
+								}
+							});
+						} else {
+							res.send('Could not find any comments with that criteria.');
+						}
+					}
+				});
+			} else {
+				// Delete all Comments
+				model.remove(function(error, found) {
+					response.respond(res, error, found, response.deleteAll);
+				});
+			}
+		});
 
 	// Get all comments for a particular url
 	app.get('/server/:url/comments', function(req, res) {

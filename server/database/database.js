@@ -28,18 +28,8 @@ module.exports = function(app, mongoose) {
 	models.Extensions = require('./models/Extensions')(Schema, models, validate, mongoose);
 	models.Theme = require('./models/Theme')(Schema, models, validate, mongoose);
 	models.Roles = require('./models/Roles')(Schema, models, validate, mongoose);
-
-	models.Theme.findOne({active: true}, function(error, found) {
-		if(error) {
-			GLOBAL.THEME = 'Default';
-		} else {
-			if(found) {
-				GLOBAL.THEME = found.url;
-			} else {
-				GLOBAL.THEME = 'Default';
-			}
-		}
-	});
+	require('../config/globals')(models);
+	
 	return models;
 };
 

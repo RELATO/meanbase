@@ -4,15 +4,14 @@ module.exports = function(Schema, models, validate, mongoose) {
 		title: String,
 		url: {
 			type: String,
-			trim: true,
-			validate: validate.url,
-			required: true
+			unique: true,
+			trim: true
 		},
 		location: {
 			type: String,
-			trim: true
-		},
-		pageId: {type: Schema.ObjectId, ref: 'Page'}
+			trim: true,
+			default: 'main'
+		}
 	});
 	return mongoose.model('Menu', menuSchema);
 };

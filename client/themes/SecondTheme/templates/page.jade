@@ -8,15 +8,11 @@ nav.navbar.navbar-default(role='navigation')
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='http://getbootstrap.com/examples/navbar/#') Project name
+      a.navbar-brand(href='/') Home
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav
-        li(ng-class="getClass('/')")
-          a(href='/') Home
-        li(ng-class="getClass('/hello-world')")
-          a(href='/hello-world') Hello World
-        li(ng-class="getClass('/about')")
-          a(href='/about') About
+        li(ng-repeat="menu in menus")
+          a(href="{{menu.url}}") {{menu.title}}
 .jumbotron
   h1#page-title.sc-editable {{page.title}}
   p#content-1.sc-editable(ng-bind-html="page.content['content-1'] ? page.content['content-1'] : 'content-1 prefiller'")

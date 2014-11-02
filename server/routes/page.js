@@ -36,9 +36,32 @@ module.exports = function(app, mongoose, models) {
 	app.route('/server/pages')
 		.post(function(req, res) {
 			// Create a new Page
+			if(isEmpty(req.body.url)) {
+				req.body.url = '';
+			} else {
+				req.body.url = req.body.url;
+			}
 			var data = new models.Page(req.body);
 			data.save(function(error, found) {
-				response.respond(res, error, found, response.create);	
+				if(error) {
+					res.send(error);
+				} else {
+					if(found) {
+						var menu = new models.Menu({
+							title: req.body.title,
+							url: req.body.url
+						});
+						menu.save(function(error, found) {
+							if(found) {
+								res.send('Page and menu were created.');
+							} else {
+								res.send('Made the page, but could not make the menu.');
+							}	
+						});
+					} else {
+						res.send('Could not create page.');
+					}	
+				}
 			});
 		})
 		.get(function(req, res) {
@@ -66,7 +89,6 @@ module.exports = function(app, mongoose, models) {
 					response.respond(res, error, found, response.updateAll);
 				});
 			}
-			
 		})
 		.delete(function(req, res) {
 			if(!isEmpty(req.body)) {
@@ -107,19 +129,19 @@ module.exports = function(app, mongoose, models) {
 	app.route('/server/')
 	.get(function(req, res) {
 		// Find One Page by url
-		model.findOne({url: '/'}, function(error, found) {
+		model.findOne({url: ''}, function(error, found) {
 			response.respond(res, error, found, response.findOne);
 		});
 	})
 	.put(function(req, res) {
 		// Update One Page by url
-		model.findOneAndUpdate({url: '/'}, req.body, function(error, found) {
+		model.findOneAndUpdate({url: ''}, req.body, function(error, found) {
 			response.respond(res, error, found, response.updateOne);
 		});
 	})
 	.delete(function(req, res) {
 		// Delete One Page by url
-		model.findOne({url: '/'}).populate('comments').exec(function(error, foundPage) {
+		model.findOne({url: ''}).populate('comments').exec(function(error, foundPage) {
 			response.respond(res, error, foundPage, response.deleteOneAndDependancies, model, mongoose.model('Comment'), 'comments');
 		});
 	});

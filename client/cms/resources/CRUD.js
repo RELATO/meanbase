@@ -1,5 +1,6 @@
-angular.module('crudApp').service('CRUD', ['$http', 'page', 'user', 'role', 'theme', 'comment', 'site', function($http, page, user, role, theme, comment, site) {
+angular.module('crudApp').service('CRUD', ['$http', 'page', 'user', 'role', 'theme', 'comment', 'site', 'menu', function($http, page, user, role, theme, comment, site, menu) {
 	function Requests() {
+		this.menu = menu;
 	  	this.page = page;
 	  	this.user = user;
 	  	this.role = role;

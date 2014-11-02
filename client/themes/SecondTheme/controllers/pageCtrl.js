@@ -5,6 +5,10 @@ app.controller('pageCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD'
 	CRUD.comment.findByUrl($location.url(), function(data) {
 		$scope.comments = data;
 	});
+
+	CRUD.menu.findAll(function(response) {
+		$scope.menus = response;
+	});
 	$scope.templateUrl = function() {
 		return 'themes/SecondTheme/templates/' + resolveData.data.template;
 	}

@@ -177,7 +177,7 @@ module.exports = function(type) {
 						if(found) {
 							res.send('Deleted all ' + type + 's and dependancies.');
 						} else {
-							res.send('Could not find any dependancies to delete.');
+							res.send('Deleted document but could not find any dependancies to delete.');
 						}
 					}
 				});

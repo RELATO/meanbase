@@ -1,25 +1,39 @@
+(function($){
 app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD', 'ckeditorService', function($scope, $rootScope, $http, $location, CRUD, ckeditorService) {
 
 	$scope.inEditMode = false;
 
-	// Edit Mode
-	$('#sc-editMode').click(function(e){
-		if($scope.inEditMode == false) {
+	var Edit = new function() {
+		this.startEditing = function() {
 			$scope.inEditMode = true;
 			$('a').click(function(e) {
-				e.preventDefault();
+				if($scope.inEditMode) {
+					e.preventDefault();
+				}
 			});
 			jQuery('.sc-editable').attr('contenteditable', true);
 			CKEDITOR.inlineAll();
 			for(i in CKEDITOR.instances) {
 				CKEDITOR.instances[i].firstSnapshot = CKEDITOR.instances[i].getData();
 			}	
-
 			$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
 			$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
-		} else { //Save Changes
+		}
+		this.endEditing = function() {
 			$scope.inEditMode = false;
+			jQuery('.sc-editable').removeAttr('contenteditable');
+			$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
+			$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
+		}
+	} 
 
+	
+
+	// Edit Mode
+	$('#sc-editMode').click(function(e){
+		if($scope.inEditMode == false) {
+			Edit.startEditing();
+		} else { //Save Changes
 			var content = $scope.page.content || {}, title = $scope.page.title || {};
 			for(i in CKEDITOR.instances) {
 				var storage = {};
@@ -44,26 +58,26 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 				console.log(response);
 			});
 
-			jQuery('.sc-editable').removeAttr('contenteditable');
-			$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
-			$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
+			$('a.sc-main-list-a').each(function(i) {
+				var url = $(this).attr('href');
+				var title = $(this).text();
+				CRUD.menu.updateBy({url: url}, {title: title});
+			});
+			Edit.endEditing();
 		}
 	});
 
 	// Reject Changes
 	$('#sc-cancel').click(function(e){
 		if($scope.inEditMode) {
-			$scope.inEditMode = false;
 			for(i in CKEDITOR.instances) {
 				CKEDITOR.instances[i].setData(CKEDITOR.instances[i].firstSnapshot);
 			    CKEDITOR.instances[i].destroy();
 			}
-			jQuery('.sc-editable').removeAttr('contenteditable');
-			$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
-			$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
+			Edit.endEditing();
 		}
 	});
-
+	
 	// Reject Changes
 	$('#sc-new-template li').click(function(e){
 		var url = prompt('url (without beginning slash) Ex: about');
@@ -89,10 +103,9 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 		if(confirm('Are use sure you want to delete the page at ' + $location.url())) {
 			CRUD.page.deleteOne($location.url(), function(response) {
 				$location.url('/');
-				$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
-				$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
-				$scope.inEditMode = false;
+				Edit.endEditing();
 			});
 		}
 	});
 }]);
+})(jQuery);

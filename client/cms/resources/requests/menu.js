@@ -26,9 +26,9 @@ angular.module('crudApp').service('menu', ['$http', function($http) {
 
 		this.updateBy = function(identifier, replacementData, callback) {
 			$http.put('/server/menus', {identifier: identifier, replacementData: replacementData}).success(function(response) {
-				callback(response);
+				if(callback) {callback(response);}
 			}).error(function(error) {
-				callback(error);
+				if(callback) {callback(error)};
 			});
 		};
 

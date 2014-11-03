@@ -12,7 +12,7 @@ nav.navbar.navbar-default(role='navigation')
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav
         li(ng-repeat="menu in menus")
-          a(href="{{menu.url ? menu.url : /}}").sc-editable {{menu.title}}
+          a(href="{{menu.url ? menu.url : /}}").sc-editable.sc-main-list-a {{menu.title}}
 .jumbotron
   h1#page-title.sc-editable {{page.title}}
   p#content-1.sc-editable(ng-bind-html="page.content['content-1'] ? page.content['content-1'] : 'content-1 prefiller'")

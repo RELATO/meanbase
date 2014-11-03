@@ -10,9 +10,10 @@ module.exports = function(Schema, models, validate, mongoose) {
 			type: Date, 
 			default: Date.now
 		},
-		state: {
-			type: String,
-			default: "Unapproved"
+		approved: {
+			type: Boolean,
+			default: false,
+			required: true
 		},
 		gravatar: {
 			type: String

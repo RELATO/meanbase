@@ -1,4 +1,4 @@
-module.exports = function(app, mongoose, models) {
+module.exports = function(app, mongoose, models, response) {
 	// Page: Create Read Update Delete
 	app.delete('/server/all', function(req, res) {
 		mongoose.model('Page').remove(function(error) {

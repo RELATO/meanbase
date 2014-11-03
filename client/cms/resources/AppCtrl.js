@@ -6,7 +6,9 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 	$('#sc-editMode').click(function(e){
 		if($scope.inEditMode == false) {
 			$scope.inEditMode = true;
-
+			$('a').click(function(e) {
+				e.preventDefault();
+			});
 			jQuery('.sc-editable').attr('contenteditable', true);
 			CKEDITOR.inlineAll();
 			for(i in CKEDITOR.instances) {
@@ -66,19 +68,18 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 	$('#sc-new-template li').click(function(e){
 		var url = prompt('url (without beginning slash) Ex: about');
 		var template = {
-	        "author": "jpm",
-	        "editability": "Level 3",
-	        "url": url,
-	        "tabTitle": url,
-	        "template": $(e.target).text(),
-	        "title": url + " Title",
-	        "summary": url,
-	        "description": url,
-	        "visibility": "Level 3"
+	        author: "jpm",
+	        editability: "Level 3",
+	        url: url,
+	        tabTitle: url,
+	        template: $(e.target).text(),
+	        title: url + " Title",
+	        summary: url,
+	        description: url,
+	        visibility: "Level 3"
 		};
-
+		$('.sc-dropdown, .sc-dropdown-right').addClass('sc-hidden');
 		CRUD.page.create(template, function(response) {
-			console.log(response);
 			$location.url('/' + template.url);
 		});
 	});

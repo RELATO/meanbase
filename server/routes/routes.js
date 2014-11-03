@@ -1,12 +1,16 @@
 module.exports = function(app, mongoose, models) {
 
-	var commentRoutes = require('./comment')(app, mongoose, models);
-	var siteRoutes = require('./site')(app, mongoose, models);
-	var themeRoutes = require('./theme')(app, mongoose, models);
-	var userRoutes = require('./user')(app, mongoose, models);
-	var roleRoutes = require('./role')(app, mongoose, models);
-	var menuRoutes = require('./menu')(app, mongoose, models);
-	var pageRoutes = require('./page')(app, mongoose, models);
+	var responder = require('./responder');
+	var CRUD = require('./CRUD')(app, mongoose, models, responder());
+
+	var paths = {};
+		paths.commentPaths = require('./paths/comment')(app, mongoose, models, responder(), CRUD());
+		paths.sitePaths = require('./paths/site')(app, mongoose, models, responder(), CRUD());
+		paths.themePaths = require('./paths/theme')(app, mongoose, models, responder(), CRUD());
+		paths.userPaths = require('./paths/user')(app, mongoose, models, responder(), CRUD());
+		paths.rolePaths = require('./paths/role')(app, mongoose, models, responder(), CRUD());
+		paths.menuPaths = require('./paths/menu')(app, mongoose, models, responder(), CRUD());
+		paths.pagePaths = require('./paths/page')(app, mongoose, models, responder(), CRUD());
 
 
 	app.get('/login', function(req, res) {

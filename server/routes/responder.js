@@ -47,7 +47,6 @@ module.exports = function() {
 			}; 
 
 			this.find = function(res, found) {
-				console.log('self.getType() overall', self.getType());
 				if(found) {
 					res.setHeader('Content-Type', 'application/json');
 					res.send(JSON.stringify(found));

@@ -13,6 +13,12 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 
 	// Get, Edit, and Delete comments by paramaters
 	app.route('/server/comments')
+		.post(function(req, res) {
+			req.params.url = req.body.url;
+			req.body.url = null;
+			var data = new models.Comment(req.body);
+			CRUD.createAndLink(req, res, data, req.params, 'comments', mongoose.model('Page'));
+		})
 		.get(function(req, res) {
 			CRUD.find(req, res);
 		})

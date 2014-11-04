@@ -4,6 +4,7 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 	responder.setType('page');
 
 	function deletePageCommentsMenus(req, res) {
+		console.log('req.query', req.query);
 		CRUD.deleteAndDependancies(req, res, 'comments', mongoose.model('Comment'), function(res, error, found, callbackParams) {
 			var i = 0, urls = [];
 			while(i < callbackParams.length) {
@@ -18,10 +19,9 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 
 	app.route('/server/pages')
 		.post(function(req, res) {
+			if(req.body.url.charAt(0) != '/') {req.body.url = '/'+req.body.url;}
 			var newDocument = new models.Page(req.body);
-
 			CRUD.create(req, res, newDocument, function() {
-				if(req.body.url == '') req.body.url = '/';
 				var newDocument = new models.Menu({
 					title: req.body.title,
 					url: req.body.url
@@ -31,7 +31,8 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 			});
 		})
 		.get(function(req, res) {
-			CRUD.find(req, res);
+			var populateQuery = [{path: 'comments'}];
+			CRUD.find(req, res, populateQuery);
 		})
 		.put(function(req, res) {
 			CRUD.update(req, res);

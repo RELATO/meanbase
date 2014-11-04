@@ -18,7 +18,7 @@ app.config(['$locationProvider', '$httpProvider', '$routeProvider', function($lo
 }]);
 
 function getPage($http, $location) {
-	return $http.get('/server' + $location.url()).success(function(response) {
+	return $http.get('/server/pages', {params: {url: $location.url()}}).success(function(response) {
 		return response.data;
 	}).error(function(error) {
 		return error;

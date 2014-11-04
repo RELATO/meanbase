@@ -1,28 +1,52 @@
 
 //Static navbar 
-nav.navbar.navbar-default(role='navigation')
-  .container-fluid
-    .navbar-header
-      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      a.navbar-brand(href='/') Home
-    #navbar.navbar-collapse.collapse
-      ul.nav.navbar-nav
-        li(ng-repeat="menu in menus")
-          a(href="{{menu.url ? menu.url : /}}").sc-editable.sc-main-list-a {{menu.title}}
-.jumbotron
-  h1#page-title.sc-editable {{page.title}}
-  p#content-1.sc-editable(ng-bind-html="page.content['content-1'] ? page.content['content-1'] : 'content-1 prefiller'")
-  p
-    a.btn.btn-lg.btn-primary(href='/', role='button') View navbar docs »
-.col-lg-4
-  div#content-2.sc-editable(ng-bind-html="page.content['content-2'] ? page.content['content-2'] : 'content-2 prefiller'")
-.col-lg-4
-  div#content-3.sc-editable(ng-bind-html="page.content['content-3'] ? page.content['content-3'] : 'content-3 prefiller'")
-.col-lg-4
-  div#content-4.sc-editable(ng-bind-html="page.content['content-4'] ? page.content['content-4'] : 'content-4 prefiller'")
+.container
+  nav.navbar.navbar-default(role='navigation')
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href='/') Home
+      #navbar.navbar-collapse.collapse
+        ul.nav.navbar-nav
+          li(ng-repeat="menu in menus")
+            a(href="{{menu.url ? menu.url : /}}").sc-editable.sc-main-list-a {{menu.title}}
+  .jumbotron
+    h1#page-title.sc-editable {{page.title}}
+    p#content-1.sc-editable(ng-bind-html="page.content['content-1'] ? page.content['content-1'] : 'content-1 prefiller'")
+    p
+      a.btn.btn-lg.btn-primary(href='/', role='button') View navbar docs »
+  .col-lg-4
+    div#content-2.sc-editable(ng-bind-html="page.content['content-2'] ? page.content['content-2'] : 'content-2 prefiller'")
+  .col-lg-4
+    div#content-3.sc-editable(ng-bind-html="page.content['content-3'] ? page.content['content-3'] : 'content-3 prefiller'")
+  .col-lg-4
+    div#content-4.sc-editable(ng-bind-html="page.content['content-4'] ? page.content['content-4'] : 'content-4 prefiller'")
+  h2 Comments
+  div#comment-wrapper
+    div.comment(ng-repeat="comment in page.comments")
+      h3 {{comment.author}}
+      p on {{comment.date | date: 'MMM d, y h:mm a'}} 
+      p {{comment.content}}
+    div.add-comment
+      h3 Add a comment
+      form(ng-submit="addComment()")
+        .form-group
+          .input-group
+            .input-group-addon Name
+            input(type="text" ng-model="author" placeholder="nickname" id="comment-author").form-control
+        .form-group
+          .input-group
+            .input-group-addon Email
+            input(type="email" ng-model="email" placeholder="email" id="comment-email").form-control
+          p.help-block This will be shown
+        .form-group
+          label(for="comment-content") Message
+          textarea(ng-model="content" placeholder="Message" id="comment-content" rows="3").form-control
+        .form-group
+          button(type="submit").btn.btn-default Add comment
 
 

@@ -1,12 +1,14 @@
-angular.module('crudApp').service('CRUD', ['$http', 'rest', 'user', 'role', 'theme', 'comment', 'site', function($http, rest, user, role, theme, comment, site) {
+angular.module('crudApp', ['ngResource', 'ngRoute']);
+
+angular.module('crudApp').service('CRUD', ['$http', 'rest', function($http, rest) {
 	function Requests() {
 		this.menu = rest('menus');
 	  	this.page = rest('pages');
-	  	this.user = user;
-	  	this.role = role;
-	  	this.theme = theme;
+	  	this.user = rest('users');
+	  	this.role = rest('roles');
+	  	this.theme = rest('themes');
 	  	this.comment = rest('comments');
-	  	this.site = site;
+	  	this.site = rest('site');
 	}
   return new Requests();
 }]);

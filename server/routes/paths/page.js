@@ -17,6 +17,11 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 		});
 	}
 
+	app.get('/server/pages/approved', function(req, res) {
+		var populateQuery = [{path: 'comments', match: {approved: true}}];
+		CRUD.find(req, res, populateQuery);
+	});
+
 	app.route('/server/pages')
 		.post(function(req, res) {
 			if(req.body.url.charAt(0) != '/') {req.body.url = '/'+req.body.url;}

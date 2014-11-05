@@ -31,11 +31,5 @@ module.exports = function(Schema, models, validate, mongoose) {
 	});
 	var model = mongoose.model('Comment', commentsSchema);
 
-	commentsSchema.pre('remove', function(next) {
-	    commentsSchema.remove().exec();
-	    Book.remove({authorId : this._id}).exec();
-	    next();
-	});
-
 	return model;
 };

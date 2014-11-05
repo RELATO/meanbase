@@ -18,17 +18,13 @@ app.controller('pageCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD'
 	    }
 	}
 
-	$scope.author = "JP";
-	$scope.email = "milesjonpaul@gmail.com";
-	$scope.content = "Hello World!";
-
-	$scope.addComment = function() {
+	$scope.addComment = function(commit) {
 		var commit = {
-			author: $scope.author,
+			author: commit.author,
 			ip: '186.136.5.1',
 			date: Date.now(),
-			email: $scope.email,
-			content: $scope.content,
+			email: commit.email,
+			content: commit.content,
 			url: $location.url()
 		};
 		CRUD.comment.create(commit, function(response) {

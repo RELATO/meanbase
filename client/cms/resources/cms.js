@@ -1,4 +1,4 @@
-var cms = angular.module('cms', ['ngResource', 'ngRoute', 'crudApp']);
+var cms = angular.module('cms', ['ngResource', 'ngRoute', 'crudApp', 'angularFileUpload']);
 
 // cms.config(['$locationProvider', '$routeParams', '$routeProvider', function($locationProvider, $routeParams, $routeProvider) {
 //         $locationProvider.html5Mode(true);

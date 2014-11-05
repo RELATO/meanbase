@@ -3,10 +3,8 @@ module.exports = function(Schema, models, validate, mongoose) {
 	var imagesSchema = new Schema({
 		url: {
 			type: String,
-			required: true,
-			validate: validate.url
+			required: true
 		},
-		order: Number,
 		alt: {
 			type: String,
 			trim: true
@@ -20,5 +18,6 @@ module.exports = function(Schema, models, validate, mongoose) {
 			trim: true
 		}
 	});
-	return mongoose.model('Images', imagesSchema);
+	var model = mongoose.model('Image', imagesSchema);
+	return model;
 };

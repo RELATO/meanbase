@@ -101,7 +101,8 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 					console.log(reply.response);
 				} else {
 					console.log(reply.response);
-					$location.url('/' + template.url);
+					window.location.href= template.url;
+					// $location.url('/' + template.url);
 				}
 			});
 		}

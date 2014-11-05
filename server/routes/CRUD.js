@@ -57,31 +57,31 @@ module.exports = function(app, mongoose, models, responder) {
 				});
 			};
 
-			this.find = function(req, res, populateQuery) {
+			this.find = function(req, res, populateQuery, callback) {
 				var identifier = this.getIdentifer(req);
 				if(!isEmpty(populateQuery)) {
 					self.model.find(identifier).populate(populateQuery).exec(function(error, found) {
-						responder.respond(res, error, found, responder.find);	
+						responder.respond(res, error, found, responder.find, callback);	
 					});
 				} else {
 					self.model.find(identifier, function(error, found) {
-						responder.respond(res, error, found, responder.find);	
+						responder.respond(res, error, found, responder.find, callback);	
 					});
 				}
 			};
 
-			this.update = function(req, res) {
+			this.update = function(req, res, callback) {
 				var identifier = this.getIdentifer(req);
 				self.model.update(identifier, req.body, {multi: true}, function(error, found) {
-					responder.respond(res, error, found, responder.update);	
+					responder.respond(res, error, found, responder.update, callback);	
 				});
 			};
 
-			this.delete = function(req, res) {
+			this.delete = function(req, res, callback) {
 				var identifier = this.getIdentifer(req);
 				console.log('delete identifier', identifier);
 				self.model.remove(identifier, function(error, found) {
-					responder.respond(res, error, found, responder.delete);
+					responder.respond(res, error, found, responder.delete, callback);
 				});
 			};
 

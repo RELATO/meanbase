@@ -1,2 +1,94 @@
 #sc-backend-wrapper
-    h1 Media
+	.container
+		.a-12
+			h1.page-header
+				| Media {{hello}}
+			div.sc-file-upload(ng-controller="uploadCTRL" nv-file-drop uploader="uploader" filters="queueLimit, customFilter")
+				h3 Upload Files
+				div.sc-file-drop-zone(nv-file-over uploader="uploader") Drop files here
+				.a-6
+					.form-group
+						input(type='file' name='image[]' nv-file-select multiple uploader="uploader")
+						p.help-text Upload a multiple files.
+				.a-6.a-right
+					p Queue length: {{ uploader.queue.length }}
+				div.sc-upload-que
+					table.table
+						thead
+							tr
+								th(width="50%") Name
+								th Size
+								th Progress
+								th Status
+								th Actions
+						tbody
+							tr(ng-repeat="file in uploader.queue")
+								td
+									strong
+										{{file.file.name}}
+								td(nowrap)
+									{{file.file.size/1024/1024|number:2}} MB
+								td
+									.progress-bar(role="progress-bar" ng-style="{ 'width': file.progress + '%' }")
+
+								td.text-center
+									span(ng-show="file.isSuccess")
+										i.glyphicon.glyphicon-ok
+									span(ng-show="file.isCancel")
+										i.glyphicon.glyphicon-ban-circle
+									span(ng-show="file.isError")
+										i.glyphicon.glyphicon-remove
+								td(nowrap)
+									button.btn.btn-success.btn-xs(type='button', ng-click='file.upload()', ng-disabled='file.isReady || file.isUploading || file.isSuccess')
+										span.glyphicon.glyphicon-upload
+										| Upload
+									button.btn.btn-warning.btn-xs(type='button', ng-click='file.cancel()', ng-disabled='!file.isUploading')
+										span.glyphicon.glyphicon-ban-circle
+										| Cancel
+									button.btn.btn-danger.btn-xs(type='button', ng-click='file.remove()')
+										span.glyphicon.glyphicon-trash
+										| Remove
+
+					div
+						| Queue Progress
+						.progress
+							.progress-bar(role="progressbar" ng-style="{ 'width': uploader.progress + '%' }")
+						button.button.btn.btn-success.btn-s(ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length")
+							span.glyphicon.glyphicon-upload
+							|  Upload All
+						button.btn.btn-warning.btn-s(type='button', ng-click='uploader.cancelAll()', ng-disabled='!uploader.isUploading')
+							span.glyphicon.glyphicon-ban-circle
+							|  Cancel all
+						button.btn.btn-danger.btn-s(type='button', ng-click='uploader.clearQueue()', ng-disabled='!uploader.queue.length')
+							span.glyphicon.glyphicon-trash
+							|  Remove all
+
+		.a-4.m-6.c-12(ng-repeat="image in images")
+			.sc-media-item
+				img.img-responsive(ng-src="../../images/{{image.url}}" alt='{{image.alt}}')
+				p.h4 Title
+					{{image.title}}
+				p.h4 Alt
+					| {{image.alt}}
+				button.btn.btn-danger(ng-click="deleteImage(image, $index)") Delete
+				button.btn.btn-warning(ng-click="") Edit
+		hr
+		.text-center
+			.a-12
+				ul.pagination
+					li
+						a(href='#') «
+					li.active
+						a(href='#') 1
+					li
+						a(href='#') 2
+					li
+						a(href='#') 3
+					li
+						a(href='#') 4
+					li
+						a(href='#') 5
+					li
+						a(href='#') »
+		hr
+

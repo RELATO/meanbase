@@ -4,6 +4,7 @@ var express = require('express'),
 	jade = require('jade'),
 	prerender = require('prerender-node'),
 	bodyParser = require('body-parser'),
+	multer  = require('multer'),
 	logger = require('morgan'),
 	cookieParser = require('cookie-parser'),
 	session = require('express-session'),
@@ -22,6 +23,12 @@ module.exports = function(app) {
 	app.use(bodyParser());
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(bodyParser.json());
+	app.use(multer({ 
+		dest: './client/images/', 
+		rename: function (fieldname, filename) {
+  			return filename + '-' + Date.now()
+		}
+	}));
 	app.use(prerender);
 	app.use(session({secret: 'Yellow or*&ange bRown_189'}));
 	app.use(passport.initialize());

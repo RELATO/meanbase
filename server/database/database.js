@@ -19,7 +19,7 @@ module.exports = function(app, mongoose) {
 
 	// Define Models
 	models.Comment = require('./models/Comment')(Schema, models, validate, mongoose);
-	models.Images = require('./models/Images')(Schema, models, validate, mongoose);
+	models.Image = require('./models/Images')(Schema, models, validate, mongoose);
 	models.gallerySchema = require('./models/Gallery')(Schema, models, validate, mongoose);
 	models.contentSchema = require('./models/Content')(Schema, models, validate, mongoose);
 	models.Page = require('./models/Page')(Schema, models, validate, mongoose);

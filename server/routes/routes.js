@@ -6,6 +6,7 @@ module.exports = function(app, mongoose, models) {
 	var paths = {};
 		paths.commentPaths = require('./paths/comment')(app, mongoose, models, responder(), CRUD());
 		paths.sitePaths = require('./paths/site')(app, mongoose, models, responder(), CRUD());
+		paths.imagePaths = require('./paths/image')(app, mongoose, models, responder(), CRUD());
 		paths.themePaths = require('./paths/theme')(app, mongoose, models, responder(), CRUD());
 		paths.userPaths = require('./paths/user')(app, mongoose, models, responder(), CRUD());
 		paths.rolePaths = require('./paths/role')(app, mongoose, models, responder(), CRUD());

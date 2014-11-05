@@ -7,6 +7,7 @@ angular.module('crudApp').service('CRUD', ['$http', 'rest', function($http, rest
 	  	this.user = rest('users');
 	  	this.role = rest('roles');
 	  	this.theme = rest('themes');
+	  	this.image = rest('images');
 	  	this.comment = rest('comments');
 	  	this.site = rest('site');
 	}

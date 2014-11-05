@@ -144,6 +144,10 @@ dark green: 27AE60;
   	transition: all 1s ease-in-out;
 }
 
+#sc-new-template .sc-dropdown {
+	width: 130px;
+}
+
 #sc-page-settings .sc-dropdown {
 	width: 480px;
 	text-align: left;
@@ -660,6 +664,30 @@ a[contenteditable="true"]:focus {
 	outline-offset: 0;
 }
 
+.sc-file-drop-zone {
+	border: dotted 3px lightgray;
+	padding: 3em;
+	color: darkgray;
+}
+
+.sc-file-drop-zone:hover {
+	background-color: #419641;
+	color: white;
+}
+
+.a-6 > .form-group {
+	padding: 1em 0 0;
+	margin-bottom: 0;
+}
+
+/* Bootstrap */
+button.btn {
+	margin-left: 0.5em;
+}
+
+.sc-media-item {
+	margin: 1em;
+}
 
 @media screen and (max-width: 640px) {
 	#sc-users .sc-form-group {

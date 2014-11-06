@@ -11,6 +11,10 @@ module.exports = function(Schema, models, validate, mongoose) {
 			type: String,
 			trim: true,
 			default: 'main'
+		},
+		position: {
+			type: Number,
+			default: 0
 		}
 	});
 	return mongoose.model('Menu', menuSchema);

@@ -35,5 +35,7 @@
 			$(this).toggleClass('fa-toggle-on').toggleClass('fa-toggle-off');
 			
 		});
+
+
 	});
 })(jQuery);

@@ -13,7 +13,7 @@ cms.config(['$locationProvider', '$httpProvider', '$routeProvider', function($lo
 	var templates = '/cms/templates/sc-';
     $routeProvider.when('/cms', {
 		templateUrl: templates + "settings",
-		controller: 'cmsCtrl'
+		controller: 'settingsCtrl'
 	}).when('/cms/users', {
 		templateUrl: templates + 'users',
 		controller: 'usersCtrl'

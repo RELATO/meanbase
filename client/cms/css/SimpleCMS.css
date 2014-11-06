@@ -562,10 +562,6 @@ button.sc-delete-user:hover {
 	height: auto;
 }
 
-.sc-theme-controls {
-	text-align: right;
-}
-
 .sc-theme-delete {
 	background-color: #C0392B;
 }
@@ -580,6 +576,10 @@ button.sc-delete-user:hover {
 
 .sc-theme-activate:hover {
 	background-color: #2ECC71;
+}
+
+.sc-theme {
+	padding: 0.5em;
 }
 
 
@@ -659,9 +659,19 @@ button.sc-delete-user:hover {
 	outline-offset: 6px;
 }
 
+
 a[contenteditable="true"]:hover,
 a[contenteditable="true"]:focus {
 	outline-offset: 0;
+}
+
+.sc-contents-moving a[contenteditable="true"]:hover,
+.sc-contents-moving a[contenteditable="true"]:focus {
+	outline: none;
+}
+
+.sc-currently-moving {
+	outline: 2px solid #2ECC71;
 }
 
 .sc-file-drop-zone {
@@ -673,6 +683,14 @@ a[contenteditable="true"]:focus {
 .sc-file-drop-zone:hover {
 	background-color: #419641;
 	color: white;
+}
+
+.sc-theme-controls {
+	padding-top: 1em;
+}
+
+.sc-active-theme {
+	padding: 1em;
 }
 
 .a-6 > .form-group {
@@ -687,6 +705,16 @@ button.btn {
 
 .sc-media-item {
 	margin: 1em;
+	text-align: center;
+}
+
+.sc-media-item img {
+	max-height: 200px;
+	display: inline-block;
+}
+
+.sortable-ghost {
+	background-color: #2ECC71;
 }
 
 @media screen and (max-width: 640px) {

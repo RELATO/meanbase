@@ -25,6 +25,10 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 			$('#sc-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('sc-light-green');
 			$('#sc-cancel, #sc-trash').toggleClass('sc-hidden');
 		}
+
+		this.sortMenu;
+		this.origionalMenuOrder;
+		this.newMenuOrder;
 	} 
 
 	
@@ -33,6 +37,30 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 	$('#sc-editMode').click(function(e){
 		if($scope.inEditMode == false) {
 			Edit.startEditing();
+			var el = document.getElementById('sortable-head');
+			Edit.sortMenu = new Sortable(el, {
+			    group: "header",
+			    ghostClass: "sortable-ghost",
+			    animation: 150,
+			    store: {
+			    	get: function (sortable) {
+			            Edit.origionalMenuOrder = sortable.toArray();
+			            return Edit.origionalMenuOrder;
+			        },
+			        set: function (sortable) {
+			            Edit.newMenuOrder = sortable.toArray();
+			        }
+			    },
+			    draggable: "li",
+			    onStart: function (e) { 
+			    	// jQuery(e.target).addClass('sc-currently-moving');
+			    	jQuery('#sortable-head').addClass("sc-contents-moving");
+			    },
+			    onUpdate: function (e){
+			        // jQuery(e.target).removeClass('sc-currently-moving');
+			        jQuery('#sortable-head').removeClass("sc-contents-moving");
+			    }
+			});
 		} else { 
 	//Save Edits
 			var content = $scope.page.content || {}, title = $scope.page.title || {};
@@ -59,6 +87,17 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 				console.log(response.response);
 			});
 
+			var i = 0;
+			while(i < Edit.sortMenu.el.children.length) {
+				// jQuery(Edit.sortMenu.el.children[i]).data('id', i);
+				var currentElementUrl = jQuery(Edit.sortMenu.el.children[i]).children('a').attr('href');
+				// console.log(jQuery(Edit.sortMenu.el.children[i]).data('id'));
+				CRUD.menu.update({url: currentElementUrl}, {position: i}, function(response) {
+					console.log(response.response);
+				});
+				i++;
+			}
+
 			$('a.sc-main-list-a').each(function(i) {
 				var url = $(this).attr('href');
 				var title = $(this).text();
@@ -77,6 +116,8 @@ app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD',
 				CKEDITOR.instances[i].setData(CKEDITOR.instances[i].firstSnapshot);
 			    CKEDITOR.instances[i].destroy();
 			}
+			Edit.sortMenu.sort(Edit.origionalMenuOrder);
+			Edit.sortMenu.destroy();
 			Edit.endEditing();
 		}
 	});

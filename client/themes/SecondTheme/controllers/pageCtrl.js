@@ -3,7 +3,7 @@ app.controller('pageCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD'
 	$rootScope.page = resolveData.data[0];
 	
 	CRUD.menu.find({}, function(response) {
-		$scope.menus = response.response;
+		$rootScope.menus = response.response;
 	});
 
 	$scope.templateUrl = function() {

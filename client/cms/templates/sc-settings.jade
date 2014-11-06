@@ -1,34 +1,20 @@
 #sc-backend-wrapper
-    h1 Backend Settings
-    h3 Site Title
-    input#sc-site-title.sc-input(type='text', name='sc-site-title')
-    h3 Tagline
-    input#sc-site-tagline.sc-input(type='text', name='sc-site-tagline')
-    h3 Themes
+    //- h1 Backend Settings
+    //- .form-group
+    //-     label Site Title
+    //-     input(type="text").form-control
+    //- .form-group
+    //-     label Tagline
+    //-     input(type="text").form-control
+    h2 Themes
     #sc-site-theme
-        .sc-theme-option.sc-4
-            .sc-theme-title
-                | Flexgrid for Old Hillsboro
-            .sc-theme-preview
-                img(src='screenshot.png', height='450', width='600')
-            .sc-theme-controls
-                button.sc-button.sc-theme-delete Delete
-                button.sc-button.sc-theme-activate Activate
-        .sc-theme-option.sc-4
-            .sc-theme-title
-                | Flexgrid for Old Hillsboro Unfinished
-            .sc-theme-preview
-            img(src='screenshot.png', height='450', width='600')
-            .sc-theme-controls
-                button.sc-button.sc-theme-delete Delete
-                button.sc-button.sc-theme-activate Activate
-        .sc-theme-option.sc-4
-            .sc-theme-title
-                | Flexgrid for Old Hillsboro Unfinished
-            .sc-theme-preview
-                img(src='screenshot.png', height='450', width='600')
-            .sc-theme-controls
-                button.sc-button.sc-theme-delete Delete
-                button.sc-button.sc-theme-activate Activate
-        h3 Social Sharing Setup
-        button.sc-button.sc-connect-social Connect
+        .d-4.t-6(ng-repeat="theme in themes").sc-theme
+            h4 {{theme.title}} 
+            //- img(src="http://placehold.it/300x200")
+            img(src="/{{theme.preview}}").img-responsive.img-thumbnail
+            .sc-theme-controls.a-left
+                button.btn.btn-danger(ng-click="deleteTheme(theme, $index)") Delete
+                button.btn.btn-success(ng-disabled="theme.active" ng-click="activateTheme(theme, $index)") Activate
+                span(ng-if="theme.active").sc-active-theme Active
+    h3 Social Sharing Setup
+    button.sc-button.sc-connect-social Connect

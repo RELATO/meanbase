@@ -1,42 +1,22 @@
-module.exports = function(app, mongoose, models, response) {
-	// Page: Create Read Update Delete
+module.exports = function(app, mongoose, models, responder, CRUD) {
+
+	CRUD.setModel(mongoose.model('Theme'));
+	responder.setType('theme');
+
 	app.route('/server/themes')
 		.post(function(req, res) {
-			var data = new models.Theme({
-				author: req.body.author,
-				email: req.body.email,
-				title: req.body.title,
-				website: req.body.website,
-				preview: req.body.preview,
-				url: req.body.url
-			});
-			data.save(function(error, found) {
-				if(error) {
-					res.send(error);
-				} else {
-					res.send(found.title + ' was created.');
-				}
-			});
+			var data = new models.Theme(req.body);
+			CRUD.create(req, res, data);
 		})
 		.get(function(req, res) {
-			mongoose.model('Theme').find(function(error, found) {
-				if(found) {
-					res.json(found);
-				} else {
-					res.send('Could not find any Themes.');
-				}
-			});
+			CRUD.find(req, res);
+		})
+		.put(function(req, res) {
+			CRUD.update(req, res);
 		})
 		.delete(function(req, res) {
-			mongoose.model('Theme').remove(function(error) {
-				if(error) {
-					res.send('error');
-				} else {
-					res.send('Deleted all themes in the database.');
-				}
-			});
+			CRUD.delete(req, res);
 		});
-
 
 	app.put('/server/themes/:theme/activate', function(req, res) {
 		mongoose.model('Theme').update({active: true}, {active: false}, function(error) {
@@ -58,42 +38,4 @@ module.exports = function(app, mongoose, models, response) {
 			}
 		});
 	});
-
-	app.route('/server/themes/:theme')
-		.get(function(req, res) {
-			mongoose.model('Theme').findOne({url: req.params.theme}, function(error, found) {
-				if(found) {
-					res.json(found);
-				} else {
-					res.send('Could not find a theme with that url');
-				}
-			});
-		})
-		.put(function(req, res) {
-			mongoose.model('Theme').findOneAndUpdate({url: req.params.theme}, {$set: req.body}, function(error, found) {
-				if (error) {
-				    res.send(error);
-				} else {
-					if(found) {
-						res.send(found.title + ' was updated.');
-					} else {
-						res.send('Could not find a theme with that url to update.');
-					}
-				    
-				}
-			});
-		})
-		.delete(function(req, res) {
-			mongoose.model('Theme').findOneAndRemove({url: req.params.theme}, function (error, found) { 
-				if (error) {
-				    res.send(error);
-				} else {
-					if(found) {
-						res.send(found.title + ' was deleted.');
-					} else {
-						res.send('Could not find a page with that url to delete.');
-					}
-				}
-			});
-		});
 };

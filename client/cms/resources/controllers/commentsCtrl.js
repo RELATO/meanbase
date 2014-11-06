@@ -1,6 +1,6 @@
 cms.controller('commentsCtrl', ['$scope', '$http', '$location', 'CRUD', function($scope, $http, $location, CRUD) {
 
-	CRUD.page.find({}, function(response) {
+	CRUD.page.find({template: 'post'}, function(response) {
 		var pages = response.response;
 		$scope.pages = pages;
 		var i = 0;

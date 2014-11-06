@@ -33,7 +33,7 @@
 						textarea(ng-model="comment.content" placeholder="Message" id="comment-content" rows="3").form-control
 					button.btn.btn-primary(type='submit') Comment
 			hr
-			.media(ng-repeat="comment in page.comments")
+			.well.media(ng-repeat="comment in page.comments")
 				a.pull-left(href='#')
 					img.media-object(src='http://placehold.it/64x64', alt='')
 				.media-body

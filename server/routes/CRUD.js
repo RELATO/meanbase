@@ -70,6 +70,13 @@ module.exports = function(app, mongoose, models, responder) {
 				}
 			};
 
+			this.findAndSort = function(req, res, sortFilter, callback) {
+				var identifier = this.getIdentifer(req);
+				self.model.find(identifier).sort(sortFilter).exec(function(error, found) {
+					responder.respond(res, error, found, responder.find, callback);	
+				});
+			};
+
 			this.update = function(req, res, callback) {
 				var identifier = this.getIdentifer(req);
 				self.model.update(identifier, req.body, {multi: true}, function(error, found) {

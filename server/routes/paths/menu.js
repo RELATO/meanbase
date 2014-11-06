@@ -9,7 +9,8 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 			CRUD.create(req, res, data);
 		})
 		.get(function(req, res) {
-			CRUD.find(req, res);
+			// CRUD.findAndSort(req, res, {location: 1, position: 1});
+			CRUD.findAndSort(req, res, {position: 1});
 		})
 		.put(function(req, res) {
 			CRUD.update(req, res);

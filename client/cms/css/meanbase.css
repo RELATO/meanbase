@@ -550,6 +550,10 @@ button.mb-delete-user:hover {
 	padding: 1em;
 }
 
+.mb-theme-buttons {
+	padding: 1em 0;
+}
+
 .mb-theme-title {
 	text-align: center;
 	font-size: 1.2em;
@@ -579,7 +583,7 @@ button.mb-delete-user:hover {
 }
 
 .mb-theme {
-	padding: 0.5em;
+	padding: 1em;
 }
 
 
@@ -751,6 +755,10 @@ button.btn {
 
 .mb-file-center {
 	margin-left: 90px;
+}
+
+.modal-xl {
+	min-width: 90%;
 }
 
 @media screen and (max-width: 640px) {

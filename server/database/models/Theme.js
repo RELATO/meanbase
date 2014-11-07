@@ -6,7 +6,10 @@ module.exports = function(Schema, models, validate, mongoose) {
 		website: String,
 		title: String,
 		description: String,
-		url: String,
+		url: {
+			type: String,
+			unique: true
+		},
 		preview: String,
 		active: {
 			type: Boolean,

@@ -1,0 +1,12 @@
+doctype html
+html(ng-app="app")
+	head
+		meta(name="fragment" content="!")
+		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+		title Third Theme
+		include ../../cms/templates/mb-links
+		include templates/SecondThemeLinks
+	body(ng-controller="AppCtrl")
+		include ../../cms/templates/mb-headbar
+		div(ng-view)
+

@@ -86,7 +86,6 @@ module.exports = function(app, mongoose, models, responder) {
 
 			this.delete = function(req, res, callback) {
 				var identifier = this.getIdentifer(req);
-				console.log('delete identifier', identifier);
 				self.model.remove(identifier, function(error, found) {
 					responder.respond(res, error, found, responder.delete, callback);
 				});

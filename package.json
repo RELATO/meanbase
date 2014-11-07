@@ -22,6 +22,7 @@
     "cookie-parser": "^1.3.3",
     "express": "^4.10.0",
     "express-session": "^1.9.1",
+    "fsmonitor": "^0.2.4",
     "jade": "^1.7.0",
     "mongodb": "^1.4.19",
     "mongoose": "^3.8.18",

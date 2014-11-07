@@ -681,7 +681,7 @@ a[contenteditable="true"]:focus {
 }
 
 .mb-file-drop-zone:hover {
-	background-color: #419641;
+	background-color: lightgray;
 	color: white;
 }
 
@@ -722,6 +722,35 @@ button.btn {
     transition: all 1s;
 	transform: translate3d(0px, 0px, 0px);
 	z-index: 3;
+}
+
+.mb-p-25 {
+	padding: 0.25em 0;
+}
+
+.mb-p-1 {
+	padding: 1em;
+}
+
+.mb-dark-panel {
+	background-color: #2C3E50;
+	border: 1px solid #2C3E50
+}
+
+.mb-dark-panel .panel-body {
+	background-color: #ECF0F1;
+}
+
+.mb-panel-select {
+	background-color: #27AE60;
+	color: #ECF0F1;
+	border: none;
+	font-size: 1.5em;
+	border-radius: 3px;
+}
+
+.mb-file-center {
+	margin-left: 90px;
 }
 
 @media screen and (max-width: 640px) {

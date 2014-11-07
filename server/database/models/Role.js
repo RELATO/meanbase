@@ -9,70 +9,44 @@ module.exports = function(Schema, models, validate, mongoose) {
 		},
 		permissions: {
 			editContent: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			publishContent: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			deleteContent: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			manageMedia: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			restrictAccess: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			manageExtensions: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			moderateComments: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			manageUsers: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			manageRoles: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			changeSiteSettings: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			importExportData: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			deleteSite: {
-				type: Boolean,
-				required: true,
-				default: false
+				type: Boolean
 			},
 			allPrivilages: {
-				type: Boolean,
-				required: true,
-				default: false
-			},
+				type: Boolean
+			}
 		}
 	});
 	return mongoose.model('Role', roleSchema);

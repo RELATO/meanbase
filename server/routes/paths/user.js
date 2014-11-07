@@ -9,7 +9,8 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 			CRUD.create(req, res, data);
 		})
 		.get(function(req, res) {
-			CRUD.find(req, res);
+			var populateQuery = {path: 'access'};
+			CRUD.find(req, res, populateQuery);
 		})
 		.put(function(req, res) {
 			CRUD.update(req, res);

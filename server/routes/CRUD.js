@@ -31,7 +31,7 @@ module.exports = function(app, mongoose, models, responder) {
 							if(callback)
 								callback();
 							else
-								res.send('Created the ' + responder.type + ' and any dependancies if any.');
+								res.send(found);
 						} else
 							res.send('Could not create the ' + responder.type + '.');
 					}
@@ -134,8 +134,12 @@ module.exports = function(app, mongoose, models, responder) {
 								ids.push(found[i].id);
 								i++;
 							}
-							var dependantObject = {}, dependantObject2 = {};
-							dependantObject[linkField] = {$in: ids};
+							var dependantObject = {}, dependantObject2 = {}, endUpdateQuery = {};
+							if(ids.length > 1) {
+								dependantObject[linkField] = {$in: ids};
+							} else {
+								dependantObject[linkField] = ids.shift();
+							}
 							dependantObject2[linkField] = ids;
 
 							// Unlink from

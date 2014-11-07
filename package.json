@@ -11,6 +11,10 @@
     "MEAN",
     "Stack"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codingfriend1/meanbase.git"
+  }
   "author": "Jon Paul Miles <codingfriend1@gmail.com>",
   "license": "MIT",
   "dependencies": {

@@ -1,0 +1,51 @@
+.container
+	include menu
+	header#myCarousel.carousel.slide(style="height: 300px;")
+		ol.carousel-indicators
+			li.active(data-target='#myCarousel', data-slide-to='0')
+			li(data-target='#myCarousel', data-slide-to='1')
+			li(data-target='#myCarousel', data-slide-to='2')
+		.carousel-inner
+			.item.active
+				.fill(style='background-image: url(\'http://placehold.it/1900x1080&text=Slide One\');')
+				.carousel-caption
+					h2 Caption 1
+			.item
+				.fill(style='background-image: url(\'http://placehold.it/1900x1080&text=Slide Two\');')
+				.carousel-caption
+					h2 Caption 2
+			.item 
+				.fill(style='background-image: url(\'http://placehold.it/1900x1080&text=Slide Three\');')
+				.carousel-caption
+					h2 Caption 3
+		a.left.carousel-control(data-slide='prev')
+			span.icon-prev
+		a.right.carousel-control(data-slide='next')
+			span.icon-next
+	.container
+		.row
+			.col-lg-12
+				h1#page-title.mb-editable {{page.title}}
+				div#content-1.mb-editable(ng-bind-html="page.content['content-1'] ? page.content['content-1'] : 'content-1 prefiller'")
+		hr
+		footer
+			.row
+				.col-lg-12
+					p Copyright © Your Website 2014
+
+
+
+
+	//- .jumbotron
+	//-   h1#page-title.mb-editable {{page.title}}
+	//-   p#content-1.mb-editable(ng-bind-html="page.content['content-1'] ? page.content['content-1'] : 'content-1 prefiller'")
+	//-   p
+	//-     a.btn.btn-lg.btn-primary(href='/', role='button') View navbar docs »
+	//- .col-lg-4
+	//-   div#content-2.mb-editable(ng-bind-html="page.content['content-2'] ? page.content['content-2'] : 'content-2 prefiller'")
+	//- .col-lg-4
+	//-   div#content-3.mb-editable(ng-bind-html="page.content['content-3'] ? page.content['content-3'] : 'content-3 prefiller'")
+	//- .col-lg-4
+	//-   div#content-4.mb-editable(ng-bind-html="page.content['content-4'] ? page.content['content-4'] : 'content-4 prefiller'")
+
+

@@ -3,7 +3,7 @@ var validate = require('./validation')();
 module.exports = function(app, mongoose) {	
 
 	// Connect to meanbase
-	var mongoURL = 'mongodb://localhost/SimpleCMS';
+	var mongoURL = 'mongodb://localhost/meanbase';
 	mongoose.connect(mongoURL);
 	var db = mongoose.connection;
 	var Schema = mongoose.Schema;

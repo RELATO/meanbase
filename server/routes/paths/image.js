@@ -10,11 +10,10 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 			var image = new models.Image({
 				url: req.files.file.name,
 			}); 
-			var allFound = [];
 			CRUD.create(req, res, image, function(response, error, found) {
-				allFound.push(found);
+				res.send(JSON.stringify(found));
 			});
-			res.send(JSON.stringify(allFound));
+			
 		})
 		.get(function(req, res) {
 			res.setHeader('content-type', 'image');

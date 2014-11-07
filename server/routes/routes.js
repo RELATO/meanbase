@@ -19,7 +19,7 @@ module.exports = function(app, mongoose, models) {
 	});
 
 	app.get('/cms', function(req, res) {
-		res.render('cms/templates/SimpleCMS');
+		res.render('cms/templates/meanbase');
 	});
 
 	app.get('/cms/templates/:template', function (req, res) {
@@ -27,7 +27,7 @@ module.exports = function(app, mongoose, models) {
 	});
 
 	app.get('/cms/:url', function(req, res) {
-		res.render('cms/templates/SimpleCMS');
+		res.render('cms/templates/meanbase');
 	});
 
 	app.get('/themes/:theme/templates/:template', function(req, res) {

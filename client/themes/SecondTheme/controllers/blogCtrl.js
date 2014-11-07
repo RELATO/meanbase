@@ -4,7 +4,16 @@ app.controller('blogCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD'
 	// console.log('resolveData',resolveData);
 	
 	CRUD.menu.find({}, function(response) {
-		$scope.menus = response.response;
+		var i = 0;
+		var menus = {};
+		while(i < response.response.length) {
+			if(menus[response.response[i].location] == undefined) {
+				menus[response.response[i].location] = [];
+			}
+			menus[response.response[i].location].push(response.response[i]);
+			i++;
+		}
+		$rootScope.menus = menus;
 	});
 
 	CRUD.page.find({template: 'post'}, function(response) {

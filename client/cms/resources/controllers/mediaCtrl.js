@@ -2,15 +2,15 @@ cms.controller('mediaCtrl', ['$scope', '$http', '$location', 'CRUD', 'FileUpload
 	CRUD.image.find({}, function(response) {
 		if(!response.error) {
 			$scope.images = response.response;
-			console.log($scope.images);
 		}
 	});
 
-	console.log($scope.images);
-
 	$scope.deleteImage = function(image, index) {
-		CRUD.image.delete({url: image.url}, function(response) {
-			console.log(response.response);
+		CRUD.image.delete({url: image.url}, function(response) {            
+            var index = $scope.images.indexOf(image);
+            if (index > -1) {
+                $scope.images.splice(index, 1);
+            }
 		});
 	};
 }]);
@@ -70,6 +70,4 @@ cms.controller('uploadCTRL', ['$scope', 'FileUploader', 'CRUD', function($scope,
         uploader.onCompleteAll = function() {
             console.log('completedAll');
         };
-
-        console.info('uploader', uploader);
 }]);

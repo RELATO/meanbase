@@ -75,5 +75,5 @@ module.exports = function(Schema, models, validate, mongoose) {
 			},
 		}
 	});
-	return mongoose.model('Roles', roleSchema);
+	return mongoose.model('Role', roleSchema);
 };

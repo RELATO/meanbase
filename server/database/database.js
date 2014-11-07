@@ -2,7 +2,7 @@ var validate = require('./validation')();
 
 module.exports = function(app, mongoose) {	
 
-	// Connect to SimpleCMS
+	// Connect to meanbase
 	var mongoURL = 'mongodb://localhost/SimpleCMS';
 	mongoose.connect(mongoURL);
 	var db = mongoose.connection;
@@ -25,9 +25,9 @@ module.exports = function(app, mongoose) {
 	models.Page = require('./models/Page')(Schema, models, validate, mongoose);
 	models.Menu = require('./models/Menu')(Schema, models, validate, mongoose);
 	models.User = require('./models/User')(Schema, models, validate, mongoose);
-	models.Extensions = require('./models/Extensions')(Schema, models, validate, mongoose);
+	models.Extension = require('./models/Extension')(Schema, models, validate, mongoose);
 	models.Theme = require('./models/Theme')(Schema, models, validate, mongoose);
-	models.Roles = require('./models/Roles')(Schema, models, validate, mongoose);
+	models.Role = require('./models/Role')(Schema, models, validate, mongoose);
 	require('../config/globals')(models);
 	
 	return models;

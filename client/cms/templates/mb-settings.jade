@@ -1,4 +1,4 @@
-#sc-backend-wrapper
+#mb-backend-wrapper
     //- h1 Backend Settings
     //- .form-group
     //-     label Site Title
@@ -7,14 +7,14 @@
     //-     label Tagline
     //-     input(type="text").form-control
     h2 Themes
-    #sc-site-theme
-        .d-4.t-6(ng-repeat="theme in themes").sc-theme
+    #mb-site-theme
+        .d-4.t-6(ng-repeat="theme in themes").mb-theme
             h4 {{theme.title}} 
             //- img(src="http://placehold.it/300x200")
             img(src="/{{theme.preview}}").img-responsive.img-thumbnail
-            .sc-theme-controls.a-left
+            .mb-theme-controls.a-left
                 button.btn.btn-danger(ng-click="deleteTheme(theme, $index)") Delete
                 button.btn.btn-success(ng-disabled="theme.active" ng-click="activateTheme(theme, $index)") Activate
-                span(ng-if="theme.active").sc-active-theme Active
+                span(ng-if="theme.active").mb-active-theme Active
     h3 Social Sharing Setup
-    button.sc-button.sc-connect-social Connect
+    button.mb-button.mb-connect-social Connect

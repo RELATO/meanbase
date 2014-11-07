@@ -1,30 +1,30 @@
-//SimpleCMS Head Tool Bar 
+//meanbase Head Tool Bar 
 #head-tool-bar
-	#SimpleCMS
-		a(href='/cms' target="_self") SimpleCMS
-	#sc-page-settings.sc-tools.fa-gear.sc-has-dropdown
-		.sc-dropdown.sc-hidden
-			.sc-6
+	#meanbase
+		a(href='/cms' target="_self") meanbase
+	#mb-page-settings.mb-tools.fa-gear.mb-has-dropdown
+		.mb-dropdown.mb-hidden
+			.mb-6
 				.form-group
 					label Browser Tab Title
-					input#sc-browser-tab-title.sc-input(type='text' name='sc-browser-tab-title' value="{{page.tabTitle}}")
+					input#mb-browser-tab-title.mb-input(type='text' name='mb-browser-tab-title' value="{{page.tabTitle}}")
 				.form-group
 					label URL Link Title
-					input#sc-url-link-title.sc-input(type='text', name='sc-url-link-title' value="{{page.url}}")
+					input#mb-url-link-title.mb-input(type='text', name='mb-url-link-title' value="{{page.url}}")
 				.form-group
 					label Menu Label
-					input#sc-menu-title.sc-input(type='text', name='sc-menu-title')
-			.sc-6
+					input#mb-menu-title.mb-input(type='text', name='mb-menu-title')
+			.mb-6
 				.form-group
 					label Page Description
-					textarea#sc-page-description.sc-input(name='sc-page-description').
+					textarea#mb-page-description.mb-input(name='mb-page-description').
 						{{page.description}}
-				.sc-visibility
+				.mb-visibility
 					div
 						| Who can see?
 						| =
 					form
-						select(name='sc-access-level')
+						select(name='mb-access-level')
 							option(value='everybody') Everybody
 							option(value='members') Members
 							option(value='level1') Level 1
@@ -33,12 +33,12 @@
 							option(value='level4') Level 4
 							option(value='level5') Level 5
 							option(value='super') Super
-				.sc-editability
+				.mb-editability
 					div
 						| Who can edit?
 						| =
 					form
-						select(name='sc-access-level')
+						select(name='mb-access-level')
 							option(value='everybody') Everybody
 							option(value='members') Members
 							option(value='level1') Level 1
@@ -47,26 +47,26 @@
 							option(value='level4') Level 4
 							option(value='level5') Level 5
 							option(value='super') Super
-				.sc-status
+				.mb-status
 					| Status: Draft
-					span.sc-calendar.fa-calendar(title="Latest Revision: {{page.updated}}")
-				input#sc-publish-btn(type='submit', value='Publish Now')
-	#sc-new-template.sc-tools.fa-plus-circle.sc-has-dropdown
-		.sc-dropdown.sc-hidden
+					span.mb-calendar.fa-calendar(title="Latest Revision: {{page.updated}}")
+				input#mb-publish-btn(type='submit', value='Publish Now')
+	#mb-new-template.mb-tools.fa-plus-circle.mb-has-dropdown
+		.mb-dropdown.mb-hidden
 			ul
 				li front-page
 				li page
 				li blog
 				li post
-	#sc-editMode.sc-tools.fa-edit
-	#sc-cancel.sc-tools.fa-times-circle.sc-hidden
-	#sc-trash.sc-tools.fa-trash.sc-hidden
-	#sc-login-info.sc-has-dropdown
+	#mb-editMode.mb-tools.fa-edit
+	#mb-cancel.mb-tools.fa-times-circle.mb-hidden
+	#mb-trash.mb-tools.fa-trash.mb-hidden
+	#mb-login-info.mb-has-dropdown
 		.role Admin
 		.name Jon Paul
-		.sc-dropdown-right.sc-hidden
+		.mb-dropdown-right.mb-hidden
 			ul
 				li Log out
 				li
 					a(href='/cms/users') Settings
-//SimpleCMS End Head Tool Bar 
+//meanbase End Head Tool Bar 

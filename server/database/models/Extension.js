@@ -7,5 +7,5 @@ module.exports = function(Schema, models, validate, mongoose) {
 		name: String,
 		data: Object
 	});
-	return mongoose.model('Extensions', extensionsSchema);
+	return mongoose.model('Extension', extensionsSchema);
 };

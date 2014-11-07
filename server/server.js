@@ -4,8 +4,6 @@ var express = require('express'),
 
 // var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var app = express();
-// var simplecms = __dirname + '/../client/simplecms/templates/';
-
 
 var models = require('./database/database')(app, mongoose);
 var middleware = require('./config/middleware')(app);

@@ -1,5 +1,5 @@
 {
-  "name": "SimpleCMS",
+  "name": "meanbase",
   "version": "1.0.0",
   "description": "An intuitive CMS built for the MEAN stack",
   "main": "server/server.js",

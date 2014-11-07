@@ -1,18 +1,18 @@
-#sc-backend-wrapper
+#mb-backend-wrapper
 	.container
 		.a-12
 			h1.page-header
 				| Media {{hello}}
-			div.sc-file-upload(ng-controller="uploadCTRL" nv-file-drop uploader="uploader" filters="queueLimit, customFilter")
+			div.mb-file-upload(ng-controller="uploadCTRL" nv-file-drop uploader="uploader" filters="queueLimit, customFilter")
 				h3 Upload Files
-				div.sc-file-drop-zone(nv-file-over uploader="uploader") Drop files here
+				div.mb-file-drop-zone(nv-file-over uploader="uploader") Drop files here
 				.a-6
 					.form-group
 						input(type='file' name='image[]' nv-file-select multiple uploader="uploader")
 						p.help-text Upload a multiple files.
 				.a-6.a-right
 					p Queue length: {{ uploader.queue.length }}
-				div.sc-upload-que
+				div.mb-upload-que
 					table.table
 						thead
 							tr
@@ -64,7 +64,7 @@
 							|  Remove all
 
 		.a-4.m-6.c-12(ng-repeat="image in images")
-			.sc-media-item
+			.mb-media-item
 				img.img-responsive(ng-src="../../images/{{image.url}}" alt='{{image.alt}}')
 				p.h4 Title
 					{{image.title}}

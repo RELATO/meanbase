@@ -1,0 +1,112 @@
+#mb-backend-wrapper
+  h1 Users and Privilages
+  hr
+  h3 Roles and Privilages
+  .mb-panel
+    form
+      .mb-panel-head
+        .mb-panel-title.mb-6
+          select(name='mb-roles')
+            option(value='level1') Level 1
+            option(value='level2') Level 2
+            option(value='level3') Level 3
+            option(value='level4') Level 4
+            option(value='level5') Level 5
+            option(value='super') Super
+        .mb-panel-righthand.mb-6
+          button#mb-delete-user-role Delete Role
+          button#mb-new-user-role New Role
+          input(type='submit', value='Save')
+      .mb-panel-body.mb-panel-body-open
+        .mb-form-group
+          input#mb-privilage-edit.mb-checkbox(type='checkbox', name='mb-edit')
+          label(for='mb-privilage-edit') Edit Content
+        .mb-form-group
+          input#mb-privilage-publish.mb-checkbox(type='checkbox', name='mb-publish')
+          label(for='mb-privilage-publish') Publish Content
+        .mb-form-group
+          input#mb-privilage-delete.mb-checkbox(type='checkbox', name='mb-delete')
+          label(for='mb-privilage-delete') Delete Content
+        .mb-form-group
+          input#mb-privilage-manage-media.mb-checkbox(type='checkbox', name='mb-manage-media')
+          label(for='mb-privilage-manage-media') Manage Media
+        .mb-form-group
+          input#mb-privilage-restrict.mb-checkbox(type='checkbox', name='mb-restrict')
+          label(for='mb-privilage-restrict') Restrict Access
+        .mb-form-group
+          input#mb-privilage-manage-extensions.mb-checkbox(type='checkbox', name='mb-manage-extensions')
+          label(for='mb-privilage-manage-extensions') Manage Extensions
+        .mb-form-group
+          input#mb-privilage-moderate-comments.mb-checkbox(type='checkbox', name='mb-moderate-comments')
+          label(for='mb-privilage-moderate-comments') Moderate Comments
+        .mb-form-group
+          input#mb-privilage-manage-users.mb-checkbox(type='checkbox', name='mb-manage-users')
+          label(for='mb-privilage-manage-users') Manage Users
+        .mb-form-group
+          input#mb-privilage-manage-roles.mb-checkbox(type='checkbox', name='mb-manage-roles')
+          label(for='mb-privilage-manage-roles') Manage Roles
+        .mb-form-group
+          input#mb-privilage-change-settings.mb-checkbox(type='checkbox', name='mb-change-settings')
+          label(for='mb-privilage-change-settings') Change Site Settings
+        .mb-form-group
+          input#mb-privilage-import-export.mb-checkbox(type='checkbox', name='mb-import-export')
+          label(for='mb-privilage-import-export') Import/Export Data
+        .mb-form-group
+          input#mb-privilage-delete-site.mb-checkbox(type='checkbox', name='mb-delete-site')
+          label(for='mb-privilage-delete-site') Delete Site
+        .mb-form-group
+          input#mb-privilage-all.mb-checkbox(type='checkbox', name='mb-all')
+          label(for='mb-privilage-all') All Privilages
+  h3 Users
+  #mb-form-group-user-search.mb-form-group
+    input#mb-user-search.mb-search.mb-with-icon(type='search', name='mb-user-search', placeholder='Filter Users')
+    label(for='mb-user-search')
+  #mb-users
+    .mb-panel
+      .mb-panel-head
+        .mb-panel-title.mb-6
+          img.mb-panel-image-thumbnail(src='')
+          span.mb-user-name Jon Paul
+        .mb-panel-righthand.mb-user-righthand.mb-panel-toggle.mb-6
+          | Level 5
+          i.fa.fa-caret-right.mb-panel-toggle-caret
+      .mb-panel-body
+        form
+          .mb-user-info
+            | Info:
+          .mb-form-group
+            input#mb-user-name-1.mb-input(type='text', placeholder='Jon Paul')
+          .mb-form-group
+            input#mb-user-email-1.mb-input(type='text', placeholder='soandso@gmail.com')
+          .mb-user-info
+            | Password Change:
+          .mb-form-group
+            input#mb-user-password-1-1.mb-input(type='password', name='mb-user-password-1-1', placeholder='New Password')
+          .mb-form-group
+            input#mb-user-password-1-2.mb-input(type='password', name='mb-user-password-1-2', placeholder='New Password Repeat')
+          .mb-user-info
+            span.mb-user-role.mb-3
+              .mb-user-info Access:
+              select#mb-user-role-1(name='mb-user-role')
+                option(value='level1') Level 1
+                option(value='level2') Level 2
+                option(value='level3') Level 3
+                option(value='level4') Level 4
+                option(value='level5') Level 5
+                option(value='super') Super
+            span.mb-3
+              .mb-user-info Gravatar: 
+              span.mb-user-info.mb-user-gravatar
+                img(src='')
+                button.mb-user-gravatar-choose Choose
+            span.mb-user-active.mb-3
+              .mb-user-info Active: 
+              span.mb-user-info
+                button.fa.fa-toggle-on.mb-toggle-active.mb-button
+            span.mb-user-last-logged-in.mb-3
+              .mb-user-info Last logged in:
+              .mb-user-info-date Oct 14, 2014 7:23am
+            .mb-align-right.mb-save-delete-controls
+              button.mb-email-preferences Email Preferences
+              button.mb-delete-user Delete
+              input.mb-save-user(type='submit', value='Save')

@@ -15,11 +15,15 @@ link(rel="stylesheet", href="/cms/css/meanbase.css")
 script(src='http://cdn.jsdelivr.net/flexgrid/1.5.2/flexgrid.min.js')
 
 script(src="/cms/resources/CRUD.js")
-script(src="/cms/resources/rest.js")
 script(src="/cms/resources/app.js")
-script(src="http://cdn.ckeditor.com/4.4.2/standard/ckeditor.js")
-//script.
-	//CKEDITOR.disableAutoInline = true;
+//- script(src="http://cdn.ckeditor.com/4.4.2/standard/ckeditor.js")
+script(src="http://cdn.ckeditor.com/4.4.2/full/ckeditor.js")
+//- script(src="/cms/js/ckeditor/ckeditor.js")
+
+script.
+	CKEDITOR.config.filebrowserBrowseUrl = '/server/images/ckeditor';
+	CKEDITOR.config.filebrowserImageUploadUrl = '/server/images';
+
 script(src="/cms/resources/ckeditorService.js")
 script(src="/cms/resources/appCtrl.js")
 script(src="/cms/js/Sortable.min.js")

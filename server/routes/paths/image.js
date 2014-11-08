@@ -42,4 +42,10 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 				}); //CRUD.delete
 			});
 		});
+
+	app.route('/server/images/ckeditor')
+		.get(function(req, res) {
+			console.log('req.query.CKEditorFuncNum', req.query.CKEditorFuncNum);
+			res.render('cms/templates/file-browser', {CKEditorFuncNum: req.query.CKEditorFuncNum});
+		});
 };

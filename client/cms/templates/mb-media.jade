@@ -76,11 +76,12 @@
 		h1.page-header
 			| Media
 	.a-5.a-right.a-bottom
+		button.btn.btn-danger(ng-click="deleteAll()") Delete All Images
 		button.btn.btn-success(data-toggle='modal' data-target='#uploadMedia') Upload Media
 
 	.a-4.m-6.c-12(ng-repeat="image in images")
 		.mb-media-item
-			img.img-responsive(ng-src="../../images/{{image.url}}" alt='{{image.alt}}')
+			img.img-responsive(ng-src="../../{{image.url}}" alt='{{image.alt}}')
 			p.h4 Title
 				{{image.title}}
 			p.h4 Alt

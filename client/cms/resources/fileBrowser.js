@@ -14,7 +14,8 @@ fileBrowser.controller('fileBrowserCtrl', ['$scope', '$http', '$location', 'CRUD
 	});
 
 	$scope.choose = function(image) {
-		var fileUrl = 'images/' + image.url;
+		// var fileUrl = 'images/' + image.url;
+		var fileUrl = image.url;
 		window.opener.CKEDITOR.tools.callFunction($location.search().CKEditorFuncNum, fileUrl, function() {
 			// Get the reference to a dialog window.
 			var element, dialog = this.getDialog();

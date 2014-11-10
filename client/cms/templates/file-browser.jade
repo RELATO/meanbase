@@ -23,7 +23,7 @@ body
 		div(ng-controller="fileBrowserCtrl")
 			.a-4.m-6.c-12(ng-repeat="image in images")
 				.mb-p-1
-					img.img-responsive(ng-src="../../images/{{image.url}}" alt='{{image.alt}}')
+					img.img-responsive(ng-src="../../{{image.url}}" alt='{{image.alt}}')
 					.a-12.a-center
 						.mb-p-25
 						button.btn.btn-success(ng-click="choose(image, $index)") Choose

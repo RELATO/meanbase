@@ -1,22 +1,27 @@
-cms.controller('mediaCtrl', ['$scope', '$http', '$location', 'CRUD', 'FileUploader', function($scope, $http, $location, CRUD, FileUploader) {
+cms.controller('mediaCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD', 'FileUploader', function($scope, $rootScope, $http, $location, CRUD, FileUploader) {
 	CRUD.image.find({}, function(response) {
 		if(!response.error) {
-			$scope.images = response.response;
+			$rootScope.images = response.response;
 		}
 	});
 
 	$scope.deleteImage = function(image, index) {
+        $rootScope.images.splice(index, 1);
 		CRUD.image.delete({url: image.url}, function(response) {            
-            var index = $scope.images.indexOf(image);
-            if (index > -1) {
-                $scope.images.splice(index, 1);
-            }
+            console.log(response.response);
 		});
 	};
+
+    $scope.deleteAll = function() {
+        $rootScope.images = [];
+        CRUD.image.delete({}, function(response) {            
+            console.log(response.response);
+        });
+    };
 }]);
 
 
-cms.controller('uploadCTRL', ['$scope', 'FileUploader', 'CRUD', function($scope, FileUploader, CRUD) {
+cms.controller('uploadCTRL', ['$scope', '$rootScope', 'FileUploader', 'CRUD', function($scope, $rootScope, FileUploader, CRUD) {
         var uploader = $scope.uploader = new FileUploader({
             url: '/server/images'
         });
@@ -68,6 +73,15 @@ cms.controller('uploadCTRL', ['$scope', 'FileUploader', 'CRUD', function($scope,
         	// });
         };
         uploader.onCompleteAll = function() {
-            console.log('completedAll');
+            var allImages;
+            CRUD.image.find({}, function(response) {
+                if(!response.error) {
+                    allImages = response.response;
+                    $rootScope.images = [];
+                    $rootScope.images.push(allImages);
+                    console.log($rootScope.images);
+                }
+            });
+            console.log('Uploaded all images.');
         };
 }]);

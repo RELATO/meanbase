@@ -4,7 +4,6 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 	responder.setType('page');
 
 	function deletePageCommentsMenus(req, res) {
-		console.log('req.query', req.query);
 		CRUD.deleteAndDependancies(req, res, 'comments', mongoose.model('Comment'), function(res, error, found, callbackParams) {
 			var i = 0, urls = [];
 			while(i < callbackParams.length) {

@@ -29,6 +29,9 @@ module.exports = function(app, mongoose) {
 	models.Theme = require('./models/Theme')(Schema, models, validate, mongoose);
 	models.Role = require('./models/Role')(Schema, models, validate, mongoose);
 	require('../config/globals')(models);
+
+	require('./data/addRoles')(Schema, models, mongoose);
+	require('./data/addPage')(Schema, models, mongoose);
 	
 	return models;
 };

@@ -6,7 +6,7 @@ module.exports = function(Schema, models, mongoose) {
 		tabTitle: 'meanbase',
 		template: 'front-page',
 		title: 'meanbase',
-		content: Object,
+		content: {'content-1': 'Meanbase is a CMS built on the MEAN stack and made to be simple and intuitive for users and developers.'},
 		description: 'A demo home page created automatically in meanbase.',
 		summary: 'A demo home page created automatically in meanbase.',
 		published: true,

@@ -46,4 +46,8 @@ cms.controller('commentsCtrl', ['$scope', '$http', '$location', 'CRUD', function
 			}
 		});
 	};
+
+	// $scope.editComment = function(comment, index) {
+	// 	CRUD.
+	// };
 }]);

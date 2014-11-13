@@ -52,5 +52,6 @@
                         p {{comment.date | date: 'MMM d, y h:mm a'}}
                     .a-6.m-12.a-right.a-middle.m-center
                         button.btn.btn-danger(ng-click="deleteComment(comment, $index)") Delete
+                        button.btn.btn-warning(ng-click="editComment(comment, $index)") Edit
                         button.btn.btn-success(ng-hide="comment.approved" ng-click="approveComment(comment, $index)") Approve
                         button.btn.btn-warning(ng-show="comment.approved" ng-click="unapproveComment(comment, $index)") Unapprove

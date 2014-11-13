@@ -49,7 +49,7 @@ module.exports = function(Schema, models, mongoose) {
 		permissions: {
 			editContent: true,
 			publishContent: true,
-			deleteContent: true,
+			deleteContent: false,
 			manageMedia: true,
 			restrictAccess: false,
 			manageExtensions: false,

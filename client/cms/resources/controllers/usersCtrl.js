@@ -34,9 +34,10 @@ cms.controller('usersCtrl', ['$scope', '$http', '$location', 'CRUD', function($s
 		}
 	};
 
-	$scope.updateRole = function() {
+	$scope.updateRole = function(roleForm) {
+		console.log('$scope.selectedRole', $scope.selectedRole);
 		if($scope.selectedRole) {
-			CRUD.role.update({role: $scope.selectedRole}, {permissions: $scope.permissions}, function(response) {
+			CRUD.role.update({_id: $scope.selectedRole}, {permissions: $scope.permissions}, function(response) {
 				console.log(response.response);
 			});
 		}
@@ -52,14 +53,24 @@ cms.controller('usersCtrl', ['$scope', '$http', '$location', 'CRUD', function($s
 	};
 
 	$scope.deleteRole = function() {
-		// if($scope.selectedRole) {
-		// 	var confirmed = confirm('Are you sure you want to delete this role?');
-		// 	if(confirmed) {
-		// 		CRUD.role.delete({role: $scope.selectedRole}, function(response) {
-		// 			console.log(response.response);
-		// 		});
-		// 	}
-		// }
+		if($scope.selectedRole) {
+			var confirmed = confirm('Are you sure you want to delete this role? All users currently using this role will be switched to basic.');
+			if(confirmed) {
+				var basicId;
+				CRUD.role.find({role: 'Basic'}, function(response) {
+					if(!response.error) {
+						basicId = response.response[0]._id;
+						console.log('basicId', basicId);
+						CRUD.user.update({access: $scope.selectedRole}, {access: basicId}, function(response) {
+							console.log('Updated Users');
+							CRUD.role.delete({_id: $scope.selectedRole}, function(response) {
+								console.log(response.response);
+							});
+						});
+					}
+				});
+			}
+		}
 	};
 
 

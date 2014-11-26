@@ -11,7 +11,7 @@
 			a.navbar-brand(href='/') Home
 		#navbar.navbar-collapse.collapse
 			ul#sortable-head.nav.navbar-nav(data-menu="main")
-				li(ng-repeat="menu in menus.main").mb-draggable
+				li(ng-repeat="menu in menus.main" class=".mb-draggable" ng-class="active(menu.url)")
 					a(href="{{menu.url ? menu.url : /}}").mb-editable.mb-main-list-a {{menu.title}}
 				li.drop-down
 					a(data-toggle="dropdown" href="#").dropdown-toggle 

@@ -16,7 +16,7 @@ app.controller('pageCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD'
 	});
 
 	$scope.templateUrl = function() {
-		return 'themes/SecondTheme/templates/' + resolveData.data[0].template;
+		return 'themes/ThirdTheme/templates/' + resolveData.data[0].template;
 	}
 
 	$scope.getClass = function(path) {

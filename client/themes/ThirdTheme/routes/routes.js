@@ -1,5 +1,5 @@
 app.config(['$locationProvider', '$httpProvider', '$routeProvider', function($locationProvider, $httpProvider, $routeProvider) {
-	var templates = 'themes/SecondTheme/templates/';
+	var templates = 'themes/ThirdTheme/templates/';
     $routeProvider.when('/', {
 		templateUrl: templates + "front-page",
 		controller: 'pageCtrl',

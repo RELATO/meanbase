@@ -24,6 +24,9 @@ cms.config(['$locationProvider', '$httpProvider', '$routeProvider', function($lo
 	}).when('/cms/comments', {
 		templateUrl: templates + 'comments',
 		controller: 'commentsCtrl'
+	}).when('/cms/apps', {
+		templateUrl: templates + 'apps',
+		controller: 'appsCtrl'
 	}).when('/cms/:page', {
 		templateUrl: function(params) {
 			return templates + params.page;

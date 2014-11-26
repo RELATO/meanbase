@@ -1,5 +1,5 @@
 (function($){
-	app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD', 'ckeditorService', '$compile', function($scope, $rootScope, $http, $location, CRUD, ckeditorService, $compile) {
+	app.controller('AppCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD', 'ckeditorService', '$compile', 'theme', function($scope, $rootScope, $http, $location, CRUD, ckeditorService, $compile, theme) {
 
 		$scope.inEditMode = false;
 
@@ -190,5 +190,29 @@
 		$('#mb-trash').click(function(e){
 			Edit.deletePage();
 		});
-	}]);
+
+
+		//Theme functions
+		
+		$scope.$on('$locationChangeStart', function() {
+		    theme.getPage().then(function(page) {
+				$scope.page = page;
+				$scope.templateUrl = function() {
+					return 'themes/Default/templates/' + $scope.page.template;
+				}
+			});
+		});
+
+		theme.getMenus().then(function(menus) {
+	    	$scope.menus = menus;
+	  	});
+
+		$scope.active = function(path) {
+			return theme.isActive(path);
+		};
+
+		$scope.defaultTitle = "Heading";
+		$scope.defaultText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, illo libero accusantium maxime nihil beatae sunt asperiores aut odio laboriosam incidunt, omnis, expedita ad consequuntur blanditiis, corporis necessitatibus ex numquam.";
+
+	}]); //controller AppCtrl
 })(jQuery);

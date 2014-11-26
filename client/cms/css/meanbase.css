@@ -786,3 +786,11 @@ img {
 		width: 300px;
 	}
 }
+
+.app {
+	padding: 1em;
+}
+
+.apps-wrapper {
+	padding: 0 3em;
+}

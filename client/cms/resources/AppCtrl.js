@@ -197,8 +197,9 @@
 		$scope.$on('$locationChangeStart', function() {
 		    theme.getPage().then(function(page) {
 				$scope.page = page;
+				$scope.template = page.template;
 				$scope.templateUrl = function() {
-					return 'themes/Default/templates/' + $scope.page.template;
+					return 'themes/' + $scope.theme + '/templates/' + $scope.page.template;
 				}
 			});
 		});

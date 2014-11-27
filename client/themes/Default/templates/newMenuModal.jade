@@ -9,10 +9,10 @@
 			.modal-body
 				.form-group
 					label(for="menu-url") Url
-					input.form-control(id="menu-url" ng-model="newMenuItem.url")
+					input.form-control(id="menu-url" ng-model="newItemInfo.url")
 				.form-group
 					label(for="menu-title") Title
-					input.form-control(id="menu-title" ng-model="newMenuItem.title")
+					input.form-control(id="menu-title" ng-model="newItemInfo.title")
 			.modal-footer
 				button.btn.btn-default(type='button', data-dismiss='modal') Close
-				button.btn.btn-default(ng-click="newMenuItem(newMenuItem)") Save
+				button.btn.btn-default(ng-click="newMenuItem(newItemInfo)") Save

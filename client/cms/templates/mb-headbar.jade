@@ -7,22 +7,18 @@
 			.mb-6
 				.form-group
 					label Browser Tab Title
-					input#mb-browser-tab-title.mb-input(type='text' name='mb-browser-tab-title' value="{{page.tabTitle}}")
+					input#mb-browser-tab-title.mb-input(type='text' name='mb-browser-tab-title' ng-model="page.tabTitle")
 				.form-group
 					label URL Link Title
-					input#mb-url-link-title.mb-input(type='text', name='mb-url-link-title' value="{{page.url}}")
-				.form-group
-					label Menu Label
-					input#mb-menu-title.mb-input(type='text', name='mb-menu-title')
-			.mb-6
+					input#mb-url-link-title.mb-input(type='text', name='mb-url-link-title' ng-model="page.url")
 				.form-group
 					label Page Description
-					textarea#mb-page-description.mb-input(name='mb-page-description').
-						{{page.description}}
+					textarea#mb-page-description.mb-input(name='mb-page-description' ng-model="page.description")
+			.mb-6
 				.mb-visibility
 					div
 						| Who can see?
-						| =
+						| >=
 					form
 						select(name='mb-access-level')
 							option(value='everybody') Everybody
@@ -36,7 +32,7 @@
 				.mb-editability
 					div
 						| Who can edit?
-						| =
+						| >=
 					form
 						select(name='mb-access-level')
 							option(value='everybody') Everybody

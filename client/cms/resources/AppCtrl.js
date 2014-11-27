@@ -32,7 +32,14 @@
 				}, function() {
 					jQuery('.dropdown-menu').removeClass('alwaysOpen');
 				});
-			}
+
+				jQuery('[data-menu]').each(function(index, value) {
+					if(!$scope.menus[jQuery(value).data('menu')]) {
+						jQuery(value).prepend('<li class="mb-draggable mb-placeholder-li"><a href="#">' + jQuery(value).data('menu') + ' placeholder</a></li>');
+					}
+				});
+
+			} //startEditing()
 
 			this.endEditing = function() {
 				$scope.inEditMode = false;
@@ -41,6 +48,7 @@
 				$('#mb-cancel, #mb-trash').toggleClass('mb-hidden');
 				jQuery('.dropdown-menu').removeClass('alwaysOpen');
 				jQuery('.mb-add-menu-item, .mb-edit-menu-item').remove();
+				jQuery(".mb-placeholder-li").remove();
 			}
 
 			this.startSortableMenus = function() {
@@ -229,20 +237,31 @@
 			$scope.currentLocation = jQuery($event.currentTarget).parents('[data-menu]').data('menu');
 		};
 
-		$scope.newMenuItem = function(newMenuItem) {
-			if(newMenuItem) {
-				if(!newMenuItem.url) {
-					newMenuItem.url = "/";
+		$scope.newMenuItem = function(newItemInfo) {
+			console.log($scope.menus);
+			if(newItemInfo) {
+				if(!newItemInfo.url) {
+					newItemInfo.url = "/";
 				}
-				if(!newMenuItem.title) {
-					newMenuItem.title = "Home";
+				if(!newItemInfo.title) {
+					newItemInfo.title = "Home";
 				}
-				newMenuItem.location = $scope.currentLocation;
-				newMenuItem.position = $scope.menus[$scope.currentLocation].length;
-				console.log(newMenuItem);
-				CRUD.menu.create(newMenuItem, function(response) {
+				newItemInfo.location = $scope.currentLocation;
+
+				if(!$scope.menus[$scope.currentLocation]) {
+					newItemInfo.position = 0;
+				} else {
+					newItemInfo.position = $scope.menus[$scope.currentLocation].length
+				}
+
+				if(!$scope.menus[$scope.currentLocation]) {
+					$scope.menus[newItemInfo.location] = [];
+				}
+				$scope.menus[newItemInfo.location][newItemInfo.position] = newItemInfo;
+				CRUD.menu.create(newItemInfo, function(response) {
 					console.log('Created New Menu Item', response);
 				});
+				jQuery('#newMenuItemModal').modal('hide');
 			} else {
 				console.log('Please set a url and title for the menu item.');
 			}
@@ -260,17 +279,22 @@
 		$scope.editMenuItem = function(menuItem) {
 			menuItem.location = jQuery('.mb-item-selected').parents('[data-menu]').data('menu');
 			menuItem.position = jQuery('.mb-item-selected').index();
-			console.log(menuItem);
 			CRUD.menu.update({location: menuItem.location}, menuItem, function(response) {
 				console.log('Updated menu item', response);
 			});
+			$scope.menus[menuItem.location][menuItem.position] = menuItem;
+			jQuery('#editMenuItemModal').modal('hide');
 		};
 
 		$scope.removeMenuItem = function() {
 			var href = jQuery('.mb-item-selected').find('a').attr('href');
+			var location = jQuery('.mb-item-selected').parents('[data-menu]').data('menu');
+			var position = jQuery('.mb-item-selected').index();
 			CRUD.menu.delete({url: href}, function(response) {
 				console.log(response);
 			});
+			$scope.menus[location].splice(position);
+			jQuery('#editMenuItemModal').modal('hide');
 		};
 
 		$scope.defaultTitle = "Heading";

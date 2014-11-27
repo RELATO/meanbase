@@ -26,7 +26,7 @@
 				});
 				
 				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#newMenuItemModal" ng-click="newMenuPosition($event)" class="mb-add-menu-item"><a href="#"> <i class="fa fa-plus fa-lg"></i></a></li><li data-toggle="modal" data-target="#editMenuItemModal" ng-click="selectedMenu()" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
-				
+
 				jQuery('[data-menu] li').hover(function() {
 					jQuery('.dropdown-menu').addClass('alwaysOpen');
 				}, function() {
@@ -40,6 +40,7 @@
 				$('#mb-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('mb-light-green');
 				$('#mb-cancel, #mb-trash').toggleClass('mb-hidden');
 				jQuery('.dropdown-menu').removeClass('alwaysOpen');
+				jQuery('.mb-add-menu-item, .mb-edit-menu-item').remove();
 			}
 
 			this.startSortableMenus = function() {

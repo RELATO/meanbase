@@ -3,6 +3,12 @@ white: ECF0F1
 black: 2C3E50
 green: 2ECC71;
 dark green: 27AE60;
+dark red: C0392B;
+light red: E74C3C;
+dark blue: 2980B9;
+light blue: 3498DB;
+dark orange: F39C12
+light orange: F1C40F
 
 */
 
@@ -721,9 +727,6 @@ button.btn {
 }
 
 #sortable-head li {
-	-webkit-transition: all 1s;
-    transition: all 1s;
-	transform: translate3d(0px, 0px, 0px);
 	z-index: 3;
 }
 
@@ -762,6 +765,30 @@ button.btn {
 
 img {
 	max-width: 100%;
+}
+
+.mb-add-menu-item:hover {
+	outline: 2px solid #2ECC71;
+}
+
+.mb-add-menu-item i {
+	color: #2ECC71;
+}
+
+.mb-edit-menu-item:hover {
+	outline: 2px solid #2ECC71;
+}
+
+.mb-edit-menu-item i {
+	color: #F1C40F;
+}
+
+.mb-edit-menu-item:hover {
+	/*background-color: #F39C12;*/
+}
+
+.alwaysOpen {
+	display: block;
 }
 
 @media screen and (max-width: 640px) {

@@ -19,6 +19,19 @@
 				CKEDITOR.inlineAll();	
 				$('#mb-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('mb-light-green');
 				$('#mb-cancel, #mb-trash').toggleClass('mb-hidden');
+
+				jQuery('.mb-draggable').click(function(e) {
+					jQuery('.mb-draggable').removeClass('mb-item-selected');
+					jQuery(e.currentTarget).addClass('mb-item-selected');
+				});
+				
+				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#newMenuItemModal" ng-click="newMenuPosition($event)" class="mb-add-menu-item"><a href="#"> <i class="fa fa-plus fa-lg"></i></a></li><li data-toggle="modal" data-target="#editMenuItemModal" ng-click="selectedMenu()" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
+				
+				jQuery('[data-menu] li').hover(function() {
+					jQuery('.dropdown-menu').addClass('alwaysOpen');
+				}, function() {
+					jQuery('.dropdown-menu').removeClass('alwaysOpen');
+				});
 			}
 
 			this.endEditing = function() {
@@ -26,7 +39,7 @@
 				jQuery('.mb-editable').removeAttr('contenteditable');
 				$('#mb-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('mb-light-green');
 				$('#mb-cancel, #mb-trash').toggleClass('mb-hidden');
-				jQuery('.dropdown-menu').dropdown('toggle');
+				jQuery('.dropdown-menu').removeClass('alwaysOpen');
 			}
 
 			this.startSortableMenus = function() {
@@ -39,7 +52,7 @@
 					    draggable: ".mb-draggable",
 					    animation: 250,
 					    onStart: function (e) { 
-					    	jQuery('.dropdown-menu').dropdown('toggle');
+					    	// jQuery('.dropdown-menu').dropdown('toggle');
 					    	jQuery(sortableMenus[i]).addClass("mb-contents-moving");
 					    },
 					    onSort: function (e) {
@@ -90,7 +103,7 @@
 			};
 
 			this.saveMenuLabels = function() {
-				$('a.mb-main-list-a').each(function(i) {
+				$('[data-menu] a[href!="#"]').each(function(i) {
 					var url = $(this).attr('href');
 					var title = $(this).text();
 					CRUD.menu.update({url: url}, {title: title}, function(response) {
@@ -197,9 +210,8 @@
 		$scope.$on('$locationChangeStart', function() {
 		    theme.getPage().then(function(page) {
 				$scope.page = page;
-				$scope.template = page.template;
 				$scope.templateUrl = function() {
-					return 'themes/' + $scope.theme + '/templates/' + $scope.page.template;
+					return 'themes/' + $scope.theme + '/templates/' + page.template;
 				}
 			});
 		});
@@ -210,6 +222,54 @@
 
 		$scope.active = function(path) {
 			return theme.isActive(path);
+		};
+
+		$scope.newMenuPosition = function($event) {
+			$scope.currentLocation = jQuery($event.currentTarget).parents('[data-menu]').data('menu');
+		};
+
+		$scope.newMenuItem = function(newMenuItem) {
+			if(newMenuItem) {
+				if(!newMenuItem.url) {
+					newMenuItem.url = "/";
+				}
+				if(!newMenuItem.title) {
+					newMenuItem.title = "Home";
+				}
+				newMenuItem.location = $scope.currentLocation;
+				newMenuItem.position = $scope.menus[$scope.currentLocation].length;
+				console.log(newMenuItem);
+				CRUD.menu.create(newMenuItem, function(response) {
+					console.log('Created New Menu Item', response);
+				});
+			} else {
+				console.log('Please set a url and title for the menu item.');
+			}
+		};
+
+		$scope.selectedMenu = function(location) {
+			var href = jQuery('.mb-item-selected').find('a').attr('href');
+			var title = jQuery('.mb-item-selected').find('a').text();
+			$scope.menuItem = {};
+			$scope.menuItem.url = href;
+			$scope.menuItem.title = title;
+			$scope.menuItem.location = location;
+		};
+
+		$scope.editMenuItem = function(menuItem) {
+			menuItem.location = jQuery('.mb-item-selected').parents('[data-menu]').data('menu');
+			menuItem.position = jQuery('.mb-item-selected').index();
+			console.log(menuItem);
+			CRUD.menu.update({location: menuItem.location}, menuItem, function(response) {
+				console.log('Updated menu item', response);
+			});
+		};
+
+		$scope.removeMenuItem = function() {
+			var href = jQuery('.mb-item-selected').find('a').attr('href');
+			CRUD.menu.delete({url: href}, function(response) {
+				console.log(response);
+			});
 		};
 
 		$scope.defaultTitle = "Heading";

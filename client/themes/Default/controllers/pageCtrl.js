@@ -4,4 +4,8 @@ app.controller('pageCtrl', ['$scope', '$rootScope', '$location', 'CRUD', '$sanit
 		theme.comment(comment);
 	};
 
+	$scope.addMenuItem = function(menu) {
+
+	};
+
 }]);

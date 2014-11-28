@@ -122,7 +122,7 @@
 			};
 
 			this.createNewPage = function(e) {
-				var url = prompt('url');
+				var url = prompt('url (include "/" at beginning)');
 				if(url != null) {
 					var template = {
 				        author: "jpm",
@@ -140,8 +140,11 @@
 							console.log(reply.response);
 						} else {
 							console.log(reply.response);
-							window.location.href= template.url;
-							// $location.url('/' + template.url);
+							// window.location.href= template.url;
+							$location.url(template.url);
+							theme.getMenus().then(function(menus) {
+						    	$scope.menus = menus;
+						  	});
 						}
 					});
 				}
@@ -166,8 +169,11 @@
 							console.log(reply.response);
 						} else {
 							console.log(reply.response);
+							var menu = jQuery('a[href="' + $location.url() + '"]')
+							var location = menu.parents('[data-menu]').data('menu');
+							var position = menu.parents('li').index();
+							$scope.menus[location].splice(position, 1);
 							$location.url('/');
-							this.endEditing();
 						}
 					});
 				}
@@ -211,6 +217,9 @@
 		// Delete by Url
 		$('#mb-trash').click(function(e){
 			Edit.deletePage();
+			Edit.shutdownCKEditor();
+			Edit.shutdownMenuOrdering();
+			Edit.endEditing();
 		});
 
 
@@ -257,10 +266,21 @@
 				if(!$scope.menus[$scope.currentLocation]) {
 					$scope.menus[newItemInfo.location] = [];
 				}
+
 				$scope.menus[newItemInfo.location][newItemInfo.position] = newItemInfo;
 				CRUD.menu.create(newItemInfo, function(response) {
-					console.log('Created New Menu Item', response);
+					$('a').click(function(e) {
+						if($scope.inEditMode) {
+							e.preventDefault();
+						}
+					});	
+					jQuery('.mb-editable').attr('contenteditable', true);
+					jQuery('.mb-draggable').click(function(e) {
+						jQuery('.mb-draggable').removeClass('mb-item-selected');
+						jQuery(e.currentTarget).addClass('mb-item-selected');
+					});
 				});
+
 				jQuery('#newMenuItemModal').modal('hide');
 			} else {
 				console.log('Please set a url and title for the menu item.');
@@ -268,17 +288,16 @@
 		};
 
 		$scope.selectedMenu = function(location) {
-			var href = jQuery('.mb-item-selected').find('a').attr('href');
-			var title = jQuery('.mb-item-selected').find('a').text();
-			$scope.menuItem = {};
-			$scope.menuItem.url = href;
-			$scope.menuItem.title = title;
-			$scope.menuItem.location = location;
+			var url = jQuery('.mb-item-selected').find('a').attr('href');
+			CRUD.menu.find({url: url}, function(response) {
+				$scope.menuItem = response.response[0];
+			});
 		};
 
 		$scope.editMenuItem = function(menuItem) {
 			menuItem.location = jQuery('.mb-item-selected').parents('[data-menu]').data('menu');
 			menuItem.position = jQuery('.mb-item-selected').index();
+			console.log(menuItem);
 			CRUD.menu.update({location: menuItem.location}, menuItem, function(response) {
 				console.log('Updated menu item', response);
 			});
@@ -293,7 +312,7 @@
 			CRUD.menu.delete({url: href}, function(response) {
 				console.log(response);
 			});
-			$scope.menus[location].splice(position);
+			$scope.menus[location].splice(position, 1);
 			jQuery('#editMenuItemModal').modal('hide');
 		};
 

@@ -13,6 +13,14 @@
 				.form-group
 					label(for="menu-title") Title
 					input.form-control(id="menu-title" ng-model="menuItem.title")
+				.form-group
+					label(for="menu-classes") Classes
+					input.form-control(id="menu-classes" ng-model="menuItem.classes")
+				.form-group
+					label(for="menu-target") Target
+					select#menu-target(ng-model="menuItem.target")
+						option(value="_blank") _blank
+						option(value="_self") _self
 			.modal-footer
 				button.btn.btn-danger(ng-click="removeMenuItem()") Delete
 				button.btn.btn-default(type='button', data-dismiss='modal') Close

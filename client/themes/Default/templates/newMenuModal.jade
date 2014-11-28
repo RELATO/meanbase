@@ -13,6 +13,14 @@
 				.form-group
 					label(for="menu-title") Title
 					input.form-control(id="menu-title" ng-model="newItemInfo.title")
+				.form-group
+					label(for="menu-classes") Classes
+					input.form-control(id="menu-classes" ng-model="newItemInfo.classes")
+				.form-group
+					label(for="menu-target") Target
+					select#menu-target(ng-model="newItemInfo.target")
+						option(value="_blank") _blank
+						option(value="_self") _self
 			.modal-footer
 				button.btn.btn-default(type='button', data-dismiss='modal') Close
 				button.btn.btn-default(ng-click="newMenuItem(newItemInfo)") Save

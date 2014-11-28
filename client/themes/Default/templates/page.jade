@@ -7,8 +7,8 @@
 					//- 	li(ng-repeat="menu in menus.sidebar").mb-draggable
 					//- 		a(href="{{menu.url}}").mb-editable {{menu.title}}
 					ul#sidebar.nav.nav-stacked(data-menu="sidebar")
-						li(ng-repeat="menu in menus.sidebar" class="mb-draggable")
-							a(href="{{menu.url ? menu.url : /}}").mb-editable {{menu.title}}
+						li(ng-repeat="menu in menus.sidebar" class="mb-draggable {{menu.classes}}")
+							a(href="{{menu.url ? menu.url : /}}" target="{{menu.target}}").mb-editable {{menu.title}}
 						//- li.mb-draggable
 						//- 	a(href='#sec1') Section 1
 						//- li

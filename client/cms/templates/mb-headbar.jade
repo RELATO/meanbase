@@ -7,45 +7,31 @@
 			.mb-6
 				.form-group
 					label Browser Tab Title
-					input#mb-browser-tab-title.mb-input(type='text' name='mb-browser-tab-title' ng-model="page.tabTitle")
+					input.mb-input(type='text' name='mb-browser-tab-title' ng-model="page.tabTitle")
 				.form-group
 					label URL Link Title
-					input#mb-url-link-title.mb-input(type='text', name='mb-url-link-title' ng-model="page.url")
+					input.mb-input(type='text', name='mb-url-link-title' ng-model="page.url")
 				.form-group
 					label Page Description
-					textarea#mb-page-description.mb-input(name='mb-page-description' ng-model="page.description")
+					textarea.mb-input(name='mb-page-description' ng-model="page.description")
 			.mb-6
 				.mb-visibility
 					div
 						| Who can see?
 						| >=
-					form
-						select(name='mb-access-level')
-							option(value='everybody') Everybody
-							option(value='members') Members
-							option(value='level1') Level 1
-							option(value='level2') Level 2
-							option(value='level3') Level 3
-							option(value='level4') Level 4
-							option(value='level5') Level 5
-							option(value='super') Super
+					select(ng-model="page.visibility")
+						option(value='everybody') Everybody
+						option(ng-repeat="role in roles" value="{{role.role}}") {{role.role}}
 				.mb-editability
 					div
 						| Who can edit?
 						| >=
-					form
-						select(name='mb-access-level')
-							option(value='everybody') Everybody
-							option(value='members') Members
-							option(value='level1') Level 1
-							option(value='level2') Level 2
-							option(value='level3') Level 3
-							option(value='level4') Level 4
-							option(value='level5') Level 5
-							option(value='super') Super
+					select(ng-model="page.editability")
+						option(value='everybody') Everybody
+						option(ng-repeat="role in roles" value="{{role.role}}") {{role.role}}
 				.mb-status
 					| Status: Draft
-					span.mb-calendar.fa-calendar(title="Latest Revision: {{page.updated}}")
+					span.mb-calendar.fa-calendar(title="Updated: {{page.updated | date: 'MMM d, y h:mm a'}} ")
 				input#mb-publish-btn(type='submit', value='Publish Now')
 	#mb-new-template.mb-tools.fa-plus-circle.mb-has-dropdown
 		.mb-dropdown.mb-hidden
@@ -66,3 +52,6 @@
 				li
 					a(href='/cms/users') Settings
 //meanbase End Head Tool Bar 
+
+include newMenuModal
+include editMenuModal

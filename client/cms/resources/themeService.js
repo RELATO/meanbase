@@ -41,6 +41,7 @@ app.service('theme', ['$location', 'CRUD', '$http', function($location, CRUD, $h
 				url: $location.url()
 			};
 			CRUD.comment.create(comment, function(response) {
+
 				console.log(response.response);
 			});
 		}; //createComment
@@ -55,9 +56,18 @@ app.service('theme', ['$location', 'CRUD', '$http', function($location, CRUD, $h
 			return page.promise();
 		}; //getPage
 
-		this.isActive = function(path) {
+		this.getRoles = function() {
+			var roles = $.Deferred();
+			CRUD.role.find({}, function(response) {
+				roles.resolve(response.response);
+			});
+			return roles.promise();
+		};
+
+		this.isActive = function(path, classtoAdd) {
+			if(!classtoAdd) { classtoAdd = 'active'; }
 			if ($location.path() == path) {
-				return "active";
+				return classtoAdd;
 			} else {
 				return "";
 			}

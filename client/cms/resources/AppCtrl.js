@@ -89,10 +89,15 @@
 				var finalDocument = {
 					title: title,
 					content: content,
-					tabTitle: document.getElementById('mb-browser-tab-title').value,
-					url: document.getElementById('mb-url-link-title').value,
-					description: document.getElementById('mb-page-description').value
+					tabTitle: $scope.page.tabTitle,
+					url: $scope.page.url,
+					description: $scope.page.description,
+					visibility: $scope.page.visibility,
+					editability: $scope.page.editability,
+					updated: Date.now()
 				}
+
+				console.log('finalDocument', finalDocument);
 
 				CRUD.page.update({url: $location.url()}, finalDocument, function(response) {
 					console.log(response.response);
@@ -133,7 +138,7 @@
 				        title: url + " Title",
 				        summary: url,
 				        description: url,
-				        visibility: "Level 3"
+				        updated: Date.now()
 					};
 					CRUD.page.create(template, function(reply) {
 						if(reply.error) {
@@ -231,15 +236,20 @@
 				$scope.templateUrl = function() {
 					return 'themes/' + $scope.theme + '/templates/' + page.template;
 				}
+				console.log('page', $scope.page);
 			});
+		});
+
+		theme.getRoles().then(function(roles) {
+			$scope.roles = roles;
 		});
 
 		theme.getMenus().then(function(menus) {
 	    	$scope.menus = menus;
 	  	});
 
-		$scope.active = function(path) {
-			return theme.isActive(path);
+		$scope.active = function(path, classtoAdd) {
+			return theme.isActive(path, classtoAdd);
 		};
 
 		$scope.newMenuPosition = function($event) {

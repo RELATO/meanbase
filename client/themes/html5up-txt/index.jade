@@ -1,0 +1,25 @@
+doctype html
+html(ng-app="app")
+  head
+    title TXT by HTML5 UP
+    meta(http-equiv='content-type', content='text/html; charset=utf-8')
+    meta(name='description', content='')
+    meta(name='keywords', content='')
+    include ../../cms/templates/mb-links
+    script(src="/themes/html5up-txt/controllers/pageCtrl.js")
+    script(src="/themes/html5up-txt/routes/routes.js")
+    //if lte IE 8
+      script(src='/themes/html5up-txt/css/ie/html5shiv.js')
+    script(src='/themes/html5up-txt/js/jquery.min.js')
+    script(src='/themes/html5up-txt/js/jquery.dropotron.min.js')
+    script(src='/themes/html5up-txt/js/skel.min.js')
+    script(src='/themes/html5up-txt/js/skel-layers.min.js')
+    script(src='/themes/html5up-txt/js/init.js')
+    link(rel='stylesheet' href='/themes/html5up-txt/css/skel.css')
+    link(rel='stylesheet' href='/themes/html5up-txt/css/style.css')
+    link(rel='stylesheet' href='/themes/html5up-txt/css/style-desktop.css')
+    //if lte IE 8
+      link(rel='stylesheet' href='/themes/html5up-txt/css/ie/v8.css')
+  body.homepage(ng-controller="AppCtrl" ng-init="theme=#{JSON.stringify(theme)}")
+    include ../../cms/templates/mb-headbar
+    div(ng-view)

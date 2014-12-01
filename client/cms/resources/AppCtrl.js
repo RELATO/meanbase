@@ -238,7 +238,6 @@
 				if($scope.serverData.templates[page.template]) {
 					page.template = $scope.serverData.templates[page.template];
 				}
-
 				$scope.templateUrl = function() {
 					return 'themes/' + $scope.serverData.theme + '/templates/' + page.template;
 				}

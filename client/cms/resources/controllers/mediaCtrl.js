@@ -18,6 +18,10 @@ cms.controller('mediaCtrl', ['$scope', '$rootScope', '$http', '$location', 'CRUD
             console.log(response.response);
         });
     };
+
+    $scope.editMedia = function(image) {
+        $scope.selectedImage = image;
+    };
 }]);
 
 

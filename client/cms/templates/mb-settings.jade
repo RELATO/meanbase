@@ -4,7 +4,7 @@ h2 Themes
     .d-4.t-6(ng-repeat="theme in themes").mb-theme
         h4 {{theme.title}} 
         //- img(src="http://placehold.it/300x200")
-        img(src="/{{theme.preview}}").img-responsive.img-thumbnail
+        img(src="/{{theme.preview}}" data-toggle='modal' data-target='#theme-{{$index}}').img-responsive.img-thumbnail
         .modal.fade(id="theme-{{$index}}" tabindex='-1', role='dialog', aria-labelledby='theme-{{$index}}Label', aria-hidden='true')
             .modal-dialog
                 .modal-content
@@ -14,6 +14,8 @@ h2 Themes
                             span.sr-only Close
                         h4(id="theme-{{$index}}").modal-title {{theme.title}}
                     .modal-body
+                        p(ng-if="theme.active").mb-active-theme.bg-success Active
+                        p(ng-if="!theme.active").mb-active-theme.bg-warning Inactive
                         .mb-theme-controls.a-left
                             .form-group
                                 label Author
@@ -29,12 +31,11 @@ h2 Themes
                                 textarea(disabled).form-control {{theme.description}}
                     .modal-footer
                         button.btn.btn-warning(type='button' ng-click="updateTheme(theme)" data-dismiss='modal') Update
-                        button.btn.btn-primary(type='button', data-dismiss='modal') Close
+                        button.btn.btn-danger(ng-click="deleteTheme(theme, $index)" data-dismiss='modal') Delete
+                        button.btn.btn-success(ng-disabled="theme.active" ng-click="activateTheme(theme, $index)" data-dismiss='modal') Activate
+                        button.btn.btn-default(type='button' data-dismiss='modal') Close
                         
-        .mb-theme-buttons
-            button.btn.btn-warning(data-toggle='modal' data-target='#theme-{{$index}}') Info
-            button.btn.btn-danger(ng-click="deleteTheme(theme, $index)") Delete
-            button.btn.btn-success(ng-disabled="theme.active" ng-click="activateTheme(theme, $index)") Activate
-            span(ng-if="theme.active").mb-active-theme Active
+        .mb-theme-buttons.a-center
+            p(ng-if="theme.active").mb-active-theme.bg-success Active
 h3 Social Sharing Setup
 button.mb-button.mb-connect-social Connect

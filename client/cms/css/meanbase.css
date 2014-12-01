@@ -521,6 +521,10 @@ button.mb-delete-user:hover {
 
 /* SC Theme Options */
 
+.mb-theme img {
+	cursor: pointer;
+}
+
 .mb-theme-option {
 	padding: 1em;
 }

@@ -212,8 +212,7 @@
 							$location.url(template.url);
 							theme.getMenus().then(function(menus) {
 						    	$scope.menus = menus;
-						    	Edit.prepareMenusForEditing();
-						    	Edit.prepareDropdownMenu();
+						    	Edit.reprepareMenus();
 						  	});
 						}
 					});

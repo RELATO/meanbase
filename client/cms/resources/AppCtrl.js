@@ -134,11 +134,11 @@
 				        author: "jpm",
 				        editability: "Level 3",
 				        url: url,
-				        tabTitle: url,
-				        template: $(e.target).text(),
-				        title: url + " Title",
-				        summary: url,
-				        description: url,
+				        tabTitle: "Google Search Title",
+				        template: $(e.currentTarget).text(),
+				        title: $(e.currentTarget).text() + " Title",
+				        summary: "Summary of page.",
+				        description: "The description that will show up on facebook feeds and google searches.",
 				        updated: Date.now()
 					};
 					CRUD.page.create(template, function(reply) {
@@ -215,9 +215,8 @@
 		});
 		
 		// New page from template
-		$('#mb-new-template li').click(function(e){
+		$('#mb-new-template li a').click(function(e){
 			Edit.createNewPage(e);
-			$('.mb-dropdown, .mb-dropdown-right').addClass('mb-hidden');
 		});
 
 		// Delete by Url
@@ -316,7 +315,7 @@
 			menuItem.location = jQuery('.mb-item-selected').parents('[data-menu]').data('menu');
 			menuItem.position = jQuery('.mb-item-selected').index();
 			console.log(menuItem);
-			CRUD.menu.update({location: menuItem.location}, menuItem, function(response) {
+			CRUD.menu.update({url: menuItem.url}, menuItem, function(response) {
 				console.log('Updated menu item', response);
 			});
 			$scope.menus[menuItem.location][menuItem.position] = menuItem;

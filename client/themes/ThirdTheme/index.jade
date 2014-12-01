@@ -6,7 +6,7 @@ html(ng-app="app")
 		title Third Theme
 		include ../../cms/templates/mb-links
 		include templates/SecondThemeLinks
-	body(ng-controller="AppCtrl")
+	body(ng-controller="AppCtrl" ng-init="serverData=#{JSON.stringify(serverData)}")
 		include ../../cms/templates/mb-headbar
 		div(ng-view)
 

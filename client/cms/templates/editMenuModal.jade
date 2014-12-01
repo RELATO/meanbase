@@ -18,9 +18,10 @@
 					input.form-control(id="menu-classes" ng-model="menuItem.classes")
 				.form-group
 					label(for="menu-target") Target
-					select#menu-target(ng-model="menuItem.target")
-						option(value="_blank") _blank
+					select#menu-target(ng-model="menuItem.target").form-control
+						option(value="") none (good for angular)
 						option(value="_self") _self
+						option(value="_blank") _blank
 			.modal-footer
 				button.btn.btn-danger(ng-click="removeMenuItem()") Delete
 				button.btn.btn-default(type='button', data-dismiss='modal') Close

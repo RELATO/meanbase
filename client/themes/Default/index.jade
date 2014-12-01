@@ -6,7 +6,7 @@ html(ng-app="app")
 		title Default Theme
 		include ../../cms/templates/mb-links
 		include templates/DefaultLinks
-	body(ng-controller="AppCtrl" ng-init="theme=#{JSON.stringify(theme)}")
+	body(ng-controller="AppCtrl" ng-init="serverData=#{JSON.stringify(serverData)}")
 		include ../../cms/templates/mb-headbar
 		div(ng-view)
 

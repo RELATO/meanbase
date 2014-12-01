@@ -35,6 +35,6 @@ module.exports = function(app, mongoose, models) {
 	});
 
 	app.get('*', function(req, res) {
-		res.render('themes/' + THEME + '/index', {theme: THEME});
+		res.render('themes/' + THEME + '/index', {serverData: {theme: THEME, templates: TEMPLATES}});
 	});
 };

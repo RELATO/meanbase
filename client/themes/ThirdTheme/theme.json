@@ -5,5 +5,11 @@
 	"title": "Third Theme",
 	"description": "Another demo theme for meanbase",
 	"url": "ThirdTheme",
-	"preview": "themes/ThirdTheme/screenshot.png"
+	"preview": "themes/ThirdTheme/screenshot.png",
+	"templates": {
+		"front-page": "front-page",
+		"blog": "blog",
+		"page": "page",
+		"post": "post"
+	}
 }

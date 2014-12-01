@@ -1,57 +1,110 @@
 //meanbase Head Tool Bar 
-#head-tool-bar
-	#meanbase
-		a(href='/cms' target="_self") meanbase
-	#mb-page-settings.mb-tools.fa-gear.mb-has-dropdown
-		.mb-dropdown.mb-hidden
-			.mb-6
-				.form-group
-					label Browser Tab Title
-					input.mb-input(type='text' name='mb-browser-tab-title' ng-model="page.tabTitle")
-				.form-group
-					label URL Link Title
-					input.mb-input(type='text', name='mb-url-link-title' ng-model="page.url")
-				.form-group
-					label Page Description
-					textarea.mb-input(name='mb-page-description' ng-model="page.description")
-			.mb-6
-				.mb-visibility
-					div
-						| Who can see?
-						| >=
-					select(ng-model="page.visibility")
-						option(value='everybody') Everybody
-						option(ng-repeat="role in roles" value="{{role.role}}") {{role.role}}
-				.mb-editability
-					div
-						| Who can edit?
-						| >=
-					select(ng-model="page.editability")
-						option(value='everybody') Everybody
-						option(ng-repeat="role in roles" value="{{role.role}}") {{role.role}}
-				.mb-status
-					| Status: Draft
-					span.mb-calendar.fa-calendar(title="Updated: {{page.updated | date: 'MMM d, y h:mm a'}} ")
-				input#mb-publish-btn(type='submit', value='Publish Now')
-	#mb-new-template.mb-tools.fa-plus-circle.mb-has-dropdown
-		.mb-dropdown.mb-hidden
-			ul
-				li front-page
-				li page
-				li blog
-				li post
-	#mb-editMode.mb-tools.fa-edit
-	#mb-cancel.mb-tools.fa-times-circle.mb-hidden
-	#mb-trash.mb-tools.fa-trash.mb-hidden
-	#mb-login-info.mb-has-dropdown
-		.role Admin
-		.name Jon Paul
-		.mb-dropdown-right.mb-hidden
-			ul
-				li Log out
-				li
-					a(href='/cms/users') Settings
+nav#mb-headbar.navbar.navbar-default.navbar-fixed-top.navbar-inverse(role="navigation")
+	.container
+		div.navbar-header 
+			button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#mb-headbar-child" aria-controls="navbar")
+				span.sr-only Toggle navigation
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+			a(href='/cms' target="_self").navbar-brand Site Settings
+		div#mb-headbar-child.navbar-collapse.collapse
+			ul.nav.navbar-nav
+				li.dropdown
+					//- a.dropdown-toggle(data-toggle="dropdown" role="button").fa.fa-plus-circle.fa-2x
+					a.dropdown-toggle(data-toggle="dropdown" role="button") New
+					ul.dropdown-menu(role="menu")
+						li.disabled
+							a(href="#")
+								| Template 
+						li.divider
+						li 
+							a(href="#") front-page
+						li 
+							a(href="#") page
+						li 
+							a(href="#") blog
+						li 
+							a(href="#") post
+				li#mb-edit
+					a Edit
+				li#mb-cancel.hidden
+					button.btn.btn-warning discard
+				li#mb-page-settings.hidden
+					button.btn.btn-primary(data-toggle="modal" data-target="#editPageModal") Settings
+				li#mb-trash.hidden
+					button.btn.btn-danger delete page
+			ul.nav.navbar-nav.navbar-right
+				li.dropdown
+					a.dropdown-toggle(data-toggle="dropdown" role="button")
+						| jon4888 (Admin)
+					ul.dropdown-menu(role="menu").dropdown-menu-right
+						li 
+							a Log Out
+						li 
+							a(href="/cms/users" target="_self") Account Settings
+//- 	#mb-login-info.mb-has-dropdown
+//- 		.role Admin
+//- 		.name Jon Paul
+//- 		.mb-dropdown-right.mb-hidden
+//- 			ul
+//- 				li Log out
+//- 				li
+//- 					a(href='/cms/users') Settings
+//- #head-tool-bar
+//- 	#meanbase
+//- 		a(href='/cms' target="_self") meanbase
+//- 	#mb-page-settings.mb-tools.fa-gear.mb-has-dropdown
+//- 		.mb-dropdown.mb-hidden
+//- 			.mb-6
+//- 				.form-group
+//- 					label Browser Tab Title
+//- 					input.mb-input(type='text' name='mb-browser-tab-title' ng-model="page.tabTitle")
+//- 				.form-group
+//- 					label URL Link Title
+//- 					input.mb-input(type='text', name='mb-url-link-title' ng-model="page.url")
+//- 				.form-group
+//- 					label Page Description
+//- 					textarea.mb-input(name='mb-page-description' ng-model="page.description")
+//- 			.mb-6
+//- 				.mb-visibility
+//- 					div
+//- 						| Who can see?
+//- 						| >=
+//- 					select(ng-model="page.visibility")
+//- 						option(value='everybody') Everybody
+//- 						option(ng-repeat="role in roles" value="{{role.role}}") {{role.role}}
+//- 				.mb-editability
+//- 					div
+//- 						| Who can edit?
+//- 						| >=
+//- 					select(ng-model="page.editability")
+//- 						option(value='everybody') Everybody
+//- 						option(ng-repeat="role in roles" value="{{role.role}}") {{role.role}}
+//- 				.mb-status
+//- 					| Status: Draft
+//- 					span.mb-calendar.fa-calendar(title="Updated: {{page.updated | date: 'MMM d, y h:mm a'}} ")
+//- 				input#mb-publish-btn(type='submit', value='Publish Now')
+//- 	#mb-new-template.mb-tools.fa-plus-circle.mb-has-dropdown
+//- 		.mb-dropdown.mb-hidden
+//- 			ul
+//- 				li front-page
+//- 				li page
+//- 				li blog
+//- 				li post
+//- 	#mb-editMode.mb-tools.fa-edit
+//- 	#mb-cancel.mb-tools.fa-times-circle.mb-hidden
+//- 	#mb-trash.mb-tools.fa-trash.mb-hidden
+//- 	#mb-login-info.mb-has-dropdown
+//- 		.role Admin
+//- 		.name Jon Paul
+//- 		.mb-dropdown-right.mb-hidden
+//- 			ul
+//- 				li Log out
+//- 				li
+//- 					a(href='/cms/users') Settings
 //meanbase End Head Tool Bar 
 
+include pageSettingsModal
 include newMenuModal
 include editMenuModal

@@ -22,7 +22,7 @@ module.exports = function(Schema, models, validate, mongoose) {
 		},
 		target: {
 			type: String,
-			default: '_self'
+			default: ''
 		}
 	});
 	return mongoose.model('Menu', menuSchema);

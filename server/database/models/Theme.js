@@ -16,6 +16,16 @@ module.exports = function(Schema, models, validate, mongoose) {
 			required: true,
 			default: false
 		},
+		templates: {
+			type: Object,
+			required: true,
+			default: {
+				"front-page": "front-page",
+				"blog": "blog",
+				"page": "page",
+				"post": "post"
+			}
+		},
 		meta: Object
 	});
 	return mongoose.model('Theme', themeSchema);

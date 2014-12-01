@@ -1,0 +1,26 @@
+body {
+	margin-top: 53px;
+}
+
+/* For themes that have fixed headers on top, so they won't interfere with the meanbase header */
+.mb-fixed-top {
+	top: 51px !important;
+}
+
+#mb-headbar .container {
+	max-width: 100%;
+}
+
+#mb-headbar a {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#mb-cancel button,
+#mb-trash button,
+#mb-edit button,
+#mb-page-settings button {
+	margin: 5px;
+	padding: 8px 13px;
+	outline: none;
+}

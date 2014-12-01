@@ -21,8 +21,6 @@ module.exports = function(Schema, models, mongoose) {
 		}
 	});
 
-	basicRoles.push(basic);
-
 	var level1 = new models.Role({
 		role: 'Level 1',
 		permissions: {
@@ -41,8 +39,6 @@ module.exports = function(Schema, models, mongoose) {
 			allPrivilages: false
 		}
 	});
-
-	basicRoles.push(level1);
 
 	var level2 = new models.Role({
 		role: 'Level 2',
@@ -63,8 +59,6 @@ module.exports = function(Schema, models, mongoose) {
 		}
 	});
 
-	basicRoles.push(level2);
-
 	var level3 = new models.Role({
 		role: 'Level 3',
 		permissions: {
@@ -83,8 +77,6 @@ module.exports = function(Schema, models, mongoose) {
 			allPrivilages: false
 		}
 	});
-
-	basicRoles.push(level3);
 
 	var level4 = new models.Role({
 		role: 'Level 4',
@@ -105,8 +97,6 @@ module.exports = function(Schema, models, mongoose) {
 		}
 	});
 
-	basicRoles.push(level4);
-
 	var level5 = new models.Role({
 		role: 'Level 5',
 		permissions: {
@@ -125,8 +115,6 @@ module.exports = function(Schema, models, mongoose) {
 			allPrivilages: false
 		}
 	});
-
-	basicRoles.push(level5);
 
 	var master = new models.Role({
 		role: 'Master',
@@ -147,7 +135,7 @@ module.exports = function(Schema, models, mongoose) {
 		}
 	});
 
-	basicRoles.push(master);
+	basicRoles.push(basic, level1, level2, level3, level4, level5, master);
 
 	mongoose.model('Role').find({}, function(error, found) {
 		if(found.length == 0) {

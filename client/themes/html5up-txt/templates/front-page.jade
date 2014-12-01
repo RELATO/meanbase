@@ -7,7 +7,7 @@ header#header
       p#description.mb-editable(ng-bind-html="page.content['description'] ? page.content['description'] : defaultText")
 //
    Nav 
-nav#nav.skel-layers-fixed
+nav#nav.skel-layers-fixed.mb-fixed-top
   ul(data-menu="main")
     li(ng-repeat="menu in menus.main" class="mb-draggable {{menu.classes}}" ng-class="active(menu.url)")
       a(href="{{menu.url ? menu.url : /}}" target="{{menu.target}}").mb-editable.mb-main-list-a {{menu.title}}

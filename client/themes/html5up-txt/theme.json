@@ -5,5 +5,11 @@
 	"title": "TXT",
 	"description": "TXT Theme",
 	"url": "html5up-txt",
-	"preview": "themes/html5up-txt/screenshot.png"
+	"preview": "themes/html5up-txt/screenshot.png",
+	"templates": {
+		"front-page": "page",
+		"blog": "page",
+		"page": "page",
+		"post": "page"
+	}
 }

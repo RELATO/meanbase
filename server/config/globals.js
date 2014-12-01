@@ -5,8 +5,15 @@ module.exports = function(models) {
 		} else {
 			if(found) {
 				GLOBAL.THEME = found.url;
+				GLOBAL.TEMPLATES = found.templates;
 			} else {
 				GLOBAL.THEME = 'Default';
+				GLOBAL.TEMPLATES = {
+					"front-page": "front-page",
+					"blog": "blog",
+					"page": "page",
+					"post": "post"
+				}
 			}
 		}
 	});

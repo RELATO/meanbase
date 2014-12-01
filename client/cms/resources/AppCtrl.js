@@ -17,8 +17,9 @@
 				});
 				jQuery('.mb-editable').attr('contenteditable', true);
 				CKEDITOR.inlineAll();	
-				$('#mb-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('mb-light-green');
-				$('#mb-cancel, #mb-trash').toggleClass('mb-hidden');
+				// $('#mb-edit').children('a').toggleClass('fa-edit').toggleClass('fa-check-circle');
+				$('#mb-edit').html('<button class="btn btn-success">Save</button>');
+				$('#mb-cancel, #mb-trash, #mb-page-settings').toggleClass('hidden');
 
 				jQuery('.mb-draggable').click(function(e) {
 					jQuery('.mb-draggable').removeClass('mb-item-selected');
@@ -28,7 +29,7 @@
 				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#newMenuItemModal" ng-click="newMenuPosition($event)" class="mb-add-menu-item"><a href="#"> <i class="fa fa-plus fa-lg"></i></a></li><li data-toggle="modal" data-target="#editMenuItemModal" ng-click="selectedMenu()" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
 
 				jQuery('[data-menu] li').hover(function() {
-					jQuery('.dropdown-menu').addClass('alwaysOpen');
+					jQuery('[data-menu] .dropdown-menu').addClass('alwaysOpen');
 				}, function() {
 					jQuery('.dropdown-menu').removeClass('alwaysOpen');
 				});
@@ -44,9 +45,9 @@
 			this.endEditing = function() {
 				$scope.inEditMode = false;
 				jQuery('.mb-editable').removeAttr('contenteditable');
-				$('#mb-editMode').toggleClass('fa-edit').toggleClass('fa-check-circle').toggleClass('mb-light-green');
-				$('#mb-cancel, #mb-trash').toggleClass('mb-hidden');
-				jQuery('.dropdown-menu').removeClass('alwaysOpen');
+				$('#mb-edit').html('<a href="#">Edit</a>');
+				$('#mb-cancel, #mb-trash, #mb-page-settings').toggleClass('hidden');
+				jQuery('[data-menu] .dropdown-menu').removeClass('alwaysOpen');
 				jQuery('.mb-add-menu-item, .mb-edit-menu-item').remove();
 				jQuery(".mb-placeholder-li").remove();
 			}
@@ -187,7 +188,7 @@
 		
 
 		// Start editing or Save Edits
-		$('#mb-editMode').click(function(e){
+		$('#mb-edit').click(function(e){
 			if($scope.inEditMode == false) {
 				// Start Editing
 				Edit.startEditing();
@@ -233,10 +234,14 @@
 		$scope.$on('$locationChangeStart', function() {
 		    theme.getPage().then(function(page) {
 				$scope.page = page;
-				$scope.templateUrl = function() {
-					return 'themes/' + $scope.theme + '/templates/' + page.template;
+
+				if($scope.serverData.templates[page.template]) {
+					page.template = $scope.serverData.templates[page.template];
 				}
-				console.log('page', $scope.page);
+
+				$scope.templateUrl = function() {
+					return 'themes/' + $scope.serverData.theme + '/templates/' + page.template;
+				}
 			});
 		});
 
@@ -275,6 +280,10 @@
 
 				if(!$scope.menus[$scope.currentLocation]) {
 					$scope.menus[newItemInfo.location] = [];
+				}
+
+				if(!$scope.menus[newItemInfo.target]) {
+					$scope.menus[newItemInfo.target] = '';
 				}
 
 				$scope.menus[newItemInfo.location][newItemInfo.position] = newItemInfo;

@@ -7,14 +7,12 @@ header#header
       p#description.mb-editable(ng-bind-html="page.content['description'] ? page.content['description'] : defaultText")
 //
    Nav 
-nav#nav.skel-layers-fixed
+nav#nav.skel-layers-fixed.mb-fixed-top
   ul(data-menu="main")
-    li(ng-repeat="menu in menus.main" class="mb-draggable {{menu.classes}}" ng-class="active(menu.url)")
+    li(ng-repeat="menu in menus.main" class="mb-draggable {{menu.classes}}" ng-class="active(menu.url, 'current')")
       a(href="{{menu.url ? menu.url : /}}" target="{{menu.target}}").mb-editable.mb-main-list-a {{menu.title}}
-    li.current
-      a(href='index') Home
     li
-      a(href='') Dropdown
+      a(href='#') Dropdown
       ul(data-menu="footer").dropdown-menu
         li(ng-repeat="menu in menus.footer").mb-draggable
           a(href="{{menu.url ? menu.url: /}}" target="{{menu.target}}").mb-editable.mb-footer-list-a {{menu.title}}

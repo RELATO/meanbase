@@ -10,29 +10,16 @@
 			this.startEditing = function() {
 				$scope.inEditMode = true;
 				this.bodySnapshot = document.body.innerHTML;
-				$('a').click(function(e) {
-					if($scope.inEditMode) {
-						e.preventDefault();
-					}
-				});
-				jQuery('.mb-editable').attr('contenteditable', true);
+
+				this.prepareMenusForEditing();
 				CKEDITOR.inlineAll();	
 				// $('#mb-edit').children('a').toggleClass('fa-edit').toggleClass('fa-check-circle');
 				$('#mb-edit').html('<button class="btn btn-success">Save</button>');
 				$('#mb-cancel, #mb-trash, #mb-page-settings').toggleClass('hidden');
-
-				jQuery('.mb-draggable').click(function(e) {
-					jQuery('.mb-draggable').removeClass('mb-item-selected');
-					jQuery(e.currentTarget).addClass('mb-item-selected');
-				});
 				
 				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#newMenuItemModal" ng-click="newMenuPosition($event)" class="mb-add-menu-item"><a href="#"> <i class="fa fa-plus fa-lg"></i></a></li><li data-toggle="modal" data-target="#editMenuItemModal" ng-click="selectedMenu()" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
 
-				jQuery('[data-menu] li').hover(function() {
-					jQuery('[data-menu] .dropdown-menu').addClass('alwaysOpen');
-				}, function() {
-					jQuery('.dropdown-menu').removeClass('alwaysOpen');
-				});
+				this.prepareDropdownMenu();
 
 				jQuery('[data-menu]').each(function(index, value) {
 					if(!$scope.menus[jQuery(value).data('menu')]) {
@@ -41,6 +28,27 @@
 				});
 
 			} //startEditing()
+
+			this.prepareMenusForEditing = function() {
+				$('a').click(function(e) {
+					if($scope.inEditMode) {
+						e.preventDefault();
+					}
+				});	
+				jQuery('.mb-editable').attr('contenteditable', true);
+				jQuery('.mb-draggable').click(function(e) {
+					jQuery('.mb-draggable').removeClass('mb-item-selected');
+					jQuery(e.currentTarget).addClass('mb-item-selected');
+				});
+			};
+
+			this.prepareDropdownMenu = function() {
+				jQuery('[data-menu] li').hover(function() {
+					jQuery('[data-menu] .dropdown-menu').addClass('alwaysOpen');
+				}, function() {
+					jQuery('.dropdown-menu').removeClass('alwaysOpen');
+				});
+			};
 
 			this.endEditing = function() {
 				$scope.inEditMode = false;
@@ -286,16 +294,8 @@
 
 				$scope.menus[newItemInfo.location][newItemInfo.position] = newItemInfo;
 				CRUD.menu.create(newItemInfo, function(response) {
-					$('a').click(function(e) {
-						if($scope.inEditMode) {
-							e.preventDefault();
-						}
-					});	
-					jQuery('.mb-editable').attr('contenteditable', true);
-					jQuery('.mb-draggable').click(function(e) {
-						jQuery('.mb-draggable').removeClass('mb-item-selected');
-						jQuery(e.currentTarget).addClass('mb-item-selected');
-					});
+					Edit.prepareMenusForEditing();
+					Edit.prepareDropdownMenu();
 				});
 
 				jQuery('#newMenuItemModal').modal('hide');
@@ -317,6 +317,8 @@
 			console.log(menuItem);
 			CRUD.menu.update({url: menuItem.url}, menuItem, function(response) {
 				console.log('Updated menu item', response);
+				Edit.prepareMenusForEditing();
+				Edit.prepareDropdownMenu();
 			});
 			$scope.menus[menuItem.location][menuItem.position] = menuItem;
 			jQuery('#editMenuItemModal').modal('hide');

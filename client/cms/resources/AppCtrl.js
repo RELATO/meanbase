@@ -17,7 +17,7 @@
 				$('#mb-edit').html('<button class="btn btn-success">Save</button>');
 				$('#mb-cancel, #mb-trash, #mb-page-settings').toggleClass('hidden');
 				
-				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#newMenuItemModal" ng-click="newMenuPosition($event)" class="mb-add-menu-item"><a href="#"> <i class="fa fa-plus fa-lg"></i></a></li><li data-toggle="modal" data-target="#editMenuItemModal" ng-click="selectedMenu()" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
+				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#editMenuItemModal" ng-click="selectedMenu($event)" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
 
 				this.prepareDropdownMenu();
 
@@ -158,6 +158,8 @@
 							$location.url(template.url);
 							theme.getMenus().then(function(menus) {
 						    	$scope.menus = menus;
+						    	Edit.prepareMenusForEditing();
+						    	Edit.prepareDropdownMenu();
 						  	});
 						}
 					});
@@ -263,52 +265,48 @@
 			return theme.isActive(path, classtoAdd);
 		};
 
-		$scope.newMenuPosition = function($event) {
-			$scope.currentLocation = jQuery($event.currentTarget).parents('[data-menu]').data('menu');
-		};
-
-		$scope.newMenuItem = function(newItemInfo) {
-			console.log($scope.menus);
-			if(newItemInfo) {
-				if(!newItemInfo.url) {
-					newItemInfo.url = "/";
+		$scope.newMenuItem = function(menuItem) {
+			if(menuItem) {
+				if(!menuItem.url) {
+					menuItem.url = "/";
 				}
-				if(!newItemInfo.title) {
-					newItemInfo.title = "Home";
+				if(!menuItem.title) {
+					menuItem.title = "Home";
 				}
-				newItemInfo.location = $scope.currentLocation;
+				menuItem.location = $scope.currentLocation;
 
 				if(!$scope.menus[$scope.currentLocation]) {
-					newItemInfo.position = 0;
+					menuItem.position = 0;
 				} else {
-					newItemInfo.position = $scope.menus[$scope.currentLocation].length
+					menuItem.position = $scope.menus[$scope.currentLocation].length
 				}
 
 				if(!$scope.menus[$scope.currentLocation]) {
-					$scope.menus[newItemInfo.location] = [];
+					$scope.menus[menuItem.location] = [];
 				}
 
-				if(!$scope.menus[newItemInfo.target]) {
-					$scope.menus[newItemInfo.target] = '';
+				if(!$scope.menus[menuItem.target]) {
+					$scope.menus[menuItem.target] = '';
 				}
 
-				$scope.menus[newItemInfo.location][newItemInfo.position] = newItemInfo;
-				CRUD.menu.create(newItemInfo, function(response) {
+				$scope.menus[menuItem.location][menuItem.position] = menuItem;
+				CRUD.menu.create(menuItem, function(response) {
+					jQuery('#editMenuItemModal').modal('hide');
 					Edit.prepareMenusForEditing();
 					Edit.prepareDropdownMenu();
 				});
-
-				jQuery('#newMenuItemModal').modal('hide');
 			} else {
 				console.log('Please set a url and title for the menu item.');
 			}
 		};
 
-		$scope.selectedMenu = function(location) {
+		$scope.selectedMenu = function($event) {
 			var url = jQuery('.mb-item-selected').find('a').attr('href');
 			CRUD.menu.find({url: url}, function(response) {
+				delete response.response[0]['_id'];
 				$scope.menuItem = response.response[0];
 			});
+			$scope.currentLocation = jQuery($event.currentTarget).parents('[data-menu]').data('menu');
 		};
 
 		$scope.editMenuItem = function(menuItem) {

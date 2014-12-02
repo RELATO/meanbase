@@ -40,8 +40,10 @@ cms.controller('commentsCtrl', ['$scope', '$http', '$location', 'CRUD', function
 	};
 
 	$scope.deleteComment = function(comment, index) {
+		console.log(comment._id);
 		CRUD.comment.delete({_id: comment._id}, function(response) {
 			if(!response.error) {
+				console.log(response.response);
 				$scope.comments.splice(index, 1);
 			}
 		});

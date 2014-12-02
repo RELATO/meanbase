@@ -303,7 +303,7 @@
 		
 		$scope.$on('$locationChangeStart', function() {
 		    theme.getPage().then(function(page) {
-				$scope.page = page;
+				$rootScope.page = page;
 
 				if($scope.serverData.templates[page.template]) {
 					page.template = $scope.serverData.templates[page.template];

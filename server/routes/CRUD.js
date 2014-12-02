@@ -130,14 +130,14 @@ module.exports = function(app, mongoose, models, responder) {
 						if(found) {
 							var ids = [], i = 0;
 							while(i < found.length) {
-								ids.push(found[i].id);
+								ids.push(found[i]._id);
 								i++;
 							}
 							var dependantObject = {}, dependantObject2 = {}, endUpdateQuery = {};
 							if(ids.length > 1) {
 								dependantObject[linkField] = {$in: ids};
 							} else {
-								dependantObject[linkField] = ids.shift();
+								dependantObject[linkField] = ids[0];
 							}
 							dependantObject2[linkField] = ids;
 

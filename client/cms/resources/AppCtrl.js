@@ -191,15 +191,17 @@
 
 			this.createNewPage = function(e) {
 				var url = prompt('url (include "/" at beginning)');
+				var demoTitle = (url.charAt(0) == '/') ? url.substr(1) : url;
 				if(url != null) {
 					var template = {
 				        author: "jpm",
 				        editability: "Level 3",
+				        visibility: "Level 3",
 				        url: url,
-				        tabTitle: "Google Search Title",
+				        tabTitle: demoTitle,
 				        template: $(e.currentTarget).text(),
-				        title: $(e.currentTarget).text() + " Title",
-				        summary: "Summary of page.",
+				        title: demoTitle,
+				        summary: "Summary of " + demoTitle + ".",
 				        description: "The description that will show up on facebook feeds and google searches.",
 				        updated: Date.now()
 					};
@@ -212,7 +214,6 @@
 							$location.url(template.url);
 							theme.getMenus().then(function(menus) {
 						    	$scope.menus = menus;
-						    	Edit.reprepareMenus();
 						  	});
 						}
 					});

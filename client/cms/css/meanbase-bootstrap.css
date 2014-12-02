@@ -24,3 +24,23 @@ body {
 	padding: 8px 13px;
 	outline: none;
 }
+
+@media (max-width: 768px) {
+	#mb-cancel,
+	#mb-trash,
+	#mb-edit,
+	#mb-page-settings {
+		padding: 5px;
+		box-sizing: border-box;
+	}
+
+	#mb-cancel button,
+	#mb-trash button,
+	#mb-edit button,
+	#mb-page-settings button {
+		box-sizing: border-box;
+		margin: 0;
+		outline: none;
+		width: 100%;
+	}
+}

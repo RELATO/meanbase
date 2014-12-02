@@ -14,8 +14,6 @@ h2 Themes
                             span.sr-only Close
                         h4(id="theme-{{$index}}").modal-title {{theme.title}}
                     .modal-body
-                        p(ng-if="theme.active").mb-active-theme.bg-success Active
-                        p(ng-if="!theme.active").mb-active-theme.bg-warning Inactive
                         .mb-theme-controls.a-left
                             .form-group
                                 label Author
@@ -29,13 +27,16 @@ h2 Themes
                             .form-group
                                 label Description
                                 textarea(disabled).form-control {{theme.description}}
+                        p(ng-if="theme.active").mb-active-theme.bg-success Currently in use
+                        p(ng-if="!theme.active").mb-active-theme.bg-warning Not being used
                     .modal-footer
                         button.btn.btn-warning(type='button' ng-click="updateTheme(theme)" data-dismiss='modal') Update
                         button.btn.btn-danger(ng-click="deleteTheme(theme, $index)" data-dismiss='modal') Delete
-                        button.btn.btn-success(ng-disabled="theme.active" ng-click="activateTheme(theme, $index)" data-dismiss='modal') Activate
+                        button.btn.btn-success(ng-disabled="theme.active" ng-click="activateTheme(theme, $index)" data-dismiss='modal') Use this theme
                         button.btn.btn-default(type='button' data-dismiss='modal') Close
                         
         .mb-theme-buttons.a-center
-            p(ng-if="theme.active").mb-active-theme.bg-success Active
+            p(ng-if="theme.active").mb-active-theme.bg-success Currently in use
+            p(ng-if="!theme.active").mb-active-theme.bg-warning Not being used
 h3 Social Sharing Setup
 button.mb-button.mb-connect-social Connect

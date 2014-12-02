@@ -1,15 +1,6 @@
 
 h1 Comments
-.form-group
-    input(type="text" placeholder="filter comments" ng-model="commentFilter").form-control
-.form-group
-    select.form-control(ng-model="whichPage")
-        option(value="") All
-        option(ng-repeat="page in pages") {{page.title}}
-.radio-inline
-    label
-        input(type="radio" ng-model="approval" value="")
-        | both
+h4 Filter by
 .radio-inline
     label
         input(type="radio" ng-model="approval" value="true")
@@ -18,6 +9,16 @@ h1 Comments
     label
         input(type="radio" ng-model="approval" value="false")
         | unapproved
+.radio-inline
+    label
+        input(type="radio" ng-model="approval" value="")
+        | both
+.form-group
+    input(type="text" placeholder="filter comments by text" ng-model="commentFilter").form-control
+.form-group
+    select.form-control(ng-model="whichPage")
+        option(value="") All Pages
+        option(ng-repeat="page in pages") {{page.title}}
 .panel-group#comments-accordian(role="tablist" aria-multiselectable="true")
 
     .panel.panel-primary(ng-repeat="comment in comments | filter:filterComments | filter: {approved: approval, title: whichPage}")
@@ -29,18 +30,10 @@ h1 Comments
         .panel-collapse.collapse(role="tabpanel" aria-labelledby="headingOne" id="comment-{{$index}}")
             .panel-body.equal
                 .a-6.m-12
-                    .a-3.m-3.a-middle
-                        button.btn.btn-danger
-                            i.fa.fa-ban.fa-lg
                     .a-9.m-9.a-middle
                         p.h4 email
                         p {{comment.email}}
-                    
-                    
                 .a-6.m-12
-                    .a-3.m-3.a-middle
-                        button.btn.btn-danger
-                            i.fa.fa-ban.fa-lg
                     .a-9.m-9.a-middle
                         p.h4 ip
                         p {{comment.ip}}
@@ -51,6 +44,7 @@ h1 Comments
                     p.h4 Date
                     p {{comment.date | date: 'MMM d, y h:mm a'}}
                 .a-6.m-12.a-right.a-middle.m-center
+                    button.btn.btn-danger() Ban commentor
                     button.btn.btn-danger(ng-click="deleteComment(comment, $index)") Delete
                     button.btn.btn-warning(ng-click="editComment(comment, $index)") Edit
                     button.btn.btn-success(ng-hide="comment.approved" ng-click="approveComment(comment, $index)") Approve

@@ -9,7 +9,11 @@
 
 			this.editedMenus = [];
 			this.newMenus = [];
+			this.newMenusId = [];
 			this.deletedMenus = [];
+			this.oldPositions = [];
+
+			this.addingMenusComplete = $.Deferred();
 
 			this.startEditing = function() {
 				$scope.inEditMode = true;
@@ -34,7 +38,6 @@
 			} //startEditing()
 
 			this.prepareMenusForEditing = function() {
-				console.log('prepareMenusforEditing');
 				$('a').click(function(e) {
 					if($scope.inEditMode) {
 						e.preventDefault();
@@ -45,10 +48,20 @@
 					jQuery('.mb-draggable').removeClass('mb-item-selected');
 					jQuery(e.currentTarget).addClass('mb-item-selected');
 				});
+
+				jQuery('[data-menu]').each(function(index, location) {
+					jQuery(location).children('.mb-draggable').has('a[href!="#"]').each(function(index, value) {
+						if(jQuery(value).data('position') === undefined) {
+							jQuery(value).data('position', index);
+							jQuery(value).data('location', jQuery(location).data('menu'));
+							console.log(jQuery(value).text() + ' ' + jQuery(value).data('location') + ' ' + jQuery(value).data('position'));
+						}
+					});
+				});
 			};
 
 			this.prepareDropdownMenu = function() {
-				jQuery('[data-menu] li').hover(function() {
+				jQuery('[data-menu]').children().hover(function() {
 					jQuery('[data-menu] .dropdown-menu').addClass('alwaysOpen');
 				}, function() {
 					jQuery('.dropdown-menu').removeClass('alwaysOpen');
@@ -91,23 +104,21 @@
 					    draggable: ".mb-draggable",
 					    animation: 250,
 					    onStart: function (e) { 
-					    	// jQuery('.dropdown-menu').dropdown('toggle');
 					    	jQuery(sortableMenus[i]).addClass("mb-contents-moving");
 					    },
 					    onSort: function (e) {
 					        jQuery(sortableMenus[i]).removeClass("mb-contents-moving");
-					    },
+					    }
 					});
 					i++;
 				}
 			};
 
 			this.saveEditedMenus = function() {
-				console.log('editedMenus id', this.editedMenus);
 				var i = 0;
 				while(i < this.editedMenus.length) {
-					console.log('editedMenus url', this.editedMenus[i]._id);
-					CRUD.menu.update({_id: this.editedMenus[i]._id}, this.editedMenus[i], function(response) {
+					console.log('editedMenus url', this.editedMenus[i].id);
+					CRUD.menu.update({id: this.editedMenus[i].id}, this.editedMenus[i], function(response) {
 						console.log('Updated menu item', response);
 					});
 					i++;
@@ -117,21 +128,42 @@
 			this.deleteMenus = function() {
 				var i = 0;
 				while(i < this.deletedMenus.length) {
-					CRUD.menu.delete({url: this.deletedMenus[i]}, function(response) {
-						console.log(response);
-					});
+					var foundIndex = jQuery.inArray(this.deletedMenus[i], this.newMenusId);
+					console.log('foundIndex', foundIndex);
+					if(foundIndex !== -1) {
+						this.newMenusId.splice(foundIndex, 1);
+						this.newMenus.splice(foundIndex, 1);
+						console.log('deleteMenus $scope.menus', $scope.menus);
+						// $scope.menus.splice(foundIndex, 1);
+					} else {
+						CRUD.menu.delete({id: this.deletedMenus[i]}, function(response) {
+							console.log(response);
+						});
+					}
 					i++;
 				}
 			};
 
 			this.saveNewMenus = function() {
-				console.log('newMenus', this.newMenus);
-				var i = 0;
-				while(i < this.newMenus.length) {
-					CRUD.menu.create(this.newMenus[i], function(response) {
-						console.log('Created menu item', response);
-					});
-					i++;
+				var newMenus = this.newMenus;
+				if(newMenus.length > 0) {
+					var i = 0;
+					var delayI = 0;
+					while(i < newMenus.length) {
+						console.log('i, length', i, newMenus.length);
+						CRUD.menu.create(newMenus[i], function(response) {
+							console.log('Created menu item', response);
+							console.log('delayI, length', delayI, newMenus.length);
+							delayI++;
+							if(delayI === newMenus.length) {
+								console.log('delayI, length final', delayI, newMenus.length);
+								Edit.addingMenusComplete.resolve(true);
+							}
+						});
+						i++;
+					}
+				} else {
+					Edit.addingMenusComplete.resolve(true);
 				}
 			};
 
@@ -163,20 +195,36 @@
 				console.log('finalDocument', finalDocument);
 
 				CRUD.page.update({url: $location.url()}, finalDocument, function(response) {
-					console.log(response.response);
 				});
 			};
 
 			this.saveMenuOrdering = function() {
 				jQuery('[data-menu]').each(function(index, currentMenu) {
 					jQuery(currentMenu).children('.mb-draggable').each(function(index, currentLink) {
-						var url = jQuery(currentLink).children('a').attr('href');
-						var location = jQuery(currentMenu).data('menu');
-						CRUD.menu.update({url: url}, {position: index, location: location}, function(response) {
-							console.log(response.response);
-						});
-					});
-				});
+						var location = jQuery(currentLink).data('location');
+						var position = jQuery(currentLink).data('position');
+						var id = jQuery(currentLink).data('id');
+						console.log('saveMenudate id', id);
+						if(location && position !== undefined) {
+							CRUD.menu.find({id: id}, function(response) {
+								console.log('saveMenuDate found with id', response.response);
+							});
+							var newLocation = jQuery(currentLink).parent('[data-menu]').data('menu');
+							var newPosition = jQuery(currentLink).index();
+
+							// CRUD.menu.update({id: id}, {location: newLocation, position: newPosition}, function(response) {
+							// 	console.log('update position and location', response.response);
+							// });
+
+							// If the menu position hasn't changed
+							if(location != newLocation || position != newPosition) {
+								CRUD.menu.update({id: id}, {location: newLocation, position: newPosition}, function(response) {
+									console.log('update position and location', response.response);
+								});
+							}
+						}
+					}); //.mb-draggable each
+				}); // [data-menu] each
 			};
 
 			this.saveMenuLabels = function() {
@@ -184,14 +232,24 @@
 					var url = $(this).attr('href');
 					var title = $(this).text();
 					CRUD.menu.update({url: url}, {title: title}, function(response) {
-						console.log(response.response);
 					});
 				});
 			};
 
 			this.createNewPage = function(e) {
-				var url = prompt('url (include "/" at beginning)');
-				var demoTitle = (url.charAt(0) == '/') ? url.substr(1) : url;
+				var url = prompt('url (no spaces)');
+				if($scope.inEditMode) {
+					Edit.shutdownCKEditor();
+					Edit.shutdownMenuOrdering();
+					Edit.endEditing();
+					Edit.discardMenuEdits();
+				}
+				var demoTitle = url;
+				if((url.charAt(0) == '/')) {
+					demoTitle = url.substr(1);
+				} else {
+					url = '/' + url;
+				}
 				if(url != null) {
 					var template = {
 				        author: "jpm",
@@ -211,7 +269,12 @@
 						} else {
 							console.log(reply.response);
 							// window.location.href= template.url;
-							$location.url(template.url);
+							if($location.url() != template.url) {
+								$location.url(template.url);
+							} else {
+								window.location = template.url;
+							}
+							
 							theme.getMenus().then(function(menus) {
 						    	$scope.menus = menus;
 						  	});
@@ -240,8 +303,8 @@
 						} else {
 							console.log(reply.response);
 							var menu = jQuery('a[href="' + $location.url() + '"]')
-							var location = menu.parents('[data-menu]').data('menu');
-							var position = menu.parents('li').index();
+							var location = menu.parent('[data-menu]').data('menu');
+							var position = menu.parent('.mb-draggable').index();
 							$scope.menus[location].splice(position, 1);
 							$location.url('/');
 						}
@@ -260,14 +323,19 @@
 			} else { 
 				// Save Edits
 				Edit.saveCKEditorData();
-				Edit.saveMenuOrdering();
+				Edit.deleteMenus();
 				Edit.saveMenuLabels();
 				Edit.saveNewMenus();
 				Edit.saveEditedMenus();
-				Edit.deleteMenus();
-				this.editedMenus = [];
-			  	this.newMenus = [];
-			  	this.deletedMenus = [];
+				Edit.addingMenusComplete.then(function(finished) {
+					console.log('resolved and savingMenuOrdering');
+					Edit.saveMenuOrdering();
+				});	
+				$scope.foundInNew = undefined;
+				Edit.newMenusId = [];
+				Edit.editedMenus = [];
+			  	Edit.newMenus = [];
+			  	Edit.deletedMenus = [];
 				Edit.endEditing();
 			}
 		});
@@ -277,8 +345,13 @@
 			if($scope.inEditMode) {
 				Edit.shutdownCKEditor();
 				Edit.shutdownMenuOrdering();
+				Edit.newMenusId = [];
+				Edit.editedMenus = [];
+			  	Edit.newMenus = [];
+			  	Edit.deletedMenus = [];
 				Edit.endEditing();
 				Edit.discardMenuEdits();
+				$scope.foundInNew = undefined;
 				document.body.innerHTML = Edit.bodySnapshot;
 				$compile(document.body)($scope);
 				
@@ -311,6 +384,13 @@
 				$scope.templateUrl = function() {
 					return 'themes/' + $scope.serverData.theme + '/templates/' + page.template;
 				}
+
+				if(page.template == "blog") {
+					theme.getAllPosts().then(function(posts) {
+						console.log(posts);
+						$scope.posts = posts;
+					});
+				}
 			});
 		});
 
@@ -322,36 +402,62 @@
 	    	$scope.menus = menus;
 	  	});
 
+
 		$scope.active = function(path, classtoAdd) {
 			return theme.isActive(path, classtoAdd);
 		};
 
-		$scope.newMenuItem = function(menuItem) {
-			if(menuItem) {
-				if(!menuItem.url) {
-					menuItem.url = "/";
-				}
-				if(!menuItem.title) {
-					menuItem.title = "Home";
-				}
-				menuItem.location = $scope.currentLocation;
+		$scope.selectedMenu = function($event) {
+			jQuery('#editMenuItemModal').on('shown.bs.modal', function () {
+			    $('#menu-url').focus();
+			});
+			var id = jQuery('.mb-item-selected').data('id');
+			$scope.currentMenuId = id;
 
-				if(!$scope.menus[$scope.currentLocation]) {
-					menuItem.position = 0;
+			var foundIndex = jQuery.inArray(id, Edit.newMenusId);
+
+			if(id) {
+				if(foundIndex !== -1) {
+					$scope.menuItem = Edit.newMenus[foundIndex];
+					$scope.foundInNew = foundIndex;
 				} else {
-					menuItem.position = $scope.menus[$scope.currentLocation].length
+					$scope.foundInNew = undefined;
+					CRUD.menu.find({id: id}, function(response) {
+						delete response.response[0]['id'];
+						delete response.response[0]['_id'];
+						response.response[0]['position'] = jQuery('.mb-item-selected').index();
+						$scope.menuItem = response.response[0];
+						console.log('$scope.menuItem', $scope.menuItem);
+					});	
 				}
+			} else {
+				$scope.menuItem = {
+					id: new Date().toString(),
+					title: '',
+					url: '',
+					location: jQuery($event.currentTarget).parent('[data-menu]').data('menu'),
+					position: jQuery($event.currentTarget).parent('[data-menu]').children('.mb-draggable').has('a[href!="#"]').length,
+					classes: '',
+					target: ''
+				};
+			}
+		};
 
-				if(!$scope.menus[$scope.currentLocation]) {
-					$scope.menus[menuItem.location] = [];
+		$scope.newMenuItem = function() {
+			if($scope.menuItem) {
+				if(!$scope.menus[$scope.menuItem.location]) {
+					$scope.menus[$scope.menuItem.location] = {};
 				}
-
-				if(!$scope.menus[menuItem.target]) {
-					$scope.menus[menuItem.target] = '';
+				if($scope.menuItem.url.substring(0, 4) != 'http' && $scope.menuItem.url.charAt(0) != '/') {
+					$scope.menuItem.url = '/' + $scope.menuItem.url;
 				}
-
-				$scope.menus[menuItem.location][menuItem.position] = menuItem;
-				Edit.newMenus.push(menuItem);
+				// jQuery('[data-menu="' + $scope.menuItem.location + '"').children(".mb-placeholder-li").remove();
+				var length = $scope.menus[$scope.menuItem.location].length;
+				$scope.menuItem.position = length;
+				$scope.menus[$scope.menuItem.location][length] = $scope.menuItem;
+				Edit.newMenus.push($scope.menuItem);
+				Edit.newMenusId.push($scope.menuItem.id);
+				$scope.menuItem = [];
 				Edit.reprepareMenus();
 				jQuery('#editMenuItemModal').modal('hide');
 			} else {
@@ -359,34 +465,24 @@
 			}
 		};
 
-		$scope.selectedMenu = function($event) {
-			var url = jQuery('.mb-item-selected').find('a').attr('href');
-			CRUD.menu.find({url: url}, function(response) {
-				$scope.currentMenuId = response.response[0]['_id'];
-				delete response.response[0]['_id'];
-				$scope.menuItem = response.response[0];
-			});
-			$scope.currentLocation = jQuery($event.currentTarget).parents('[data-menu]').data('menu');
-		};
-
 		$scope.editMenuItem = function(menuItem) {
-			menuItem.location = jQuery('.mb-item-selected').parents('[data-menu]').data('menu');
-			menuItem.position = jQuery('.mb-item-selected').index();
-			menuItem._id = $scope.currentMenuId;
-			console.log(menuItem);
-			Edit.editedMenus.push(menuItem);
-			$scope.menus[menuItem.location][menuItem.position] = menuItem;
+			$scope.menuItem.id = $scope.currentMenuId;
+			Edit.editedMenus.push($scope.menuItem);
+			$scope.menus[$scope.menuItem.location][$scope.menuItem.position] = $scope.menuItem;
+			$scope.menuItem = [];
 			Edit.reprepareMenus();
 			jQuery('#editMenuItemModal').modal('hide');
 		};
 
 
 		$scope.removeMenuItem = function() {
-			var href = jQuery('.mb-item-selected').find('a').attr('href');
-			var location = jQuery('.mb-item-selected').parents('[data-menu]').data('menu');
-			var position = jQuery('.mb-item-selected').index();
-			Edit.deletedMenus.push(href);
-			$scope.menus[location].splice(position, 1);
+			if($scope.foundInNew != undefined) {
+				Edit.newMenusId.splice($scope.foundInNew, 1);
+				Edit.newMenus.splice($scope.foundInNew, 1);
+			} else {
+				Edit.deletedMenus.push($scope.currentMenuId);
+			}
+			$scope.menus[$scope.menuItem.location].splice($scope.menuItem.position, 1);
 			jQuery('#editMenuItemModal').modal('hide');
 		};
 

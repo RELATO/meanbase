@@ -28,6 +28,7 @@ module.exports = function(app, mongoose, models, responder) {
 						res.send(error);
 					else {
 						if(found) {
+							console.log('CRUD server CREATE', found);
 							if(callback)
 								callback();
 							else

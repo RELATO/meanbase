@@ -4,9 +4,6 @@ app.config(['$locationProvider', '$httpProvider', '$routeProvider', function($lo
     $routeProvider.when('/', {
 		templateUrl: template + "front-page",
 		controller: 'pageCtrl'
-	}).when('/blog', {
-		template: '<ng-include src="templateUrl()"></ng-include>',
-		controller: 'blogCtrl'
 	}).when('/:page', {
 		template: '<ng-include src="templateUrl()"></ng-include>',
 		controller: 'pageCtrl'

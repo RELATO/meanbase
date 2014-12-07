@@ -32,9 +32,13 @@ module.exports = function(Schema, models, validate, mongoose) {
 		},
 		title: {
 			type: String,
-			trim: true
+			trim: true,
+			default: "Title"
 		},
-		content: Object,
+		content: {
+			type: Object,
+			default: {}
+		},
 		description: String,
 		summary: String,
 		galleries: [models.gallerySchema],

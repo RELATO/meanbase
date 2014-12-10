@@ -263,9 +263,16 @@
 		    theme.getPage().then(function(page) {
 				$rootScope.page = page;
 
-				if($scope.serverData.templates[page.template]) {
-					page.template = $scope.serverData.templates[page.template];
+				for(var template in $scope.serverData.templates) {
+					if($scope.serverData.templates.hasOwnProperty(template)) {
+						var found = $scope.serverData.templates[template].indexOf(page.template);
+						if(found > -1) {
+							page.template = template;
+							break;
+						}
+					}
 				}
+
 				$scope.templateUrl = function() {
 					return 'themes/' + $scope.serverData.theme + '/templates/' + page.template;
 				}

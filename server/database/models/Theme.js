@@ -20,10 +20,10 @@ module.exports = function(Schema, models, validate, mongoose) {
 			type: Object,
 			required: true,
 			default: {
-				"front-page": "front-page",
-				"blog": "blog",
-				"page": "page",
-				"post": "post"
+				"front-page": ["front-page"],
+				"blog": ["blog"],
+				"page": ["page"],
+				"post": ["post"]
 			}
 		},
 		meta: Object

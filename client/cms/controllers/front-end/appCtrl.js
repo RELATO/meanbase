@@ -5,27 +5,21 @@
 
 		var Edit = new function() {
 			this.sortables = [];
-			this.bodySnapshot;
-
-			this.editedMenus = [];
-			this.newMenus = [];
-			this.newMenusId = [];
-			this.deletedMenus = [];
-			this.oldPositions = [];
-
-			this.addingMenusComplete = $.Deferred();
+			this.menusSnapshot = [];
 
 			this.startEditing = function() {
 				$scope.inEditMode = true;
-				this.bodySnapshot = document.body.innerHTML;
 
 				this.prepareMenusForEditing();
 				CKEDITOR.inlineAll();	
+				for(i in CKEDITOR.instances) {
+					CKEDITOR.instances[i].firstSnapshot = CKEDITOR.instances[i].getData();
+				}	
 				// $('#mb-edit').children('a').toggleClass('fa-edit').toggleClass('fa-check-circle');
 				$('#mb-edit').html('<button class="btn btn-success">Save</button>');
 				$('#mb-cancel, #mb-trash, #mb-page-settings').toggleClass('hidden');
 				
-				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#editMenuItemModal" ng-click="selectedMenu($event)" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
+				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#editMenuItemModal" ng-click="selectedMenu($event)" class="mb-edit-menu-item" class="mb-unsortable"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
 
 				this.prepareDropdownMenu();
 
@@ -33,6 +27,10 @@
 					if(!$scope.menus[jQuery(value).data('menu')]) {
 						jQuery(value).prepend('<li class="mb-draggable mb-placeholder-li"><a href="#">' + jQuery(value).data('menu') + ' placeholder</a></li>');
 					}
+				});
+
+				$('.mb-draggable a.mb-editable').blur(function(e) {
+				    Edit.saveMenuLabels(e);
 				});
 
 			} //startEditing()
@@ -48,24 +46,21 @@
 					jQuery('.mb-draggable').removeClass('mb-item-selected');
 					jQuery(e.currentTarget).addClass('mb-item-selected');
 				});
-
-				jQuery('[data-menu]').each(function(index, location) {
-					jQuery(location).children('.mb-draggable').has('a[href!="#"]').each(function(index, value) {
-						if(jQuery(value).data('position') === undefined) {
-							jQuery(value).data('position', index);
-							jQuery(value).data('location', jQuery(location).data('menu'));
-							console.log(jQuery(value).text() + ' ' + jQuery(value).data('location') + ' ' + jQuery(value).data('position'));
-						}
-					});
-				});
 			};
 
 			this.prepareDropdownMenu = function() {
-				jQuery('[data-menu]').children().hover(function() {
-					jQuery('[data-menu] .dropdown-menu').addClass('alwaysOpen');
-				}, function() {
-					jQuery('.dropdown-menu').removeClass('alwaysOpen');
-				});
+				// jQuery('.mb-dropdown-menu').addClass('alwaysOpen');
+				
+				// jQuery('[data-menu]').children().hover(function() {
+				// 	jQuery('.mb-dropdown-menu').addClass('alwaysOpen');
+				// }, function() {
+				// 	jQuery('.dropdown-menu').removeClass('alwaysOpen');
+				// });
+				// jQuery('.mb-dropdown-toggle').hover(function() {
+				// 	jQuery('.mb-dropdown-menu').addClass('alwaysOpen');
+				// }, function() {
+				// 	jQuery('.dropdown-menu').removeClass('alwaysOpen');
+				// });
 			};
 
 			this.reprepareMenus = function() {
@@ -76,11 +71,9 @@
 			};
 
 			this.discardMenuEdits = function() {
-				theme.getMenus().then(function(menus) {
-			    	$scope.menus = menus;
-			  	});
-			  	this.editedMenus = [];
-			  	this.newMenus = [];
+			  	$scope.menus = Edit.menusSnapshot;
+			  	$scope.$apply();
+			  	Edit.menusSnapshot = [];
 			};
 
 			this.endEditing = function() {
@@ -94,77 +87,23 @@
 				jQuery(".mb-placeholder-li").remove();
 			}
 
+			this.updateMenuData = function() {
+				for(var menu in $scope.menus) {
+					if ($scope.menus.hasOwnProperty(menu)) {
+						for(var menuItem in $scope.menus[menu]) {
+							$scope.menus[menu][menuItem].location = menu;
+							$scope.menus[menu][menuItem].position = menuItem;
+						}
+					}	
+				}
+			};
+
+			this.canFire = true;
+
 			this.startSortableMenus = function() {
-				var sortableMenus = document.querySelectorAll('[data-menu]');
-				var i = 0;
-				while(i < sortableMenus.length) {
-					this.sortables[i] = new Sortable(sortableMenus[i], {
-					    group: 'menus',
-					    ghostClass: "sortable-ghost",
-					    draggable: ".mb-draggable",
-					    animation: 250,
-					    onStart: function (e) { 
-					    	jQuery(sortableMenus[i]).addClass("mb-contents-moving");
-					    },
-					    onSort: function (e) {
-					        jQuery(sortableMenus[i]).removeClass("mb-contents-moving");
-					    }
-					});
-					i++;
-				}
-			};
-
-			this.saveEditedMenus = function() {
-				var i = 0;
-				while(i < this.editedMenus.length) {
-					console.log('editedMenus url', this.editedMenus[i].id);
-					CRUD.menu.update({id: this.editedMenus[i].id}, this.editedMenus[i], function(response) {
-						console.log('Updated menu item', response);
-					});
-					i++;
-				}
-			};
-
-			this.deleteMenus = function() {
-				var i = 0;
-				while(i < this.deletedMenus.length) {
-					var foundIndex = jQuery.inArray(this.deletedMenus[i], this.newMenusId);
-					console.log('foundIndex', foundIndex);
-					if(foundIndex !== -1) {
-						this.newMenusId.splice(foundIndex, 1);
-						this.newMenus.splice(foundIndex, 1);
-						console.log('deleteMenus $scope.menus', $scope.menus);
-						// $scope.menus.splice(foundIndex, 1);
-					} else {
-						CRUD.menu.delete({id: this.deletedMenus[i]}, function(response) {
-							console.log(response);
-						});
-					}
-					i++;
-				}
-			};
-
-			this.saveNewMenus = function() {
-				var newMenus = this.newMenus;
-				if(newMenus.length > 0) {
-					var i = 0;
-					var delayI = 0;
-					while(i < newMenus.length) {
-						console.log('i, length', i, newMenus.length);
-						CRUD.menu.create(newMenus[i], function(response) {
-							console.log('Created menu item', response);
-							console.log('delayI, length', delayI, newMenus.length);
-							delayI++;
-							if(delayI === newMenus.length) {
-								console.log('delayI, length final', delayI, newMenus.length);
-								Edit.addingMenusComplete.resolve(true);
-							}
-						});
-						i++;
-					}
-				} else {
-					Edit.addingMenusComplete.resolve(true);
-				}
+				$scope.sortableMenus.disabled = false;
+				$scope.$apply();
+				console.log($scope.sortableMenus);
 			};
 
 			this.saveCKEditorData = function() {
@@ -198,42 +137,10 @@
 				});
 			};
 
-			this.saveMenuOrdering = function() {
-				jQuery('[data-menu]').each(function(index, currentMenu) {
-					jQuery(currentMenu).children('.mb-draggable').each(function(index, currentLink) {
-						var location = jQuery(currentLink).data('location');
-						var position = jQuery(currentLink).data('position');
-						var id = jQuery(currentLink).data('id');
-						console.log('saveMenudate id', id);
-						if(location && position !== undefined) {
-							CRUD.menu.find({id: id}, function(response) {
-								console.log('saveMenuDate found with id', response.response);
-							});
-							var newLocation = jQuery(currentLink).parent('[data-menu]').data('menu');
-							var newPosition = jQuery(currentLink).index();
-
-							// CRUD.menu.update({id: id}, {location: newLocation, position: newPosition}, function(response) {
-							// 	console.log('update position and location', response.response);
-							// });
-
-							// If the menu position hasn't changed
-							if(location != newLocation || position != newPosition) {
-								CRUD.menu.update({id: id}, {location: newLocation, position: newPosition}, function(response) {
-									console.log('update position and location', response.response);
-								});
-							}
-						}
-					}); //.mb-draggable each
-				}); // [data-menu] each
-			};
-
-			this.saveMenuLabels = function() {
-				$('[data-menu] a[href!="#"]').each(function(i) {
-					var url = $(this).attr('href');
-					var title = $(this).text();
-					CRUD.menu.update({url: url}, {title: title}, function(response) {
-					});
-				});
+			this.saveMenuLabels = function(e) {
+				var location = jQuery(e.currentTarget).parents('[data-menu]').data('menu');
+				var position = jQuery('[data-menu="' + location + '"]').children('.mb-draggable').has('a[href!="#"]').index(jQuery(e.currentTarget).parent('.mb-draggable'));
+				$scope.menus[location][position].title = jQuery(e.currentTarget).text();
 			};
 
 			this.createNewPage = function(e) {
@@ -285,14 +192,14 @@
 
 			this.shutdownCKEditor = function() {
 				for(i in CKEDITOR.instances) {
+					CKEDITOR.instances[i].setData(CKEDITOR.instances[i].firstSnapshot);
 				    CKEDITOR.instances[i].destroy();
 				}
 			};
 
 			this.shutdownMenuOrdering = function() {
-				for(i in this.sortables.length) {
-					this.sortables[i].destroy();
-				}
+				$scope.sortableMenus.disabled = true;
+				$scope.$apply();
 			};
 
 			this.deletePage = function() {
@@ -323,19 +230,8 @@
 			} else { 
 				// Save Edits
 				Edit.saveCKEditorData();
-				Edit.deleteMenus();
-				Edit.saveMenuLabels();
-				Edit.saveNewMenus();
-				Edit.saveEditedMenus();
-				Edit.addingMenusComplete.then(function(finished) {
-					console.log('resolved and savingMenuOrdering');
-					Edit.saveMenuOrdering();
-				});	
-				$scope.foundInNew = undefined;
-				Edit.newMenusId = [];
-				Edit.editedMenus = [];
-			  	Edit.newMenus = [];
-			  	Edit.deletedMenus = [];
+				theme.setMenus($scope.menus);
+				Edit.menusSnapshot = [];
 				Edit.endEditing();
 			}
 		});
@@ -343,18 +239,10 @@
 		// Reject Changes
 		$('#mb-cancel').click(function(e){
 			if($scope.inEditMode) {
-				Edit.shutdownCKEditor();
 				Edit.shutdownMenuOrdering();
-				Edit.newMenusId = [];
-				Edit.editedMenus = [];
-			  	Edit.newMenus = [];
-			  	Edit.deletedMenus = [];
-				Edit.endEditing();
+				Edit.shutdownCKEditor();
+				Edit.endEditing();	
 				Edit.discardMenuEdits();
-				$scope.foundInNew = undefined;
-				document.body.innerHTML = Edit.bodySnapshot;
-				$compile(document.body)($scope);
-				
 			}
 		});
 		
@@ -400,6 +288,7 @@
 
 		theme.getMenus().then(function(menus) {
 	    	$scope.menus = menus;
+	    	angular.copy(menus, Edit.menusSnapshot);
 	  	});
 
 
@@ -412,24 +301,15 @@
 			    $('#menu-url').focus();
 			});
 			var id = jQuery('.mb-item-selected').data('id');
-			$scope.currentMenuId = id;
-
-			var foundIndex = jQuery.inArray(id, Edit.newMenusId);
 
 			if(id) {
-				if(foundIndex !== -1) {
-					$scope.menuItem = Edit.newMenus[foundIndex];
-					$scope.foundInNew = foundIndex;
-				} else {
-					$scope.foundInNew = undefined;
-					CRUD.menu.find({id: id}, function(response) {
-						delete response.response[0]['id'];
-						delete response.response[0]['_id'];
-						response.response[0]['position'] = jQuery('.mb-item-selected').index();
-						$scope.menuItem = response.response[0];
-						console.log('$scope.menuItem', $scope.menuItem);
-					});	
-				}
+				$scope.currentMenuId = id;
+				var found = theme.findMenuById($scope.menus, id).data;
+				// Prepare found
+				delete found['id'];
+				delete found['_id'];
+				// Set menuItem
+				$scope.menuItem = found;
 			} else {
 				$scope.menuItem = {
 					id: new Date().toString(),
@@ -445,46 +325,64 @@
 
 		$scope.newMenuItem = function() {
 			if($scope.menuItem) {
+				console.log('$scope.menuItem', $scope.menuItem);
+
+				// Validate
 				if(!$scope.menus[$scope.menuItem.location]) {
 					$scope.menus[$scope.menuItem.location] = {};
 				}
 				if($scope.menuItem.url.substring(0, 4) != 'http' && $scope.menuItem.url.charAt(0) != '/') {
 					$scope.menuItem.url = '/' + $scope.menuItem.url;
 				}
-				// jQuery('[data-menu="' + $scope.menuItem.location + '"').children(".mb-placeholder-li").remove();
-				var length = $scope.menus[$scope.menuItem.location].length;
-				$scope.menuItem.position = length;
-				$scope.menus[$scope.menuItem.location][length] = $scope.menuItem;
-				Edit.newMenus.push($scope.menuItem);
-				Edit.newMenusId.push($scope.menuItem.id);
+				
+
+				var menuLength = $scope.menus[$scope.menuItem.location].length;
+				$scope.menuItem.position = menuLength;
+
+				$scope.menus[$scope.menuItem.location][menuLength] = $scope.menuItem;
+
 				$scope.menuItem = [];
 				Edit.reprepareMenus();
-				jQuery('#editMenuItemModal').modal('hide');
 			} else {
 				console.log('Please set a url and title for the menu item.');
 			}
 		};
 
-		$scope.editMenuItem = function(menuItem) {
+		$scope.editMenuItem = function() {
 			$scope.menuItem.id = $scope.currentMenuId;
-			Edit.editedMenus.push($scope.menuItem);
 			$scope.menus[$scope.menuItem.location][$scope.menuItem.position] = $scope.menuItem;
 			$scope.menuItem = [];
 			Edit.reprepareMenus();
-			jQuery('#editMenuItemModal').modal('hide');
 		};
 
 
 		$scope.removeMenuItem = function() {
-			if($scope.foundInNew != undefined) {
-				Edit.newMenusId.splice($scope.foundInNew, 1);
-				Edit.newMenus.splice($scope.foundInNew, 1);
-			} else {
-				Edit.deletedMenus.push($scope.currentMenuId);
-			}
 			$scope.menus[$scope.menuItem.location].splice($scope.menuItem.position, 1);
-			jQuery('#editMenuItemModal').modal('hide');
+			$scope.menuItem = [];
+			Edit.reprepareMenus();
 		};
+
+		$scope.sortableMenus = { 
+			group: 'menus',
+			ghostClass: "sortable-ghost",
+			draggable: ".mb-draggable",
+			animation: 250,
+			// filter: ".mb-unsortable",
+			onStart: function (e) { 
+		    	// jQuery(sortableMenus[i]).addClass("mb-contents-moving");
+		    	jQuery('.mb-dropdown-menu').addClass('alwaysOpen');
+		    },
+		    onSort: function (e) {
+		        // jQuery(sortableMenus[i]).removeClass("mb-contents-moving");
+		    },
+		    onEnd: function(e) {
+		    	// Edit.updateMenuPositions();
+		    	Edit.updateMenuData();
+		    	jQuery('.mb-dropdown-menu').removeClass('alwaysOpen');
+		   		Edit.reprepareMenus();
+			}
+		};
+		$scope.sortableMenus.disabled = true;
 
 		$scope.defaultTitle = "Heading";
 		$scope.defaultText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, illo libero accusantium maxime nihil beatae sunt asperiores aut odio laboriosam incidunt, omnis, expedita ad consequuntur blanditiis, corporis necessitatibus ex numquam.";

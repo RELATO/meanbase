@@ -7,9 +7,9 @@ html(ng-app="app")
 		meta(name="description" content="{{page.description}}")
 		meta(property="og:description" content="{{page.description}}")
 		title Meanbase - {{page.tabTitle}}
-		include ../../cms/templates/mb-links
+		include ../../cms/templates/front-end/mb-links
 		include templates/DefaultLinks
 	body(ng-controller="AppCtrl" ng-init="serverData=#{JSON.stringify(serverData)}")
-		include ../../cms/templates/mb-headbar
+		include ../../cms/templates/front-end/mb-headbar
 		div(ng-view)
 

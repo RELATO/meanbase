@@ -28,7 +28,6 @@ module.exports = function(app, mongoose, models, responder) {
 						res.send(error);
 					else {
 						if(found) {
-							console.log('CRUD server CREATE', found);
 							if(callback)
 								callback();
 							else
@@ -80,7 +79,9 @@ module.exports = function(app, mongoose, models, responder) {
 
 			this.update = function(req, res, callback) {
 				var identifier = this.getIdentifer(req);
-				self.model.update(identifier, req.body, {multi: true}, function(error, found) {
+				console.log('identifier', identifier);
+				self.model.update(identifier, req.body, {multi: true, upsert: true}, function(error, found) {
+					console.log('found', found);
 					responder.respond(res, error, found, responder.update, callback);	
 				});
 			};

@@ -34,6 +34,6 @@ module.exports = function(Schema, models, validate, mongoose) {
 			default: ''
 		}
 	});
-	menuSchema.index({id: 1, location: 1, position: 1}, { unique: true });
+	// menuSchema.index({id: 1, location: 1, position: 1}, { unique: true });
 	return mongoose.model('Menu', menuSchema);
 };

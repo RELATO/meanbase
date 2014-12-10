@@ -2,7 +2,7 @@ var cms = angular.module('cms', ['ngResource', 'ngRoute', 'crudApp', 'angularFil
 
 cms.config(['$locationProvider', '$httpProvider', '$routeProvider', function($locationProvider, $httpProvider, $routeProvider) {
 	$locationProvider.html5Mode(true);
-	var templates = '/cms/templates/mb-';
+	var templates = '/cms/templates/backend/mb-';
     $routeProvider.when('/cms', {
 		templateUrl: templates + "settings",
 		controller: 'settingsCtrl'

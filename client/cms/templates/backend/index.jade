@@ -1,0 +1,17 @@
+doctype html
+html(ng-app="cms")
+	head
+		title meanbase backend
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		include mb-backend-links
+	body
+		#wrapper
+			include mb-backend-sidebar
+			#page-content-wrapper                       
+				a#menu-toggle.btn.btn-default(href='#menu-toggle') Open/close Menu
+				div(ng-view)
+		script.
+			$("#menu-toggle").click(function(e) {
+				e.preventDefault();
+				$("#wrapper").toggleClass("toggled");
+			});

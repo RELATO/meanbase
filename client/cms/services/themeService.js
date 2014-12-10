@@ -17,6 +17,40 @@ app.service('theme', ['$location', 'CRUD', '$http', function($location, CRUD, $h
 			return allMenus.promise();
 		}; //getMenus
 
+		this.findMenuById = function(menus, id) {
+			var found;
+			for (var property in menus) {
+			    if (menus.hasOwnProperty(property)) {
+			    	for(var menu in menus[property]) {
+			    		if(menus[property][menu].id == id) {
+			    			found = {data: menus[property][menu], index: menu};
+			    		}
+			    	}
+			    }
+			}
+			return found;
+		};
+
+		this.setMenus = function(menus) {
+			var condensedMenus = [];
+			for (var property in menus) {
+			    if (menus.hasOwnProperty(property)) {
+			    	for(var menu in menus[property]) {
+			    		console.log('menu', menus[property][menu]);
+			    		condensedMenus.push(menus[property][menu]);
+			    	}
+			    }
+			}
+			// console.log('condensedMenus', condensedMenus);
+			CRUD.menu.delete({}, function(response) {
+				for(var i in condensedMenus) {
+					CRUD.menu.create(condensedMenus[i], function(response) {
+						console.log('response', response);
+					});
+				}
+			});
+		};
+
 		this.getAllPosts = function() {
 			var allPosts = $.Deferred();
 			CRUD.page.find({template: 'post'}, function(response) {

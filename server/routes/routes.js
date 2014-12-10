@@ -15,19 +15,19 @@ module.exports = function(app, mongoose, models) {
 
 
 	app.get('/login', function(req, res) {
-		res.render('cms/templates/sc-login');
+		res.render('cms/templates/front-end/mb-login');
 	});
 
 	app.get('/cms', function(req, res) {
-		res.render('cms/templates/meanbase');
+		res.render('cms/templates/backend/index');
 	});
 
-	app.get('/cms/templates/:template', function (req, res) {
-		res.render('cms/templates/' + req.params.template);
+	app.get('/cms/templates/backend/:template', function (req, res) {
+		res.render('cms/templates/backend/' + req.params.template);
 	});
 
 	app.get('/cms/:url', function(req, res) {
-		res.render('cms/templates/meanbase');
+		res.render('cms/templates/backend/index');
 	});
 
 	app.get('/themes/:theme/templates/:template', function(req, res) {

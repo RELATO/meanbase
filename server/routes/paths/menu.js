@@ -6,7 +6,6 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 	app.route('/server/menus')
 		.post(function(req, res) {
 			var data = new models.Menu(req.body);
-			console.log('menus server paths data', data);
 			CRUD.create(req, res, data);
 		})
 		.get(function(req, res) {

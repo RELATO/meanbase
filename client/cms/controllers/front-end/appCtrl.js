@@ -15,8 +15,6 @@
 					CKEDITOR.instances[i].firstSnapshot = CKEDITOR.instances[i].getData();
 				}	
 
-				$scope.activeSorting = 'pizza';
-				
 				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#editMenuItemModal" ng-click="mb.selectedMenu($event)" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
 
 				this.prepareDropdownMenu();
@@ -48,7 +46,6 @@
 			};
 
 			this.prepareDropdownMenu = function() {
-				
 				jQuery('[data-menu], .mb-dropdown-toggle').children().hover(function() {
 					jQuery('.mb-dropdown-menu').addClass('alwaysOpen');
 				}, function() {
@@ -288,8 +285,10 @@
 			$scope.mb.templates = [];
 			for(var template in $scope.serverData.templates) {
 				if($scope.serverData.templates.hasOwnProperty(template)) {
-					if($scope.mb.templates.indexOf($scope.serverData.templates[template]) === -1) {
-						$scope.mb.templates.push($scope.serverData.templates[template]);
+					for(var templateItem in $scope.serverData.templates[template]) {
+						if($scope.mb.templates.indexOf($scope.serverData.templates[template][templateItem]) === -1) {
+							$scope.mb.templates.push($scope.serverData.templates[template][templateItem]);
+						}
 					}
 				}
 			}

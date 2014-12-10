@@ -6,17 +6,9 @@
 					//- ul(role="menu" data-menu="sidebar")
 					//- 	li(ng-repeat="menu in menus.sidebar").mb-draggable
 					//- 		a(href="{{menu.url}}").mb-editable {{menu.title}}
-					ul#sidebar.nav.nav-stacked(data-menu="sidebar")
-						li(ng-repeat="menu in menus.sidebar" class="mb-draggable {{menu.classes}}" data-id="{{menu.id}}")
-							a(href="{{menu.url ? menu.url : /}}" target="{{menu.target}}").mb-editable {{menu.title}}
-						//- li.mb-draggable
-						//- 	a(href='#sec1') Section 1
-						//- li
-						//- 	a(href='#sec2') Section 2
-						//- li
-						//- 	a(href='#sec3') Section 3
-						//- li
-						//- 	a(href='#sec4') Section 4
+					ul#sidebar.nav.nav-stacked(data-menu="sidebar" ng-sortable="mb.sortableMenus")
+						li(ng-repeat="menu in menus.sidebar track by menu.id" class="mb-draggable {{menu.classes}}" data-id="{{menu.id}}" ng-class="active(menu.url, 'active')")
+							a(href="{{menu.url}}" target="{{menu.target}}").mb-editable.mb-main-list-a {{menu.title}}
 			.col-md-9
 				h2#page-title.mb-editable {{page.title}}
 				p#content-1.mb-editable(ng-bind-html="page.content['content-1'] ? page.content['content-1'] : defaultText")

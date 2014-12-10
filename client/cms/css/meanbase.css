@@ -783,6 +783,10 @@ img {
 	max-height: 300px;
 }
 
+.mb-move {
+	cursor: move;
+}
+
 @media screen and (max-width: 640px) {
 	#mb-users .mb-form-group {
 		width: 100%;

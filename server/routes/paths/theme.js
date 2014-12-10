@@ -32,6 +32,7 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 					} else {
 						if(found) {
 							THEME = found.url;
+							TEMPLATES = found.templates;
 							res.send(found.title + ' was activated.');
 						} else {
 							res.send('That theme could not be activated.');

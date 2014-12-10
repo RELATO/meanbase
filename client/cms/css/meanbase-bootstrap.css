@@ -25,6 +25,13 @@ body {
 	outline: none;
 }
 
+.nav, 
+.pagination, 
+.carousel, 
+.panel-title a { 
+	cursor: pointer; 
+}
+
 @media (max-width: 768px) {
 	#mb-cancel,
 	#mb-trash,

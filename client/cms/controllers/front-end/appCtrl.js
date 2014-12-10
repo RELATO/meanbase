@@ -164,7 +164,6 @@
 							console.log(reply.response);
 						} else {
 							console.log(reply.response);
-							// window.location.href= template.url;
 							if($location.url() != template.url) {
 								$location.url(template.url);
 							} else {
@@ -197,11 +196,16 @@
 							console.log(reply.response);
 						} else {
 							console.log(reply.response);
-							var menu = jQuery('a[href="' + $location.url() + '"]').first();
-							var location = menu.parent('[data-menu]').data('menu');
-							var position = menu.parent('.mb-draggable').index();
+							var menu = jQuery('a[href="' + $location.url() + '"]');
+							var location = menu.parents('[data-menu]').data('menu');
+							var position = menu.parents('.mb-draggable').index();
+							if($location.url() != '/') {
+								$location.url('/');
+							} else {
+								window.location = '/';
+							}
 							$scope.menus[location].splice(position, 1);
-							$location.url('/');
+							console.log($scope.menus[location]);
 						}
 					});
 				}

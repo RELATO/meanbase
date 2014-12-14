@@ -334,7 +334,10 @@
 				delete found['id'];
 				delete found['_id'];
 				// Set menuItem
-				$scope.menuItem = found;
+				$scope.menuItem = {};
+				angular.copy(found, $scope.menuItem);
+				console.log('selectedMenu', $scope.menuItem);
+				// $scope.menuItem = found;
 				jQuery(document).keypress(function(e) {
 					if(e.which == 13) {
 						$('#editMenuItemModal').modal('hide');
@@ -378,12 +381,17 @@
 				if($scope.menuItem.url.substring(0, 4) != 'http' && $scope.menuItem.url.charAt(0) != '/') {
 					$scope.menuItem.url = '/' + $scope.menuItem.url;
 				}
+				if(!$scope.menuItem.id) {
+					$scope.menuItem.id = new Date().toString();
+				}
 				
-
 				var menuLength = $scope.menus[$scope.menuItem.location].length;
 				$scope.menuItem.position = menuLength;
 
-				$scope.menus[$scope.menuItem.location][menuLength] = $scope.menuItem;
+				console.log('newMenuItem', $scope.menuItem);
+
+				// $scope.menus[$scope.menuItem.location][menuLength] = $scope.menuItem;
+				$scope.menus[$scope.menuItem.location].push($scope.menuItem);
 
 				$scope.menuItem = [];
 				Edit.reprepareMenus();

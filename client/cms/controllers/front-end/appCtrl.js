@@ -26,10 +26,11 @@
 
 				jQuery('[data-menu]').each(function(index, value) {
 					if(!$scope.menus[jQuery(value).data('menu')] || $scope.menus[jQuery(value).data('menu')].length === 0) {
-						$scope.menus[jQuery(value).data('menu')] = [];
 						jQuery(value).prepend('<li class="mb-draggable mb-placeholder-li"><a href="#">' + jQuery(value).data('menu') + ' placeholder</a></li>');
+						$scope.menus[jQuery(value).data('menu')] = [];
 					}
 				});
+				console.log('init', $scope.menus);
 
 				$('.mb-draggable a.mb-editable').blur(function(e) {
 				    Edit.saveMenuLabels(e);
@@ -312,7 +313,10 @@
 		});
 
 		theme.getMenus().then(function(menus) {
-	    	$scope.menus = menus;
+			$scope.menus = menus;
+			if(!$scope.menus.main) {
+				$scope.menus.main = [];
+			}
 	    	angular.copy(menus, Edit.menusSnapshot);
 	  	});
 

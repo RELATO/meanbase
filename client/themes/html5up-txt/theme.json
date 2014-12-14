@@ -8,10 +8,10 @@
 	"preview": "themes/html5up-txt/screenshot.png",
 	"templates": {
 		"page": [
-			"front-page",
-			"blog",
+			"home",
+			"list",
 			"page",
-			"post"
+			"article"
 		]
 	}
 }

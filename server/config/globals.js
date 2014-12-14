@@ -9,10 +9,10 @@ module.exports = function(models) {
 			} else {
 				GLOBAL.THEME = 'Default';
 				GLOBAL.TEMPLATES = {
-					"front-page": "front-page",
-					"blog": "blog",
-					"page": "page",
-					"post": "post"
+					"home": ["home"],
+					"list": ["list"],
+					"page": ["page"],
+					"article": ["article"]
 				}
 			}
 		}

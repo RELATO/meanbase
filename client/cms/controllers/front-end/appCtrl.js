@@ -15,7 +15,12 @@
 					CKEDITOR.instances[i].firstSnapshot = CKEDITOR.instances[i].getData();
 				}	
 
-				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#editMenuItemModal" ng-click="mb.selectedMenu($event)" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
+				// jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#editMenuItemModal" ng-click="mb.selectedMenu($event)" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
+
+				jQuery('.mb-draggable').dblclick(function () {
+					$scope.mb.selectedMenu();
+					jQuery('#editMenuItemModal').modal('toggle');
+				});
 
 				this.prepareDropdownMenu();
 
@@ -161,15 +166,23 @@
 							console.log(reply.response);
 						} else {
 							console.log(reply.response);
+							var newMenu = {
+								id: new Date().toString(),
+								title: demoTitle,
+								url: url,
+								location: 'main',
+								position: $scope.menus.main.length,
+								classes: '',
+								target: ''
+							};
+							
+							$scope.menus.main.push(newMenu);
+							theme.setMenus($scope.menus);
 							if($location.url() != template.url) {
 								$location.url(template.url);
 							} else {
 								window.location = template.url;
 							}
-							
-							theme.getMenus().then(function(menus) {
-						    	$scope.menus = menus;
-						  	});
 						}
 					});
 				}
@@ -322,6 +335,12 @@
 				delete found['_id'];
 				// Set menuItem
 				$scope.menuItem = found;
+				jQuery(document).keypress(function(e) {
+					if(e.which == 13) {
+						$('#editMenuItemModal').modal('hide');
+						$scope.mb.editMenuItem();
+					}
+				});
 			} else {
 				var location = jQuery($event.currentTarget).parent('[data-menu]').data('menu');
 				if(!$scope.menus[location]) {
@@ -338,6 +357,13 @@
 					classes: '',
 					target: ''
 				};
+
+				jQuery(document).keypress(function(e) {
+					if(e.which == 13) {
+						$('#editMenuItemModal').modal('hide');
+						$scope.mb.newMenuItem();
+					}
+				});
 			}
 		};
 

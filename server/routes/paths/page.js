@@ -26,12 +26,7 @@ module.exports = function(app, mongoose, models, responder, CRUD) {
 			if(req.body.url.charAt(0) != '/') {req.body.url = '/'+req.body.url;}
 			var newDocument = new models.Page(req.body);
 			CRUD.create(req, res, newDocument, function() {
-				var newDocument = new models.Menu({
-					title: req.body.title,
-					url: req.body.url
-				});
-
-				CRUD.create(req, res, newDocument);
+				res.send('Created Page');
 			});
 		})
 		.get(function(req, res) {

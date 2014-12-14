@@ -32,6 +32,10 @@ body {
 	cursor: pointer; 
 }
 
+.mb-draggable a[contenteditable="true"] {
+	cursor: move;
+}
+
 @media (max-width: 768px) {
 	#mb-cancel,
 	#mb-trash,

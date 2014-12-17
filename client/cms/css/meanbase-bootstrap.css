@@ -36,6 +36,10 @@ body {
 	cursor: move;
 }
 
+.alwaysOpen {
+	display: block;
+}
+
 @media (max-width: 768px) {
 	#mb-cancel,
 	#mb-trash,

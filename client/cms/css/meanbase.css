@@ -751,10 +751,6 @@ img {
 	/*background-color: #F39C12;*/
 }
 
-.alwaysOpen {
-	display: block;
-}
-
 /* Media */
 
 .mb-media-item {
@@ -781,6 +777,26 @@ img {
 	display: inline-block;
 	max-width: 90%;
 	max-height: 300px;
+}
+
+.mb-toggle-switch {
+	margin-top: -1em;
+}
+
+.mb-toggle-switch input {
+	display:none;
+}
+
+.mb-toggle-switch input + span:before {
+  font-family: 'FontAwesome';
+  font-size: 2.75em;
+  content: "\f204"; /* off */
+  color: #2C3E50;
+}
+
+.mb-toggle-switch input:checked + span:before {
+	content: "\f205"; /* on */
+	color: #27AE60;
 }
 
 @media screen and (max-width: 640px) {

@@ -11,7 +11,8 @@
 			"home",
 			"list",
 			"page",
-			"article"
+			"article",
+			"404"
 		]
 	}
 }

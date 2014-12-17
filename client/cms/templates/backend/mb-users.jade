@@ -79,13 +79,13 @@ h1 Users
 								.mb-p-1
 									.form-group
 										label Username
-										input(type="text" value="{{user.username}}").form-control
+										input(type="text" ng-model="user.username").form-control
 											
 							.a-6.m-12
 								.mb-p-1
 									.form-group
 										label Email
-										input(type="text" value="{{user.email}}").form-control
+										input(type="text" ng-model="user.email").form-control
 							.a-6.m-12
 								.mb-p-1
 									.form-group
@@ -96,23 +96,25 @@ h1 Users
 									.form-group
 										label Repeat New Password
 										input(type="password" placeholder="password" ng-model="currentPasswordConfirm").form-control
-							.a-3.m-6.a-middle
+							.a-3.m-6
 								.mb-p-1
 									.form-group
 										p.h5 Allow User:
 										select.mb-panel-select
-											option(value='{{user.access._id}}' ng-repeat="role in roles" ng-selected="role._id == user.access._id"){{role.role}}
-							.a-3.m-6.a-middle
+											option(ng-model='user.access' ng-value="role._id" ng-repeat="role in roles" ng-selected="role._id == user.access._id") {{role.role}}
+							.a-3.m-6
 								.mb-p-1
 									.form-group
-										p.h5 Active
-										input(type="checkbox" ng-checked="user.active")
-							.a-3.m-6.a-middle
+										p.h5 Account Enabled
+										label.mb-toggle-switch
+											input(type="checkbox" ng-model="user.active" ng-checked="user.active")
+											span
+							.a-3.m-6
 								.mb-p-1
 									.form-group
 										p.h5| Last Logged In
 										| {{user.lastVisited | date: 'MMM d, y h:mm a'}} 
-							.a-12.a-right.a-middle
+							.a-12.a-right
 								.mb-p-1
 									button.btn.btn-danger(ng-click="deleteUser(user, $index)") Delete
 									button.btn.btn-success(ng-click="updateUser(user)") Update

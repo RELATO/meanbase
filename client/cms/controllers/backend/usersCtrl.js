@@ -86,10 +86,13 @@ cms.controller('usersCtrl', ['$scope', '$http', '$location', 'CRUD', function($s
 	};
 
 	$scope.updateUser = function(user) {
-		console.log('user', user);
-		// CRUD.role.update({_id: user._id}, {}, function(response) {
-		// 	console.log(response.response);
-		// });
+		var newInfo = {};
+		angular.copy(user, newInfo);
+		newInfo.access = user.access;
+		console.log('user', newInfo);
+		CRUD.user.update({_id: user._id}, newInfo, function(response) {
+			console.log(response.response);
+		});
 	};
 
 	$scope.deleteUser = function(user, index) {

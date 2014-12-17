@@ -7,8 +7,8 @@
 					//- 	li(ng-repeat="menu in menus.sidebar").mb-draggable
 					//- 		a(href="{{menu.url}}").mb-editable {{menu.title}}
 					ul#sidebar.nav.nav-stacked(data-menu="sidebar" ng-sortable="mb.sortableMenus")
-						li(ng-repeat="menu in menus.sidebar track by menu.id" class="mb-draggable {{menu.classes}}" data-id="{{menu.id}}" ng-class="active(menu.url, 'active')")
-							a(href="{{menu.url}}" target="{{menu.target}}").mb-editable.mb-main-list-a {{menu.title}}
+						li(ng-repeat="menu in menus.sidebar track by menu.id" mb-menu="menu" ng-class="active(menu.url, 'active')")
+							a(href="{{menu.url}}" target="{{menu.target}}") {{menu.title}}
 			.col-md-9
 				h2#page-title.mb-editable {{page.title}}
 				p#content-1.mb-editable(ng-bind-html="page.content['content-1'] ? page.content['content-1'] : defaultText")

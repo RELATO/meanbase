@@ -10,13 +10,13 @@
 			a.navbar-brand(href='/') Home
 		#navbar.navbar-collapse.collapse
 			ul#sortable-head.nav.navbar-nav(data-menu="main" ng-sortable="mb.sortableMenus")
-				li(ng-repeat="menu in menus.main track by menu.id" class="mb-draggable {{menu.classes}}" data-id="{{menu.id}}" ng-class="active(menu.url, 'active')")
-					a(href="{{menu.url}}" target="{{menu.target}}").mb-editable.mb-main-list-a {{menu.title}}
+				li(ng-repeat="menu in menus.main track by menu.id" mb-menu="menu" ng-class="active(menu.url, 'active')")
+					a(href="{{menu.url}}" target="{{menu.target}}") {{menu.title}}
 			ul.nav.navbar-nav
 				li.drop-down.mb-dropdown-toggle
 					a(data-toggle="dropdown" href="#").dropdown-toggle
 						| Blog
 						span.caret
 					ul#sortable-footer.dropdown-menu(role="menu" data-menu="footer" ng-sortable="mb.sortableMenus").mb-dropdown-menu
-						li(ng-repeat="menu in menus.footer track by menu.id" data-id="{{menu.id}}" ng-class="active(menu.url, 'active')").mb-draggable
-							a(href="{{menu.url}}" target="{{menu.target}}").mb-editable.mb-footer-list-a {{menu.title}}
+						li(ng-repeat="menu in menus.footer track by menu.id" mb-menu="menu" ng-class="active(menu.url, 'active')")
+							a(href="{{menu.url}}" target="{{menu.target}}") {{menu.title}}

@@ -7,7 +7,7 @@
 	"url": "SecondTheme",
 	"preview": "themes/SecondTheme/screenshot.png",
 	"templates": {
-		"front-page": ["home"],
+		"front-page": ["home", "404"],
 		"blog": ["list"],
 		"page": ["page"],
 		"post": ["article"]

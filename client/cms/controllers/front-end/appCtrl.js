@@ -9,59 +9,52 @@
 			this.startEditing = function() {
 				$scope.editMode = true;
 
-				this.prepareMenusForEditing();
+				angular.copy($scope.menus, Edit.menusSnapshot);
+
+				jQuery('.mb-editable').attr('contenteditable', true);
 				CKEDITOR.inlineAll();	
 				for(i in CKEDITOR.instances) {
 					CKEDITOR.instances[i].firstSnapshot = CKEDITOR.instances[i].getData();
 				}	
 
-				// jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#editMenuItemModal" ng-click="mb.selectedMenu($event)" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
-
-				jQuery('.mb-draggable').dblclick(function () {
-					$scope.mb.selectedMenu();
-					jQuery('#editMenuItemModal').modal('toggle');
-				});
+				jQuery('[data-menu]').append($compile('<li data-toggle="modal" data-target="#editMenuItemModal" ng-click="mb.selectedMenu($event)" class="mb-edit-menu-item"><a href="#"> <i class="fa fa-pencil fa-lg"></i></a></li>')($scope));
 
 				this.prepareDropdownMenu();
 
-				jQuery('[data-menu]').each(function(index, value) {
-					if(!$scope.menus[jQuery(value).data('menu')] || $scope.menus[jQuery(value).data('menu')].length === 0) {
-						jQuery(value).prepend('<li class="mb-draggable mb-placeholder-li"><a href="#">' + jQuery(value).data('menu') + ' placeholder</a></li>');
-						$scope.menus[jQuery(value).data('menu')] = [];
-					}
-				});
-				console.log('init', $scope.menus);
-
-				$('.mb-draggable a.mb-editable').blur(function(e) {
-				    Edit.saveMenuLabels(e);
-				});
-
+				this.checkPlaceholderMenu();
 			} //startEditing()
 
-			this.prepareMenusForEditing = function() {
-				$('a').click(function(e) {
-					if($scope.editMode) {
-						e.preventDefault();
-					}
-				});	
-				jQuery('.mb-editable').attr('contenteditable', true);
-				jQuery('.mb-draggable').click(function(e) {
-					jQuery('.mb-draggable').removeClass('mb-item-selected');
-					jQuery(e.currentTarget).addClass('mb-item-selected');
-				});
-			};
-
 			this.prepareDropdownMenu = function() {
-				jQuery('[data-menu], .mb-dropdown-toggle').children().hover(function() {
-					jQuery('.mb-dropdown-menu').addClass('alwaysOpen');
+				jQuery('[data-menu], .mb-dropdown-toggle').hover(function() {
+					if($scope.editMode) {
+						jQuery('.mb-dropdown-menu').addClass('alwaysOpen');
+					}
 				}, function() {
 					jQuery('.dropdown-menu').removeClass('alwaysOpen');
 				});
 			};
 
+			this.checkPlaceholderMenu = function() {
+				jQuery('[data-menu]').each(function(index, value) {
+
+					if(!$scope.menus[jQuery(value).data('menu')]) {
+						$scope.menus[jQuery(value).data('menu')] = [];
+					}
+
+					if($scope.menus[jQuery(value).data('menu')].length !== 0) {
+						jQuery(value).children('.mb-placeholder-li').remove();
+					} else {
+
+						if(jQuery(value).children('.mb-placeholder-li').length == 0) {
+							jQuery(value).prepend($compile('<li class="mb-draggable ignore-draggable mb-placeholder-li"><a href="#">' + jQuery(value).data('menu') + ' placeholder</a></li>')($scope));
+						}
+						
+					}
+				});
+			};
+
 			this.reprepareMenus = function() {
 				$timeout(function () {
-				    Edit.prepareMenusForEditing();
 					Edit.prepareDropdownMenu();
 				});
 			};
@@ -127,12 +120,6 @@
 
 				CRUD.page.update({url: $location.url()}, finalDocument, function(response) {
 				});
-			};
-
-			this.saveMenuLabels = function(e) {
-				var location = jQuery(e.currentTarget).parents('[data-menu]').data('menu');
-				var position = jQuery('[data-menu="' + location + '"]').children('.mb-draggable').has('a[href!="#"]').index(jQuery(e.currentTarget).parent('.mb-draggable'));
-				$scope.menus[location][position].title = jQuery(e.currentTarget).text();
 			};
 
 			this.createNewPage = function(e) {
@@ -236,7 +223,6 @@
 		$scope.mb.saveChanges = function() {
 			if($scope.editMode) {
 				Edit.saveCKEditorData();
-				console.log('$scope.menus', $scope.menus);
 				theme.setMenus($scope.menus);
 				Edit.menusSnapshot = [];
 				Edit.endEditing();
@@ -272,6 +258,16 @@
 		
 		$scope.$on('$locationChangeStart', function() {
 		    theme.getPage().then(function(page) {
+		    	if(page == undefined) {
+		    		page = {
+		    			title: "Unkown Page",
+		    			tabTitle: "Could not find page.",
+		    			content: {
+		    				"content-1": "I'm sorry, we could not find that page."
+		    			},
+		    			template: "404"
+		    		};
+		    	}
 				$rootScope.page = page;
 
 				for(var template in $scope.serverData.templates) {
@@ -317,7 +313,6 @@
 			if(!$scope.menus.main) {
 				$scope.menus.main = [];
 			}
-	    	angular.copy(menus, Edit.menusSnapshot);
 	  	});
 
 
@@ -325,15 +320,17 @@
 			return theme.isActive(path, classtoAdd);
 		};
 
-		$scope.mb.selectedMenu = function($event) {
+		$scope.mb.selectedMenu = function($event, id) {
 			jQuery('#editMenuItemModal').on('shown.bs.modal', function () {
 			    $('#menu-url').focus();
 			});
-			var id = jQuery('.mb-item-selected').data('id');
+			console.log('id', id);
+			var id = id || jQuery('.mb-item-selected').data('id') || undefined;
 
 			if(id) {
 				$scope.currentMenuId = id;
 				var found = theme.findMenuById($scope.menus, id).data;
+				console.log('theme.findMenuById', found);
 				// Prepare found
 				delete found['id'];
 				delete found['_id'];
@@ -354,7 +351,6 @@
 					$scope.menus[location] = [];
 				}
 				var position = $scope.menus[location].length;
-				console.log('position', position);
 				$scope.menuItem = {
 					id: new Date().toString(),
 					title: '',
@@ -376,11 +372,10 @@
 
 		$scope.mb.newMenuItem = function() {
 			if($scope.menuItem) {
-				console.log('$scope.menuItem', $scope.menuItem);
-
+				console.log('newMenuItem', $scope.menuItem);
 				// Validate
 				if(!$scope.menus[$scope.menuItem.location]) {
-					$scope.menus[$scope.menuItem.location] = {};
+					$scope.menus[$scope.menuItem.location] = [];
 				}
 				if($scope.menuItem.url.substring(0, 4) != 'http' && $scope.menuItem.url.charAt(0) != '/') {
 					$scope.menuItem.url = '/' + $scope.menuItem.url;
@@ -392,13 +387,13 @@
 				var menuLength = $scope.menus[$scope.menuItem.location].length;
 				$scope.menuItem.position = menuLength;
 
-				console.log('newMenuItem', $scope.menuItem);
+				$scope.menus[$scope.menuItem.location][menuLength] = $scope.menuItem;
+				// $scope.menus[$scope.menuItem.location].push($scope.menuItem);
+				console.log('newMenuItem $scope.menus', $scope.menus);
 
-				// $scope.menus[$scope.menuItem.location][menuLength] = $scope.menuItem;
-				$scope.menus[$scope.menuItem.location].push($scope.menuItem);
-
-				$scope.menuItem = [];
+				$scope.menuItem = undefined;
 				Edit.reprepareMenus();
+				Edit.checkPlaceholderMenu();
 			} else {
 				console.log('Please set a url and title for the menu item.');
 			}
@@ -407,14 +402,14 @@
 		$scope.mb.editMenuItem = function() {
 			$scope.menuItem.id = $scope.currentMenuId;
 			$scope.menus[$scope.menuItem.location][$scope.menuItem.position] = $scope.menuItem;
-			$scope.menuItem = [];
+			$scope.menuItem = undefined;
 			Edit.reprepareMenus();
 		};
 
 
 		$scope.mb.removeMenuItem = function() {
 			$scope.menus[$scope.menuItem.location].splice($scope.menuItem.position, 1);
-			$scope.menuItem = [];
+			$scope.menuItem = undefined;
 			Edit.reprepareMenus();
 		};
 
@@ -422,11 +417,13 @@
 			group: 'menus',
 			ghostClass: "sortable-ghost",
 			draggable: ".mb-draggable",
+			filter: ".ignore-draggable",
 			animation: 250,
-			// filter: ".mb-unsortable",
+			scroll: true, // or HTMLElement
+		    scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
+		    scrollSpeed: 10, // px
 			onStart: function (e) { 
 		    	// jQuery(sortableMenus[i]).addClass("mb-contents-moving");
-		    	jQuery('.mb-dropdown-menu').addClass('alwaysOpen');
 		    },
 		    onSort: function (e) {
 		        // jQuery(sortableMenus[i]).removeClass("mb-contents-moving");
@@ -434,8 +431,9 @@
 		    onEnd: function(e) {
 		    	// Edit.updateMenuPositions();
 		    	Edit.updateMenuData();
-		    	jQuery('.mb-dropdown-menu').removeClass('alwaysOpen');
+		    	Edit.checkPlaceholderMenu();
 		   		Edit.reprepareMenus();
+		   		console.log('onEnd', $scope.menus);
 			}
 		};
 		$scope.mb.sortableMenus.disabled = true;

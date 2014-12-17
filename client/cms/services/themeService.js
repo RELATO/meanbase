@@ -51,19 +51,19 @@ app.service('theme', ['$location', 'CRUD', '$http', function($location, CRUD, $h
 			});
 		};
 
-		this.getAllPosts = function() {
-			var allPosts = $.Deferred();
-			CRUD.page.find({template: 'post'}, function(response) {
+		this.getAllArticles = function() {
+			var allArticles = $.Deferred();
+			CRUD.page.find({template: 'article'}, function(response) {
 				var i = 0;
-				var posts = []
+				var articles = []
 				while(i < response.response.length) {
-					posts = posts.concat(response.response[i]);
+					articles = articles.concat(response.response[i]);
 					i++;
 				}
-				allPosts.resolve(posts);
+				allArticles.resolve(articles);
 			});
-			return allPosts.promise();
-		}; //getAllPosts
+			return allArticles.promise();
+		}; //getallArticles
 
 		this.comment = function(comment) {
 			var comment = {

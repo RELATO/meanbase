@@ -130,9 +130,14 @@
 					Edit.endEditing();
 					Edit.discardMenuEdits();
 				}
-				var demoTitle = url;
+				url = url.replace(/[ ]/g, "-");
+				var menuTitle = url.replace(/[_-]/g, " ");
+				demoTitle = menuTitle.replace(/(^| )(\w)/g, function(x) {
+					return x.toUpperCase();
+				});
 				if((url.charAt(0) == '/')) {
 					demoTitle = url.substr(1);
+
 				} else {
 					url = '/' + url;
 				}
@@ -156,7 +161,7 @@
 							console.log(reply.response);
 							var newMenu = {
 								id: new Date().toString(),
-								title: demoTitle,
+								title: menuTitle,
 								url: url,
 								location: 'main',
 								position: $scope.menus.main.length,
@@ -284,9 +289,10 @@
 					return 'themes/' + $scope.serverData.theme + '/templates/' + page.template;
 				}
 
+				console.log('page.template', page.template);
 				if(page.template == "blog") {
-					theme.getAllPosts().then(function(posts) {
-						$scope.posts = posts;
+					theme.getAllArticles().then(function(articles) {
+						$scope.posts = articles;
 					});
 				}
 			});

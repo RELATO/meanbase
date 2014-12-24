@@ -9,7 +9,7 @@
 	"templates": {
 		"page": [
 			"home",
-			"list",
+			"archive",
 			"page",
 			"article",
 			"404"

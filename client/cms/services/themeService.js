@@ -53,6 +53,7 @@ app.service('theme', ['$location', 'CRUD', '$http', function($location, CRUD, $h
 
 		this.getAllArticles = function() {
 			var allArticles = $.Deferred();
+			console.log('getall');
 			CRUD.page.find({template: 'article'}, function(response) {
 				var i = 0;
 				var articles = []
@@ -83,6 +84,7 @@ app.service('theme', ['$location', 'CRUD', '$http', function($location, CRUD, $h
 		this.getPage = function() {
 			var page = $.Deferred();
 			$http.get('/server/pages/approved', {params: {url: $location.url()}}).success(function(response) {
+				console.log('getPage', response);
 				page.resolve(response[0]);
 			}).error(function(error) {
 				page.resolve(error[0]);

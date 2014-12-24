@@ -12,7 +12,7 @@ angular.module('app.directives').directive('mbMenu', ['$location', function(loca
 			});
 
 			element.addClass('mb-draggable ' + scope.menu.classes);
-			element.children('a').addClass('mb-editable');
+			// element.children('a').addClass('mb-editable');
 			element.attr('ng-class="active(menu.url, \'active\')"');
 			element.data('id', scope.menu.id);
 
@@ -29,9 +29,11 @@ angular.module('app.directives').directive('mbMenu', ['$location', function(loca
 
 			scope.$watch('editMode', function(value) {
 				if(value) {
-					element.children('a').attr('contenteditable', true);
+					element.addClass('mb-move');
+					// element.children('a').attr('contenteditable', true);
 				} else {
-					element.children('a').attr('contenteditable', false);
+					element.removeClass('mb-move');
+					// element.children('a').attr('contenteditable', false);
 				}
 			});
 

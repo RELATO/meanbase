@@ -8,7 +8,7 @@
 	"preview": "themes/Default/screenshot.png",
 	"templates": {
 		"front-page": ["home", "404"],
-		"blog": ["list"],
+		"blog": ["archive"],
 		"page": ["page"],
 		"post": ["article"]
 	}

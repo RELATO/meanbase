@@ -8,13 +8,13 @@ header#header
 //
    Nav 
 nav#nav.skel-layers-fixed.mb-fixed-top
-  ul(data-menu="main")
-    li(ng-repeat="menu in menus.main" class="mb-draggable {{menu.classes}}" ng-class="active(menu.url, 'current')" data-id="{{menu.id}}")
+  ul(data-menu="main" ng-sortable="mb.sortableMenus")
+    li(ng-repeat="menu in menus.main track by menu.id" mb-menu="menu" ng-class="active(menu.url, 'active')")
       a(href="{{menu.url ? menu.url : /}}" target="{{menu.target}}").mb-editable.mb-main-list-a {{menu.title}}
     li
       a(href='#') Dropdown
-      ul(data-menu="footer").dropdown-menu
-        li(ng-repeat="menu in menus.footer" data-id="menu._id").mb-draggable
+      ul(data-menu="footer" ng-sortable="mb.sortableMenus").dropdown-menu
+        li(ng-repeat="menu in menus.footer track by menu.id" mb-menu="menu" ng-class="active(menu.url, 'active')").mb-draggable
           a(href="{{menu.url ? menu.url: /}}" target="{{menu.target}}").mb-editable.mb-footer-list-a {{menu.title}}
 //
    Banner 

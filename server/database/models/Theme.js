@@ -21,9 +21,10 @@ module.exports = function(Schema, models, validate, mongoose) {
 			required: true,
 			default: {
 				"front-page": ["front-page"],
-				"blog": ["blog"],
+				"blog": ["archive"],
 				"page": ["page"],
-				"post": ["post"]
+				"article": ["article"],
+				"404": ["404"]
 			}
 		},
 		meta: Object

@@ -274,6 +274,7 @@
 		    		};
 		    	}
 				$rootScope.page = page;
+				console.log($rootScope.page);
 
 				for(var template in $scope.serverData.templates) {
 					if($scope.serverData.templates.hasOwnProperty(template)) {

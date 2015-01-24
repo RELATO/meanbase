@@ -10,6 +10,6 @@
 		"front-page": ["home", "404"],
 		"blog": ["archive"],
 		"page": ["page"],
-		"post": ["article"]
+		"article": ["article"]
 	}
 }

@@ -1,28 +1,50 @@
 //- meanbase
-script(src="http://code.jquery.com/jquery-2.1.1.min.js")
-script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js")
-script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-route.min.js")
-script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-resource.min.js")
-script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-sanitize.min.js")
-script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
 
-link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
-link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css')
-link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
-link(rel='stylesheet', href='http://cdn.jsdelivr.net/flexgrid/1.5.1/flexgrid.min.css')
-link(rel="stylesheet", href="/cms/css/meanbase.css")
-link(rel="stylesheet", href="/cms/css/meanbase-bootstrap.css")
+//- CDN's
+//- script(src="http://code.jquery.com/jquery-2.1.1.min.js")
+//- script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js")
+//- script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-route.min.js")
+//- script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-resource.min.js")
+//- script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-sanitize.min.js")
+//- script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+//- script(src='http://cdn.jsdelivr.net/flexgrid/1.5.2/flexgrid.min.js')
+//- script(src="http://rubaxa.github.io/Sortable/Sortable.js?1")
+//- script(src="http://rubaxa.github.io/Sortable/ng-sortable.js?1")
+//- script(src="http://cdn.ckeditor.com/4.4.6/standard-all/ckeditor.js")
+//- script(src="http://cdn.ckeditor.com/4.4.6/full/ckeditor.js")
+//- script(src="/cms/js/ckeditor/ckeditor.js")
 
-script(src='http://cdn.jsdelivr.net/flexgrid/1.5.2/flexgrid.min.js')
+//- link(rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+//- link(rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css')
+//- link(rel='stylesheet' href='http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
+//- link(rel='stylesheet' href='http://cdn.jsdelivr.net/flexgrid/1.5.1/flexgrid.min.css')
 
+
+//- Libraries
+link(rel="stylesheet" href="cms/bower_components/bootstrap/dist/css/bootstrap.min.css")
+link(rel="stylesheet" href="cms/bower_components/bootstrap/dist/css/bootstrap-theme.min.css")
+link(rel="stylesheet" href="cms/bower_components/font-awesome/css/font-awesome.min.css")
+link(rel='stylesheet' href='cms/bower_components/flexgrid/CDN/flexgrid.min.css')
+
+script(src="cms/bower_components/jquery/dist/jquery.min.js")
+script(src="cms/bower_components/angular/angular.min.js")
+script(src="cms/bower_components/angular-route/angular-route.min.js")
+script(src="cms/bower_components/angular-resource/angular-resource.min.js")
+script(src="cms/bower_components/angular-sanitize/angular-sanitize.min.js")
+script(src="cms/bower_components/bootstrap/dist/js/bootstrap.min.js")
+script(src="cms/bower_components/ckeditor/ckeditor.js")
+script(src="cms/bower_components/sortable/sortable.js")
+script(src="cms/bower_components/sortable/ng-sortable.js")
+script(src="cms/bower_components/flexgrid/CDN/flexgrid.min.js")
+
+
+//- App Internal Links
+link(rel="stylesheet" href="/cms/css/meanbase.css")
+link(rel="stylesheet" href="/cms/css/meanbase-bootstrap.css")
 script(src="/cms/services/CRUD.js")
 script(src="/cms/js/ui-bootstrap-tpls-0.12.0.min.js")
 script(src="/cms/modules/app.directives.js")
 script(src="/cms/modules/app.js")
-script(src="http://cdn.ckeditor.com/4.4.6/standard-all/ckeditor.js")
-//- script(src="http://cdn.ckeditor.com/4.4.6/full/ckeditor.js")
-//- script(src="/cms/js/ckeditor/ckeditor.js")
-
 script.
 	CKEDITOR.config.filebrowserBrowseUrl = '/server/images/ckeditor';
 	CKEDITOR.config.filebrowserImageUploadUrl = '/server/images';
@@ -31,7 +53,5 @@ script(src="/cms/services/ckeditorService.js")
 script(src="/cms/services/themeService.js")
 script(src="/cms/directives/mb-menu.js")
 script(src="/cms/controllers/front-end/appCtrl.js")
-script(src="http://rubaxa.github.io/Sortable/Sortable.js?1")
-script(src="http://rubaxa.github.io/Sortable/ng-sortable.js?1")
 
 

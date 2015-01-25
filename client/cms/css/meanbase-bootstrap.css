@@ -40,6 +40,14 @@ body {
 	display: block;
 }
 
+.p-1-right {
+	padding-right: 1em;
+}
+
+.p-1-left {
+	padding-left: 1em;
+}
+
 @media (max-width: 768px) {
 	#mb-cancel,
 	#mb-trash,

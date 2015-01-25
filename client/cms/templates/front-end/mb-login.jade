@@ -1,29 +1,26 @@
 doctype html
-html
-  head
-    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
-    meta(charset='utf-8')
-    title SimpleCMS | Backend Settings
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', type='text/css', href='http://cdn.jsdelivr.net/flexgrid/1.5.1/flexgrid.min.css')
-    script(src='http://code.jquery.com/jquery-2.1.1.min.js')
-    link(rel='stylesheet', type='text/css', href='cms/css/SimpleCMS.css')
-    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
-    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css')
-    script(src='cms/js/SimpleCMS.js')
-    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
-    link(href='http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
-  body
-    #mb-login-wrapper
-      h1 SimpleCMS
-      .mb-form-box
-        form(action='login.html', method='post')
-          .form-group
-            input#mb-email.mb-input(type='text', name='mb-email', placeholder='email')
-          .form-group
-            input#mb-password.mb-input(type='password', name='mb-password', placeholder='password')
-          .mb-forgot-password
-            button#mb-forgot-password-button.mb-button Forgot password?
-          input#login-submit.mb-button(type='submit', value='Log in')
-          a.mb-sign-up-link(href='mb-signup.html')
-            button.mb-button Sign Up
+html(ng-app="app")
+	head
+		meta(http-equiv='Content-Type' content='text/html; charset=UTF-8')
+		meta(charset='utf-8')
+		title Login
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		include mb-links
+		script(src="cms/controllers/front-end/loginCtrl.js")
+	body
+		include modals/sign-up-modal
+		.container(ng-controller="loginCtrl")
+			h3 meanbase login
+			form
+				.form-group
+					input.form-control(type='text' placeholder='email')
+				.form-group
+					input.form-control(type='password' placeholder='password')
+				.form-group.text-right
+					a(href="#") Forgot password?
+				.a-6
+					.p-1-right
+						button.btn.btn-primary.form-control(data-toggle='modal' data-target='#signUp') Sign Up
+				.a-6
+					.p-1-left
+						input.btn.btn-success(type='submit' value='Log in').form-control

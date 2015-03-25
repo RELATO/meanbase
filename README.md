@@ -1,6 +1,8 @@
 meanbase
 ========
 
+Current progress has moved over to [meanbase-1.0.0](https://github.com/codingfriend1/meanbase-1.0.0), it involves a complete refactor.
+
 A CMS built on the MEAN stack. Mongodb, Express, Angular, Node. Uses CKEdit for inline editing and bootstrap for backend. Currently under development in early stages. Does not have any user authentication.
 
 Watch a demo at 

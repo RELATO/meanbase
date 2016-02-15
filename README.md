@@ -1,12 +1,13 @@
 meanbase
 ========
 
+Watch a demo at 
+<a href="http://youtu.be/tteztXru4eA">http://youtu.be/tteztXru4eA</a>
+
 Current progress has moved over to [meanbase-1.0.0](https://github.com/codingfriend1/meanbase-1.0.0), it involves a complete refactor.
 
 A CMS built on the MEAN stack. Mongodb, Express, Angular, Node. Uses CKEdit for inline editing and bootstrap for backend. Currently under development in early stages. Does not have any user authentication.
 
-Watch a demo at 
-<a href="http://youtu.be/tteztXru4eA">http://youtu.be/tteztXru4eA</a>
 
 Makes sure to run "npm install" in your terminal or "sudo npm install" if needed. Also if you are using nodemon
 "npm install nodemon -g", then just run it from the root folder instead of cd'ing into the server folder, otherwise the jade paths won't work.
